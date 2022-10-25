@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
+<body>
+<div class="form-div">
+    <form action="{{ url_for('keyboard_decode_post') }}" method="post">
+        <div class="create-code-form-padding">
+            <a class="main-text create-code-char-code">*Enter each symbol line by line from left to right!</a>
+            <b class="main-text create-code">Decode using keyboard:</b>
+            <div style="padding-top: 36%;">
+                <img style="width:26rem;text-align:center;display:block;margin-left:auto;margin-right:auto;border: 6px solid #1a1a1a;border-radius: 25px;"
+                     src="{{ url_for('static', filename='icons/logo.png') }}"></h3>
+            </div>
+            <div id="code-id-div" class="create-code keyboard-decode-div">
+                <input class="create-code sub-data-input" type="text" id="keyboard-decode-in" name="keyboard-decode-in"
+                       minlength="16" maxlength="16" placeholder="Enter the code you wanna decode:"/>
+            </div>
+        </div>
+        <div class="keyboard-div">
+            <div class="keyboard">
+                <div class="keyboard-row">
+                    <div class="piece-button" onclick="insert_piece('a')">A
+                        </br><img class="keyboard-piece-icon"
+                                  src="/static/icons/geom-original/circle.png">
+                    </div>
+                    <div class="piece-button" onclick="insert_piece('b')">B
+                        </br><img class="keyboard-piece-icon"
+                                  src="/static/icons/geom-original/d-arrow.png">
+                    </div>
+                    <div class="piece-button" onclick="insert_piece('c')">C
+                        </br><img class="keyboard-piece-icon"
+                                  src="/static/icons/geom-original/e-circle.png">
+                    </div>
+                    <div class="piece-button" onclick="insert_piece('d')">D
+                        </br><img class="keyboard-piece-icon"
+                                  src="/static/icons/geom-original/e-rhombus.png">
+                    </div>
+                    <div class="piece-button" onclick="remove_last()">DELETE
+                        <a style="color: #FFCC00; font-size: 220%;"><-</a>
+                    </div>
+                </div>
+                <div class="keyboard-row">
+                    <div class="piece-button" onclick="insert_piece('e')">E
+                        </br><img class="keyboard-piece-icon"
+                                  src="/static/icons/geom-original/e-square.png">
+                    </div>
+                    <div class="piece-button" onclick="insert_piece('f')">F
+                        </br><img class="keyboard-piece-icon"
+                                  src="/static/icons/geom-original/e-triangle.png">
+                    </div>
+                    <div class="piece-button" onclick="insert_piece('g')">G
+                        </br><img class="keyboard-piece-icon"
+                                  src="/static/icons/geom-original/l-arrow.png">
+                    </div>
+                    <div class="piece-button" onclick="insert_piece('h')">H
+                        </br><img class="keyboard-piece-icon"
+                                  src="/static/icons/geom-original/minus.png">
+                    </div>
+                </div>
+                <div class="keyboard-row">
+                    <div class="piece-button" onclick="insert_piece('i')">I
+                        </br><img class="keyboard-piece-icon"
+                                  src="/static/icons/geom-original/plus.png">
+                    </div>
+                    <div class="piece-button" onclick="insert_piece('j')">J
+                        </br><img class="keyboard-piece-icon"
+                                  src="/static/icons/geom-original/r-arrow.png">
+                    </div>
+                    <div class="piece-button" onclick="insert_piece('k')">K
+                        </br><img class="keyboard-piece-icon"
+                                  src="/static/icons/geom-original/rhombus.png">
+                    </div>
+                    <div class="piece-button" onclick="insert_piece('l')">L
+                        </br><img class="keyboard-piece-icon"
+                                  src="/static/icons/geom-original/square.png">
+                    </div>
+                </div>
+                <div class="keyboard-row">
+                    <div class="piece-button" onclick="insert_piece('m')">M
+                        </br><img class="keyboard-piece-icon"
+                                  src="/static/icons/geom-original/triangle.png">
+                    </div>
+                    <div class="piece-button" onclick="insert_piece('n')">N
+                        </br><img class="keyboard-piece-icon"
+                                  src="/static/icons/geom-original/u-arrow.png">
+                    </div>
+                    <div class="piece-button" onclick="insert_piece('o')">O
+                        </br><img class="keyboard-piece-icon"
+                                  src="/static/icons/geom-original/v-bar.png">
+                    </div>
+                    <div class="piece-button" onclick="insert_piece('p')">P
+                        </br><img class="keyboard-piece-icon"
+                                  src="/static/icons/geom-original/x.png">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="create-code-buttons">
+            <div class="scan-button-container-swapped">
+                <div class="button-container">
+                    <button class="scan-button-swapped" id="scan-button"
+                            onclick="window.location.href = '/';" type="button"></button>
+                    <small class="button-description">Home</small>
+                </div>
+            </div>
+            <div class="add-button-container-swapped">
+                <div class="button-container">
+                    <button class="add-button-swapped" id="add-button" type="submit"></button>
+                    <small class="button-description">Submit</small>
+                </div>
+            </div>
+
+        </div>
+    </form>
+    <div style="height: 25em;"/>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="{{ url_for('static', filename='js-static/create-element.js') }}"></script>
+</html>

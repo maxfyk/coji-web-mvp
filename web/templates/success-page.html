@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css')}}">
+<body>
+<div class="form-div">
+        <b class="main-text create-code" style="white-space: normal !important;">🎉🥳<br/>Your code has been successfully modified!</b>
+        <div class="create-code-buttons">
+            <div class="scan-button-container-swapped">
+                <div class="button-container">
+                    <button class="scan-button-swapped" id="scan-button"
+                            onclick="window.location.href = '/';" type="button"></button>
+                    <small class="button-description">Home</small>
+                </div>
+            </div>
+            <div class="add-button-container-swapped">
+                <div class="button-container">
+                    <button class="add-button-swapped" id="add-button" type="submit"></button>
+                    <small class="button-description">Submit</small>
+                </div>
+            </div>
+
+        </div>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="{{ url_for('static', filename='js-static/create-element.js')}}"></script>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="mobile-web-app-capable" content="yes">
+<link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
+<body>
+<a class="camera-warning">Please provide camera access!</a>
+<a class="usage-help">Point your camera at the code and press the scan button!
+    <br/>
+    <small style="font-weight: normal;"> or type the code in via keyboard</small>
+    <br/>
+    <small style="font-weight: normal;"> or find one on the map</small>
+</a>
+<video class="video-preview" id="stream"></video>
+
+<div class="buttons-wrap">
+    <div class="info-button-container">
+        <div class="button-container">
+            <button class="info-button" id="info-button" onclick="window.location.href = '/what-is-this';"></button>
+            <small class="button-description">What's </br> this?</small>
+
+        </div>
+
+    </div>
+    <div class="scan-button-container">
+        <div class="button-container">
+            <button class="scan-button" id="scan-button"></button>
+            <small class="button-description">Scan</small>
+        </div>
+    </div>
+    <div class="keyboard-decode-button-container">
+        <div class="button-container">
+            <button class="keyboard-decode-button" id="keyboard-decode-button"
+                    onclick="window.location.href = '/keyboard-decode';"></button>
+            <small class="button-description">Type in</small>
+        </div>
+    </div>
+    <div class="location-decode-button-container">
+        <div class="button-container">
+            <button class="location-decode-button" id="location-decode-button"
+                    onclick="window.location.href = '/location-decode/25.045817169317402, 121.54369460190543';"></button>
+            <small class="button-description">Map</small>
+        </div>
+    </div>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="scripts/main.js"></script>
+</html>

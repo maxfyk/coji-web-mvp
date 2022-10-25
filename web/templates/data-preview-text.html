@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css')}}">
+<body>
+<div class="data-preview-text-div">
+    <a class="data-preview-text"><b> Text from the code:</b> <br>{{code_info['in-data']}}</br></a>
+     <div style="height: 25em;"/>
+</div>
+
+<div>
+    <div class="add-button-container">
+        <div class="button-container">
+            <button class="add-button" id="add-button" onclick="window.location.href = '/create-code';"></button>
+            <small class="button-description">Create</small>
+        </div>
+    </div>
+    <div class="scan-button-container">
+        <div class="button-container">
+            <button class="scan-button" id="scan-button" onclick="window.location.href = '/';"></button>
+            <small class="button-description">Home</small>
+        </div>
+    </div>
+</div>
+</body>
+</html>

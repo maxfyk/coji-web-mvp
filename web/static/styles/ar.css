@@ -1,0 +1,36 @@
+body {
+    font-family: Calibri;
+}
+
+#dom-overlay-message {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 1em;
+    background: #33333355;
+    border-top: 5px solid #FFCC00;
+    color: #FFCC00;
+}
+
+.a-dom-overlay button {
+    padding: 1em;
+    appearance: none;
+    background: #00000055;
+    border: 3px solid white;
+    border-radius: 1em;
+    margin: 1em 1em 0 0;
+    color: white;
+}
+
+.a-enter-vr-button, .a-enter-ar-button {
+    margin-bottom: -2.5%;
+    background-color: #FFCC00;
+    color: #1a1a1a; /* add error background for camera */
+
+}
+
+.a-enter-ar-button:active, .a-enter-ar-button:hover, .a-enter-vr-button:active, .a-enter-vr-button:hover {
+    background-color: white;
+}
+

@@ -61,6 +61,13 @@ def keyboard_decode():
     return render_template('keyboard-decode.html')
 
 
+# what is this page
+@app.route('/what-is-this', methods=['get'])
+def what_is_this():
+    """Info page"""
+    return render_template('what-is-this.html')
+
+
 # POST pages
 @app.route('/keyboard-decode-post', methods=['post'])
 def keyboard_decode_post():
@@ -85,7 +92,9 @@ def keyboard_decode_post():
 @app.route('/image-decode-request', methods=['post'])
 def send_image_decode_request():
     """Forward request to api"""
+    print(1)
     resp = requests.post(f'{API_URL}/coji-code/decode', json=request.get_json())
+    print(2)
     return Response(resp.content, resp.status_code)
 
 

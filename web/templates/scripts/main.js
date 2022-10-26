@@ -16,8 +16,6 @@ $(function () {
                     {minWidth: 640},
                     {minWidth: 1024},
                     {minWidth: 1280},
-                    {minWidth: 1920},
-                    {minWidth: 2560},
                 ]
             }
         }
@@ -87,7 +85,7 @@ async function scanCode() {
         }
     }
     await fetch(`/image-decode-request`, options = {
-        method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
+        method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'no-cors'
     })
         .then(await function (response) {
             return response.text();

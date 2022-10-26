@@ -1,26 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css')}}">
+<link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
 <body>
 <div class="form-div">
     <b class="main-text create-code">Here is your COJI code! </b>
-    <a class="main-text create-code-char-code">сode id: {{char_code}}</a>
+    <a class="main-text create-code-char-code">сode id: {{ char_code }}</a>
 
     <div style="padding-top: 20rem;">
         <img style="text-align:center;display:block;margin-left:auto;margin-right:auto;border: 6px solid #1a1a1a;"
-             src="data:image/jpeg;base64,{{code_image}}"></h3>
+             src="data:image/jpeg;base64,{{ code_image }}"></h3>
     </div>
     <div style="height: 4rem;"/>
     <a class="create-code sub-data-text" style="line-height: 120% !important;">*You can download the code as an image
         <br/>(right click or press & hold)!</a>
     <div style="height: 25em;"/>
 
-    <div class="add-button-container">
-        <div class="button-container">
-            <button class="add-button" id="add-button" onclick="window.location.href = '/create-code';"></button>
-            <small class="button-description">Create</small>
-        </div>
-    </div>
     <div class="scan-button-container">
         <div class="button-container">
             <button class="scan-button" id="scan-button" onclick="window.location.href = '/';"></button>

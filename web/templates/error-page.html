@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css')}}">
+<link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
 <body>
-<a class="data-preview-text"><b> {{ERROR}} 😢</b></a>
+<div style="text-align: center; width: 100%">
+    <a class="data-preview-text"><b>😢{{ ERROR }}😢</b></a>
+</div>
 
 
 <div>
-    <div class="add-button-container">
-        <div class="button-container">
-            <button class="add-button" id="add-button" onclick="window.location.href = '/create-code';"></button>
-            <small class="button-description">Create</small>
-        </div>
+    <div class=" scan-button-container">
+    <div class="button-container">
+        <button class="scan-button" id="scan-button" onclick="window.location.href = '/';"></button>
+        <small class="button-description">Home</small>
     </div>
-    <div class="scan-button-container">
-        <div class="button-container">
-            <button class="scan-button" id="scan-button" onclick="window.location.href = '/';"></button>
-            <small class="button-description">Home</small>
-        </div>
-    </div>
+</div>
 </div>
 </body>
 </html>

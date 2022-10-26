@@ -29,6 +29,9 @@ $(function () {
         .catch(function (err0r) {
             console.log("Something went wrong with permissions!");
         });
+    navigator.geolocation.getCurrentPosition(function (position) {
+    }, showError);
+
 });
 
 function location_redirector() {

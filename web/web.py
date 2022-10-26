@@ -44,10 +44,14 @@ def data_preview(id):
 
 
 # map location page
-@app.route('/location-decode', methods=['get'])
-def location_decode():
+@app.route('/location-decode/<location>', methods=['get'])
+def location_decode(location):
     """Dummy map with codes"""
-    return render_template('location-decode.html')
+    resp = r.get(f'{API_URL}/coji-code/get-by-city/{location}')
+    if resp.status_code == 200:
+        codes = resp.json().get('data', None)
+        return render_template('location-decode.html', CODES=enumerate(codes.items()))
+    return render_template('error-page.html', ERROR='Something went wrong')
 
 
 # keyboard decode page

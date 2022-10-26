@@ -107,7 +107,7 @@
     const icons = [];
     const popups = [];
     const htmls = [];
-    {% for i, code_data in enumerate(CODES.items()) %}
+    {% for i, code_data in CODES %}
         markers.push(L.marker(
             [{{ code_data[1] }}],
             {}

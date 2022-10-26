@@ -3,6 +3,7 @@ var video = $('.video-preview')[0];
 
 /*permissions*/
 $(function () {
+
     video.setAttribute('autoplay', '');
     video.setAttribute('muted', '');
     video.setAttribute('playsinline', '');
@@ -29,6 +30,24 @@ $(function () {
             console.log("Something went wrong with permissions!");
         });
 });
+
+function location_redirector() {
+    navigator.geolocation.getCurrentPosition(function (position) {
+        window.location.href = '/location-decode/' + position.coords.latitude + ',' + position.coords.longitude;
+        return 0;
+    }, showError);
+}
+
+function showError(error) {
+    switch (error.code) {
+        case error.PERMISSION_DENIED:
+            alert('Please grant access to your location!');
+            break;
+        case error.UNKNOWN_ERROR:
+            alert('Please grant access to your location!');
+            break;
+    }
+}
 
 const headers = {
     'Content-Type': 'application/json',

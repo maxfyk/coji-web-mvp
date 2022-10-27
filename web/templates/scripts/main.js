@@ -85,7 +85,7 @@ async function scanCode() {
         }
     }
     await fetch(`/image-decode-request`, options = {
-        method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'no-cors'
+        method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
     })
         .then(await function (response) {
             return response.text();

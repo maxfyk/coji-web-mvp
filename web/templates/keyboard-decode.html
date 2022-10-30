@@ -3,7 +3,7 @@
 <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
 {% if ERROR %}
     <script>
-        alert("{{ ERROR }}"+'😢');
+        alert("{{ ERROR }}" + '😢');
     </script>
 {% endif %}
 <body>
@@ -18,7 +18,8 @@
             </div>
             <div id="code-id-div" class="create-code keyboard-decode-div">
                 <input class="create-code sub-data-input" type="text" id="keyboard-decode-in" name="keyboard-decode-in"
-                       minlength="16" maxlength="16" placeholder="Enter the code you wanna decode:"/>
+                       pattern=".{16}" title="The code must be 16 characters long"
+                       placeholder="Enter the code you wanna decode:"/>
             </div>
         </div>
         <div class="keyboard-div">

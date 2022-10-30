@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
+{% if ERROR %}
+    <script>
+        alert("{{ ERROR }}"+'😢');
+    </script>
+{% endif %}
 <body>
 <div class="form-div">
     <form action="{{ url_for('keyboard_decode_post') }}" method="post">

@@ -51,7 +51,7 @@ def location_decode(location):
     if resp.status_code == 200:
         codes = resp.json().get('data', None)
         return render_template('location-decode.html', CODES=enumerate(codes.items()))
-    return render_template('error-page.html', ERROR='Something went wrong')
+    return render_template('index.html', ERROR='Something went wrong')
 
 
 # keyboard decode page
@@ -69,7 +69,7 @@ def what_is_this():
 
 
 # POST pages
-@app.route('/keyboard-decode-post', methods=['post'])
+@app.route('/keyboard-decode', methods=['post'])
 def keyboard_decode_post():
     """Decode using keyboard (post)"""
     code_in = request.form.get('keyboard-decode-in', None)
@@ -86,15 +86,7 @@ def keyboard_decode_post():
         error = data.get('text') or 'Failed to decode your code, please try again later!'
     else:
         error = 'Please enter the code first!'
-    return render_template('error-page.html', ERROR=error)
-
-
-@app.route('/image-decode-request', methods=['post'])
-def send_image_decode_request():
-    """Forward request to api"""
-    resp = requests.post(f'{API_URL}/coji-code/decode', json=request.get_json())
-    return Response(resp.content, resp.status_code)
-
+    return render_template('keyboard-decode.html', ERROR=error)
 
 # static
 

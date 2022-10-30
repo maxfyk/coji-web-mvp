@@ -2,6 +2,11 @@
 <html lang="en">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
+{% if ERROR %}
+    <script>
+        alert("{{ ERROR }}"+'😢');
+    </script>
+{% endif %}
 <body>
 <a class="camera-warning">Please provide camera access!</a>
 <a class="usage-help">Point your camera at the code and press the scan button!

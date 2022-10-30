@@ -126,7 +126,7 @@
 
         popups.push(L.popup({"autopan": "False", "maxWidth": "100%"}));
 
-        htmls.push($(`<div id="html_{{i}}" style="width: 10rem; height: 100.0%;"><a href="/data-preview/{{ code_data[0] }}"  style="color: orange; font-weight: bold;">Click here to decode code info</a> <br/> <a style="color: #1a1a1a">ID: {{code_data[0]}}</a> <br/> <a href="https://www.google.com/maps/search/{{code_data[1].replace(' ', '+')}}/@{{code_data[1].replace(' ', '')}},17z">Open in GMaps </a></div>`)[0]);
+        htmls.push($(`<div id="html_{{i}}" style="width: 10rem; height: 100.0%;"><a href="/data-preview/{{ code_data[0] }}"  style="color: orange; font-weight: bold;">Click here to open the code content</a> <br/> <a style="color: #1a1a1a">ID: {{code_data[0]}}</a> <br/> <a href="https://www.google.com/maps/search/{{code_data[1].replace(' ', '+')}}/@{{code_data[1].replace(' ', '')}},17z">Open in GMaps </a></div>`)[0]);
         popups[popups.length - 1].setContent(htmls[htmls.length - 1]);
 
 

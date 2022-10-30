@@ -117,7 +117,7 @@
         icons.push(L.icon(
             {
                 iconUrl: '/static/icons/scan-button.png',
-                iconSize: [30, 30], // size of the icon
+                iconSize: [15, 15], // size of the icon
                 iconAnchor: [10, 2], // point of the icon which will correspond to marker's location
             }
         ));
@@ -126,15 +126,25 @@
 
         popups.push(L.popup({"autopan": "False", "maxWidth": "100%"}));
 
-
-        htmls.push($(`<div id="html_{{i}}" style="width: 10rem; height: 100.0%;"><a href="/data-preview/{{ code_data[0] }}"  style="color: orange; font-weight: bold;">Click here to decode code info</a> <br/> <a style="color: #1a1a1a">ID: {{code_data[0]}}</a></div>`)[0]);
+        htmls.push($(`<div id="html_{{i}}" style="width: 10rem; height: 100.0%;"><a href="/data-preview/{{ code_data[0] }}"  style="color: orange; font-weight: bold;">Click here to decode code info</a> <br/> <a style="color: #1a1a1a">ID: {{code_data[0]}}</a> <br/> <a href="https://www.google.com/maps/search/{{code_data[1].replace(' ', '+')}}/@{{code_data[1].replace(' ', '')}},17z">Open in GMaps </a></div>`)[0]);
         popups[popups.length - 1].setContent(htmls[htmls.length - 1]);
 
 
         markers[markers.length - 1].bindPopup(popups[popups.length - 1]);
 
     {% endfor %}
-    map_a6073d0ef32e46208af726a1736154fe.setView(markers[markers.length - 1]._latlng, 11);
+    var userLocArr = '{{ LOCATION }}'.split(',');
+    var userLoc = {
+        'lat': userLocArr[0],
+        'lng': userLocArr[1]
+    };
+
+    var userMarker = L.marker(
+        userLocArr,
+        {}
+    ).bindPopup('Your are here! :)').addTo(map_a6073d0ef32e46208af726a1736154fe);
+
+    map_a6073d0ef32e46208af726a1736154fe.setView(userLoc, 14);
 
 
 </script>

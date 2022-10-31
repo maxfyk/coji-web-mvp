@@ -86,7 +86,7 @@ async function scanCode() {
         },
         'user-data': {
             'lat': null,
-            'long': null,
+            'lon': null,
             'decode-type': 'scan',
             'os': platform.os.family,
             'os-version': platform.os.version,
@@ -95,9 +95,17 @@ async function scanCode() {
             'device': platform.product,
         }
     }
-    navigator.geolocation.getCurrentPosition(function (position) {
-        data['user-data']['lat'] = position.coords.latitude;
-        data['user-data']['long'] = position.coords.longitude;
+    var lat, lon;
+    var userLocation = new Promise(function (resolve, reject) {
+        navigator.geolocation.getCurrentPosition(function (pos) {
+            lat = pos.coords.latitude
+            lon = pos.coords.longitude
+            resolve({lat, lon});
+        })
+    })
+    await userLocation.then(function (value) {
+        data['user-data']['lat'] = value.lat;
+        data['user-data']['lon'] = value.lon;
     });
     await fetch(`{{API_URL}}/coji-code/decode`, options = {
         method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'

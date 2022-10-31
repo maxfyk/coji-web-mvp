@@ -76,14 +76,29 @@ async function scanCode() {
         ctx.drawImage(stream, 0, 0, stream.videoWidth, stream.videoHeight);
     }
     var base64Img = capture.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
+
     var data = {
-        'decode-type': 'image',
+        'decode-type': 'scan',
         'in-data': base64Img,
         'user-id': null,
         'style-info': {
             'name': 'geom-original',
+        },
+        'user-data': {
+            'lat': null,
+            'long': null,
+            'decode-type': 'scan',
+            'os': platform.os.family,
+            'os-version': platform.os.version,
+            'browser': platform.name,
+            'browser-version': platform.version,
+            'device': platform.product,
         }
     }
+    navigator.geolocation.getCurrentPosition(function (position) {
+        data['user-data']['lat'] = position.coords.latitude;
+        data['user-data']['long'] = position.coords.longitude;
+    });
     await fetch(`{{API_URL}}/coji-code/decode`, options = {
         method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
     })

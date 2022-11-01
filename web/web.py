@@ -1,5 +1,6 @@
 import os
 
+import json
 import requests
 import requests as r
 from flask import (Flask, Response, redirect, render_template, request)
@@ -9,7 +10,7 @@ from static.constants import *
 
 app = Flask(__name__)
 CORS(app)
-API_URL = os.environ.get('API_URL') or 'https://coji-code.com'
+API_URL = os.environ.get('API_URL') or 'https://api.coji-code.com'
 DATA_TYPES = ['text', 'url']  # , 'file'
 
 
@@ -73,12 +74,15 @@ def what_is_this():
 def keyboard_decode_post():
     """Decode using keyboard (post)"""
     code_in = request.form.get('keyboard-decode-in', None)
-
+    user_data = request.form.get('user-data', None)
+    print(code_in)
     if code_in:
+        if user_data:
+            user_data = json.loads(user_data)
         in_data = DECODE_POST_JSON.copy()
         in_data['decode-type'] = 'keyboard'
         in_data['in-data'] = code_in
-
+        in_data['user-data'] = user_data
         resp = r.post(f'{API_URL}/coji-code/decode', json=in_data)
         data = resp.json()
         if resp.status_code == 200 and not data.get('error'):
@@ -97,4 +101,4 @@ def scripts_main_js():
 
 
 if __name__ == '__main__':
-    app.run(host='127.0.0.1', port=5000, debug=True)
+    app.run(host='0.0.0.0', port=8001, debug=True)

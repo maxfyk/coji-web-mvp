@@ -57,7 +57,7 @@ body {
     font-size: 3vw;
 }
 
-.usage-help {
+.usage-help-div {
     left: 0;
     position: absolute;
     text-align: center;
@@ -66,6 +66,7 @@ body {
     font-family: Calibri;
     font-weight: bold;
     font-size: 3vh;
+    z-index: 9999;
 }
 
 /*bottom bar buttons*/

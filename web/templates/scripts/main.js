@@ -1,8 +1,13 @@
 var video = $('.video-preview')[0];
-
+var lat = null, lon = null;
 
 /*permissions*/
 $(function () {
+
+    navigator.geolocation.getCurrentPosition(function (pos) {
+        lat = pos.coords.latitude;
+        lon = pos.coords.longitude;
+    })
 
     video.setAttribute('autoplay', '');
     video.setAttribute('muted', '');
@@ -85,8 +90,8 @@ async function scanCode() {
             'name': 'geom-original',
         },
         'user-data': {
-            'lat': null,
-            'lon': null,
+            'lat': lat,
+            'lon': lon,
             'decode-type': 'scan',
             'os': platform.os.family,
             'os-version': platform.os.version,
@@ -95,18 +100,6 @@ async function scanCode() {
             'device': platform.product,
         }
     }
-    var lat, lon;
-    var userLocation = new Promise(function (resolve, reject) {
-        navigator.geolocation.getCurrentPosition(function (pos) {
-            lat = pos.coords.latitude
-            lon = pos.coords.longitude
-            resolve({lat, lon});
-        })
-    })
-    await userLocation.then(function (value) {
-        data['user-data']['lat'] = value.lat;
-        data['user-data']['lon'] = value.lon;
-    });
     await fetch(`{{API_URL}}/coji-code/decode`, options = {
         method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
     })

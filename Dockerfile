@@ -22,5 +22,5 @@ RUN python3 -m pip install -r requirements.txt
 
 WORKDIR /app
 
-EXPOSE 8080
+EXPOSE 8001
 ENTRYPOINT ["sh", "/start.sh"]

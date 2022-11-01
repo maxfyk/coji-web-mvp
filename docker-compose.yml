@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  coji-web:
+    build: .
+    env_file:
+      - .web-env
+    volumes:
+      - ./web:/app
+    ports:
+      - "8000:8000"
+    restart: always
+    networks:
+      - network
+
+networks:
+  network:

@@ -1,8 +1,13 @@
 var video = $('.video-preview')[0];
-
+var lat = null, lon = null;
 
 /*permissions*/
 $(function () {
+
+    navigator.geolocation.getCurrentPosition(function (pos) {
+        lat = pos.coords.latitude;
+        lon = pos.coords.longitude;
+    })
 
     video.setAttribute('autoplay', '');
     video.setAttribute('muted', '');
@@ -76,12 +81,23 @@ async function scanCode() {
         ctx.drawImage(stream, 0, 0, stream.videoWidth, stream.videoHeight);
     }
     var base64Img = capture.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
+
     var data = {
-        'decode-type': 'image',
+        'decode-type': 'scan',
         'in-data': base64Img,
         'user-id': null,
         'style-info': {
             'name': 'geom-original',
+        },
+        'user-data': {
+            'lat': lat,
+            'lon': lon,
+            'decode-type': 'scan',
+            'os': platform.os.family,
+            'os-version': platform.os.version,
+            'browser': platform.name,
+            'browser-version': platform.version,
+            'device': platform.product,
         }
     }
     await fetch(`{{API_URL}}/coji-code/decode`, options = {

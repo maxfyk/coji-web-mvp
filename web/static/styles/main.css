@@ -4,7 +4,7 @@ body::after {
     height: 0;
     overflow: hidden;
     z-index: -1;
-    content: url('/static/icons/scan-loading.gif');
+    content: url('/static/icons/scan-loading.gif') url('/static/icons/whats-this.png');
 }
 
 @font-face {
@@ -378,4 +378,13 @@ body {
     width: 50%;
 
     font-family: Calibri;
+}
+
+/*what's this*/
+.whats-this-div {
+    width: 100%;
+}
+
+.whats-this-div-img {
+    width: 100%;
 }

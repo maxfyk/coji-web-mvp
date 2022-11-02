@@ -230,6 +230,7 @@ body {
     font-family: Calibri !important;
     transform: translateZ(0) !important;
     touch-action: manipulation;
+    line-height: 0px !important;
     font-size: 1.8rem;
     white-space: nowrap;
     height: 4rem;

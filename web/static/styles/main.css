@@ -1,7 +1,3 @@
-* {
-    touch-action: manipulation;
-}
-
 body::after {
     position: absolute;
     width: 0;
@@ -233,6 +229,7 @@ body {
     color: #FFCC00 !important;
     font-family: Calibri !important;
     transform: translateZ(0) !important;
+    touch-action: manipulation;
     font-size: 1.8rem;
     white-space: nowrap;
     height: 4rem;

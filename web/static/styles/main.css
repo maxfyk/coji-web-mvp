@@ -226,6 +226,7 @@ body {
 .sub-data-input {
     border-radius: 2rem;
     background-color: #1a1a1a;
+    transform: translateZ(0);
     color: #FFCC00;
     font-family: Calibri;
     font-size: 1.8rem;

@@ -1,3 +1,12 @@
+body::after {
+    position: absolute;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    z-index: -1;
+    content: url('/static/icons/scan-loading.gif');
+}
+
 @font-face {
     font-family: 'Calibri';
     src: url('/static/fonts/calibri/calibri.eot');

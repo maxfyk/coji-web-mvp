@@ -7,9 +7,10 @@
     </script>
 {% endif %}
 <body>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <div class="form-div">
     <form action="{{ url_for('keyboard_decode_post') }}" method="post" id="form">
-        <input type="hidden" name="user-data" id="user-data" value="" />
+        <input type="hidden" name="user-data" id="user-data" value=""/>
         <div class="create-code-form-padding">
             <a class="main-text create-code-char-code">*Enter each symbol line by line from left to right!</a>
             <b class="main-text create-code">Decode using keyboard:</b>

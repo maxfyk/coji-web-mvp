@@ -1,3 +1,7 @@
+* {
+    touch-action: manipulation;
+}
+
 body::after {
     position: absolute;
     width: 0;

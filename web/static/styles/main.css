@@ -226,13 +226,16 @@ body {
 .sub-data-input {
     border-radius: 2rem;
     background-color: #1a1a1a;
-    transform: translateZ(0);
-    color: #FFCC00;
-    font-family: Calibri;
+    color: #FFCC00 !important;
+    font-family: Calibri !important;
+    transform: translateZ(0) !important;
     font-size: 1.8rem;
     white-space: nowrap;
     height: 4rem;
     width: 99% !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
 }
 
 .code-id-div {

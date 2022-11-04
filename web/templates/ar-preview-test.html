@@ -8,7 +8,7 @@
     <!-- use rawgithack to retrieve the correct url for nft marker (see 'pinball' below) -->
     <a-nft
             type='nft'
-            url='../static/pinball'
+            url='../static/code'
             smooth='true' smoothCount='10' smoothTolerance='0.01' smoothThreshold='5'>
         {#        <a-entity#}
         {#                gltf-model='https://cdn.glitch.global/89ed7db8-cadc-4146-8dc1-7c422035221f/phoenix.glb?v=1665634474626'#}
@@ -17,11 +17,22 @@
         {#                scale='0.1 0.1 0.1'#}
         {#        >#}
         {#        </a-entity>#}
-        {#        <a-text value="COJI code is great!" scale="4 4 4" color="red" position="0 0 10"></a-text>#}
-            <a-image url='../static/ar-text.png' position="0 0 0" rotation="0 0 0" width="" height="" opacity="1"
-                     transparent="true" shader="standard" scale="1 1 1" visible="" material=""
-                     geometry=""></a-image>
+        <a-image src='../static/icons/logo.png' position="320 0 -280" rotation="-90 0 0" width="" height="" opacity="1"
+                 transparent="true" shader="standard" scale="100 100 100" visible="" material=""
+                 geometry=""></a-image>
+        <a-image src='../static/ar-text.png' position="340 0 -180" rotation="-90 0 0" width="" height="" opacity="1"
+                 transparent="true" shader="standard" scale="160 160 160" visible="" material=""
+                 geometry=""></a-image>
+        <a-image onclick="alert('instagram');" id="insta-button" src='../static/insta.png' position="280 0 -80" rotation="-90 0 0" width="" height=""
+                 opacity="1"
+                 transparent="true" shader="standard" scale="40 40 40"></a-image>
     </a-nft>
-    <a-entity camera></a-entity>
+    <a-camera cursor="rayOrigin: mouse"></a-camera>
+
 </a-scene>
+<script>
+    document.querySelector('#insta-button').addEventListener('click', function () {
+        alert('instagram!');
+    });
+</script>
 </body>

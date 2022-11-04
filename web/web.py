@@ -100,5 +100,10 @@ def scripts_main_js():
     return render_template('scripts/main.js', API_URL=API_URL)
 
 
+@app.route('/ar')
+def ar_test():
+    return render_template('ar-preview-test.html')
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8001, debug=True)

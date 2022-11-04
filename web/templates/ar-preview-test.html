@@ -42,7 +42,7 @@
     <!-- the path should end with the name without the extension e.g. if file is 'pinball.fset' the path should end with 'pinball' -->
     <a-nft
             type="nft"
-            url="/static/"
+            url="C:\\Users\\maxfyk\\Documents\\coji\\coji-web-mvp\\web\\static\\code"
             smooth="true"
             smoothCount="10"
             smoothTolerance=".01"
@@ -50,12 +50,6 @@
     >
         <!-- as a child of the a-nft entity, you can define the content to show. here's a GLTF model entity -->
         <a-text value="Hello, World!"></a-text>
-        <a-entity
-                gltf-model="https://arjs-cors-proxy.herokuapp.com/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
-                scale="5 5 5"
-                position="50 150 -10"
-        >
-        </a-entity>
     </a-nft>
     <!-- static camera that moves according to the device movemenents -->
     <a-entity camera></a-entity>

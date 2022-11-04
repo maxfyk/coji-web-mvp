@@ -1,38 +1,35 @@
-<script src='https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js'></script>
-<script src='https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js'></script>
-<body style='margin : 0px; overflow: hidden;'>
-<a-scene
-        vr-mode-ui='enabled: false;'
-        embedded arjs='trackingMethod: best; sourceType: webcam; debugUIEnabled: false;'>
-
-    <!-- use rawgithack to retrieve the correct url for nft marker (see 'pinball' below) -->
-    <a-nft
-            type='nft'
-            url='../static/code'
-            smooth='true' smoothCount='10' smoothTolerance='0.01' smoothThreshold='5'>
-        {#        <a-entity#}
-        {#                gltf-model='https://cdn.glitch.global/89ed7db8-cadc-4146-8dc1-7c422035221f/phoenix.glb?v=1665634474626'#}
-        {#                crossorigin="anonymous"#}
-        {#                position='0 0 0'#}
-        {#                scale='0.1 0.1 0.1'#}
-        {#        >#}
-        {#        </a-entity>#}
-        <a-image src='../static/icons/logo.png' position="320 0 -280" rotation="-90 0 0" width="" height="" opacity="1"
-                 transparent="true" shader="standard" scale="100 100 100" visible="" material=""
-                 geometry=""></a-image>
-        <a-image src='../static/ar-text.png' position="340 0 -180" rotation="-90 0 0" width="" height="" opacity="1"
-                 transparent="true" shader="standard" scale="160 160 160" visible="" material=""
-                 geometry=""></a-image>
-        <a-image onclick="alert('instagram');" id="insta-button" src='../static/insta.png' position="280 0 -80" rotation="-90 0 0" width="" height=""
-                 opacity="1"
-                 transparent="true" shader="standard" scale="40 40 40"></a-image>
-    </a-nft>
-    <a-camera cursor="rayOrigin: mouse"></a-camera>
-
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image.prod.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-aframe.prod.js"></script>
+</head>
+<body>
+<a-scene mindar-image="imageTargetSrc: ../static/code.mind;" vr-mode-ui="enabled: false"
+         device-orientation-permission-ui="enabled: true">
+    <a-assets>
+        <img id="ar-text"
+             src="../static/ar-text.png" width="200" height="200"/>
+        <img id="rubik"
+             src="../static/rubik.png" width="200" height="200"/>
+    </a-assets>
+    <a-camera position="0 0 0" look-controls="enabled: true"></a-camera>
+    <a-entity mindar-image-target="targetIndex: 0">
+        {#        <a-image src='../static/icons/logo.png' position="320 0 -280" rotation="-90 0 0" width="" height=""#}
+        {#                 opacity="1"#}
+        {#                 transparent="true" shader="standard" scale="100 100 100" visible="" material=""#}
+        {#                 geometry=""></a-image>#}
+        <a-plane src="#ar-text" position="0 0 0" height="1.1" width="1.1" rotation="0 0 0"></a-plane>
+        <a-plane src="#rubik" position="0 0 0" height="1.1" width="1.1" rotation="0 0 0"></a-plane>
+        {#        <a-image src='../static/ar-text.png' position="340 0 -180" rotation="-90 0 0" width="" height="" opacity="1"#}
+        {#                 transparent="true" shader="standard" scale="160 160 160" visible="" material=""#}
+        {#                 geometry=""></a-image>#}
+        {#        <a-image id="insta-button" src="../static/insta.png" position="280 0 -80"#}
+        {#                 rotation="-90 0 0" width="" height=""#}
+        {#                 opacity="1"#}
+        {#                 transparent="true" shader="standard" scale="40 40 40"></a-image>#}
+    </a-entity>
 </a-scene>
-<script>
-    document.querySelector('#insta-button').addEventListener('click', function () {
-        alert('instagram!');
-    });
-</script>
 </body>
+</html>

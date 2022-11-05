@@ -34,7 +34,9 @@ def data_preview(id):
         elif code_info['data-type'] == 'text':
             return render_template('data-preview-text.html', code_info=code_info)
         elif code_info['data-type'] == 'ar-model':
-            return render_template('data-preview-ar.html', in_data=code_info['in-data'])
+            return render_template('data-preview-ar-model.html', in_data=code_info['in-data'])
+        elif code_info['data-type'] == 'ar-preview':
+            return redirect(code_info['in-data'])
         elif code_info['data-type'] == 'url':
             return redirect(code_info['in-data'])
         return 'Not yet supported'
@@ -98,11 +100,6 @@ def keyboard_decode_post():
 @app.route('/scripts/main.js')
 def scripts_main_js():
     return render_template('scripts/main.js', API_URL=API_URL)
-
-
-@app.route('/ar')
-def ar_test():
-    return render_template('ar-preview-test.html')
 
 
 if __name__ == '__main__':

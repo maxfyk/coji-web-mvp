@@ -13,6 +13,10 @@
 
     gtag('config', 'G-CCXXB5EDB0');
 </script>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image.prod.js"></script>
+<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-aframe.prod.js"></script>
 <link rel="preload" as="font" href="/static/fonts/calibri/calibri.eot" crossorigin="anonymous">
 <link rel="preload" as="font" href="/static/fonts/calibri/calibri.svg" crossorigin="anonymous">
 <link rel="preload" as="font" href="/static/fonts/calibri/calibri.ttf" type="font/ttf" crossorigin="anonymous">
@@ -28,6 +32,8 @@
 <meta name="theme-color" content="#ffffff">
 <meta name="mobile-web-app-capable" content="yes">
 <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
+<link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/index-ar.css') }}">
+
 {% if ERROR %}
     <script>
         alert("{{ ERROR }}" + '😢');
@@ -43,7 +49,7 @@
         <small style="font-weight: normal;"> or find one on the map</small>
     </a>
 </div>
-<video class="video-preview" id="stream"></video>
+{#<video class="video-preview" ></video>#}
 
 <div class="buttons-wrap">
     <div class="info-button-container">
@@ -75,6 +81,15 @@
         </div>
     </div>
 </div>
+<a-scene
+        mindar-image="imageTargetSrc: ../static/code.mind;"
+        color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false">
+
+    <a-camera id="stream" position="0 0 0" look-controls="enabled: false"
+              cursor="fuse: false; rayOrigin: mouse;"
+              raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
+</a-scene>
 </body>
 <script type="text/javascript" src="https://unpkg.com/platform@1.3.6/platform.js"></script>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>

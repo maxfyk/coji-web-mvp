@@ -1,0 +1,12 @@
+.mindar-ui-scanning {
+    display: none;
+}
+
+#stream {
+    z-index: 8;
+}
+
+.button-description {
+    font-size: 120% !important;
+
+}

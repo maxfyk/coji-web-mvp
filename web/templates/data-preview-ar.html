@@ -25,7 +25,9 @@
     });
 </script>
 <div id="preview-content">
+    {% autoescape off %}
     {{ PREVIEW_CODE }}
+    {% endautoescape %}
 </div>
 <div class="scan-button-container">
     <div class="button-container">

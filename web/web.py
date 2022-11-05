@@ -37,8 +37,9 @@ def data_preview(id):
             return render_template('data-preview-ar-model.html', in_data=code_info['in-data'])
         elif code_info['data-type'] == 'ar-preview':
             resp = r.get(code_info['in-data'])
-            print(resp.content[:500])
-            return render_template('data-preview-ar.html', PREVIEW_CODE=resp.content)
+            preview_code = str(resp.content)
+            print(preview_code[:500])
+            return render_template('data-preview-ar.html', PREVIEW_CODE=preview_code)
         elif code_info['data-type'] == 'url':
             return redirect(code_info['in-data'])
         return 'Not yet supported'

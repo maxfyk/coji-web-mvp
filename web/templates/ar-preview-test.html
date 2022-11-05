@@ -5,15 +5,19 @@
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-aframe.prod.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const instaButton = document.querySelector('#insta-button');
-            const twitterButton = document.querySelector('#twitter-button');
-            instaButton.addEventListener("click", event => {
-                alert("insta");
-            });
-            twitterButton.addEventListener("click", event => {
-                alert("twi");
-            });
+        AFRAME.registerComponent('weblink', {
+            init() {
+                this.el.addEventListener('click', (evt) => {
+                    window.open(evt['srcElement']['attributes']['weblink']['nodeValue'], '_blank').focus();
+                });
+            }
+        });
+        AFRAME.registerComponent('alerter', {
+            init() {
+                this.el.addEventListener('click', (evt) => {
+                    alert(evt['srcElement']['attributes']['alerter']['nodeValue'], '_blank');
+                });
+            }
         });
     </script>
 
@@ -28,22 +32,33 @@
         <img id="logo" src="../static/icons/logo.png"/>
         <img id="insta" src="../static/insta.png"/>
         <img id="twitter" src="../static/twitter.png"/>
+        <img id="lvivsoft" src="../static/lvivsoft-logo.png"/>
     </a-assets>
 
     <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"
-              raycaster="far: 1.1.5; objects: .clickable"></a-camera>
+              raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
 
-    <a-entity mindar-image-target="targetIndex: 0">
-        <a-plane src="#logo" position="0.84 0.7 0" height="0.6" width="0.6" rotation="0 0 0"
-                 transparent="true"></a-plane>
-        <a-plane id="insta-button" class="clickable" src="#insta" position="0.7 -0.4 0" height="0.2" width="0.2"
+    <a-entity mindar-image-target="targetIndex: 0"
+              mindar-image="filterMinCF: 0.1; filterBeta: 0.01; missTolerance: 300; warmupTolerance: 1;">
+
+        <a-image id="insta-button" weblink="https://www.instagram.com" class="clickable" weblink src="#insta"
+                 position="0.64 -0.4 0" height="0.2" width="0.2"
                  rotation="0 0 0"
-                 transparent="true"></a-plane>
-        <a-plane id="twitter-button" class="clickable" src="#twitter" position="1 -0.4 0" height="0.2" width="0.2"
+                 transparent="true"></a-image>
+        <a-image id="twitter-button" class="clickable" weblink="https://www.twitter.com" src="#twitter"
+                 position="0.94 -0.4 0" height="0.2"
+                 width="0.2"
                  rotation="0 0 0"
-                 transparent="true"></a-plane>
-        <a-plane src="#ar-text" position="0.94 0.2 0" height="0.8" width="0.8" rotation="0 0 0"
-                 transparent="true"></a-plane>
+                 transparent="true"></a-image>
+        <a-image id="lvivsoft-button" class="clickable" alerter="Hi :)" src="#lvivsoft"
+                 position="1.24 -0.4 0" height="0.1"
+                 width="0.2"
+                 rotation="0 0 0"
+                 transparent="true"></a-image>
+        <a-image src="#logo" position="0.84 0.8 0" height="0.6" width="0.6" rotation="0 0 0"
+                 transparent="true"></a-image>
+        <a-image src="#ar-text" position="0.94 0.2 0" height="0.8" width="0.8" rotation="0 0 0"
+                 transparent="true"></a-image>
     </a-entity>
 </a-scene>
 </body>

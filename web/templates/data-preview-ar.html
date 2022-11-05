@@ -1,0 +1,37 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image.prod.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-aframe.prod.js"></script>
+    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/index-ar.css') }}">
+</head>
+<body>
+<script>
+    AFRAME.registerComponent('weblink', {
+        init() {
+            this.el.addEventListener('click', (evt) => {
+                window.open(evt['srcElement']['attributes']['weblink']['nodeValue'], '_blank').focus();
+            });
+        }
+    });
+    AFRAME.registerComponent('alerter', {
+        init() {
+            this.el.addEventListener('click', (evt) => {
+                alert(evt['srcElement']['attributes']['alerter']['nodeValue'], '_blank');
+            });
+        }
+    });
+</script>
+<div id="preview-content">
+    {{ PREVIEW_CODE }}
+</div>
+<div class="scan-button-container">
+    <div class="button-container">
+        <button class="scan-button" id="scan-button" onclick="window.location.href = '/';"></button>
+        <small class="button-description">Home</small>
+    </div>
+</div>
+</body>
+</html>

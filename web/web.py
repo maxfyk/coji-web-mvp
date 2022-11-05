@@ -38,7 +38,9 @@ def data_preview(id):
         elif code_info['data-type'] == 'ar-preview':
             return redirect(code_info['in-data'])
         elif code_info['data-type'] == 'url':
-            return redirect(code_info['in-data'])
+            resp = r.get(code_info['in-data'])
+            print(resp.content[:500])
+            return render_template('data-preview-ar.html', PREVIEW_CODE=resp.content)
         return 'Not yet supported'
     elif resp.status_code == 422:
         return render_template('error-page.html', ERROR='Code not found!')
@@ -100,6 +102,11 @@ def keyboard_decode_post():
 @app.route('/scripts/main.js')
 def scripts_main_js():
     return render_template('scripts/main.js', API_URL=API_URL)
+
+
+@app.route('/ar')
+def ar():
+    return render_template('data-preview-ar.html')
 
 
 if __name__ == '__main__':

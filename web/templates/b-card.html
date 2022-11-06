@@ -14,13 +14,6 @@
                 });
             }
         });
-        AFRAME.registerComponent('insidelink', {
-            init() {
-                this.el.addEventListener('click', (evt) => {
-                    location.href = evt['srcElement']['attributes']['insidelink']['nodeValue'];
-                });
-            }
-        });
         AFRAME.registerComponent('alerter', {
             init() {
                 this.el.addEventListener('click', (evt) => {
@@ -58,7 +51,7 @@
                  rotation="0 0 0.1"
                  transparent="true"
         ></a-image>
-        <a-text value="Email: maxfyk@gmail.com" class="clickable" insidelink="mailto:maxfyk@gmail.com"
+        <a-text value="Email: maxfyk@gmail.com" class="clickable" weblink="mailto:maxfyk@gmail.com"
                 position="0.05 0 0.1" height="0.7" width="0.7"></a-text>
         <a-text value="Github: @maxfyk" position="0.05 -0.1 0.1" height="0.7" width="0.7"></a-text>
         <a-text value="Mobile: +380968442209" position="0.05 -0.2 0.1" height="0.7" width="0.7"></a-text>

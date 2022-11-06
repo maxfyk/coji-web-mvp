@@ -8,6 +8,16 @@
 
 .button-description {
     font-size: 120% !important;
-    color: #FFCC00;
+    color: #FFCC00 !important;
 
+}
+
+.mindar-ui-loading .loader {
+    border: 16px solid #FFCC00 !important;
+    border-top: 16px solid #1a1a1a !important;
+    opacity: 0.8;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
 }

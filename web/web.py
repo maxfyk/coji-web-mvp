@@ -106,7 +106,7 @@ def scripts_main_js():
 
 @app.route('/ar')
 def ar():
-    return render_template('data-preview-ar.html')
+    return render_template('b-card.html')
 
 
 if __name__ == '__main__':

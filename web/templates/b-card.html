@@ -14,6 +14,13 @@
                 });
             }
         });
+        AFRAME.registerComponent('insidelink', {
+            init() {
+                this.el.addEventListener('click', (evt) => {
+                    location.href = evt['srcElement']['attributes']['insidelink']['nodeValue'];
+                });
+            }
+        });
         AFRAME.registerComponent('alerter', {
             init() {
                 this.el.addEventListener('click', (evt) => {
@@ -47,18 +54,18 @@
         {#                 animation="property: position; to: 0.64 -0.4 0; dur: 300; easing: easeInCirc; loop: true; dir: alternate"></a-image>#}
         {#        <a-entity material="shader:gif;src:#me;transparent:true;"></a-entity>#}
         <a-image id="a-logo" src="#logo"
-                 position="0.25 0.16 0" height="0.33" width="0.33"
-                 rotation="0 0 0"
+                 position="0.25 0.16 0" height="0.11" width="0.33"
+                 rotation="0 0 0.1"
                  transparent="true"
         ></a-image>
-        <a-text value="Email: maxfyk@gmail.com" position="0.05 0 0" height="0.7" width="0.7"></a-text>
-        <a-text value="Github: @maxfyk" position="0.05 -0.1 0" height="0.7" width="0.7"></a-text>
-        <a-text value="Mobile: +380968442209" position="0.05 -0.2 0" height="0.7" width="0.7"></a-text>
+        <a-text value="Email: maxfyk@gmail.com" class="clickable" insidelink="mailto:maxfyk@gmail.com"
+                position="0.05 0 0.1" height="0.7" width="0.7"></a-text>
+        <a-text value="Github: @maxfyk" position="0.05 -0.1 0.1" height="0.7" width="0.7"></a-text>
+        <a-text value="Mobile: +380968442209" position="0.05 -0.2 0.1" height="0.7" width="0.7"></a-text>
+        <a-video src="../static/b-card/me.mp4" width="0.248" height=".3031" position="-0.24 -0.04 0"></a-video>
         <a-image id="a-b-card-body" src="#b-card-body"
-                 position="0 0 0" height="0.5" width="1"
+                 position="0 0 -0.1" height="0.5" width="1"
                  rotation="0 0 0"></a-image>
-        <a-video src="../static/b-card/me.mp4" width="0.242" height=".3025" position="-0.25 -0.04 0"></a-video>
-
     </a-entity>
 </a-scene>
 <div class="scan-button-container">

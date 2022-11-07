@@ -15,10 +15,11 @@
     });
 </script>
 <a-scene
-        mindar-image="imageTargetSrc: https://api.coji-code.com/coji-code/get-asset/cpoeicpjpleclleo/b-card.mind; filterMinCF: 0.05; filterBeta: 0.01; missTolerance: 300; warmupTolerance: 1;"
+        mindar-image="imageTargetSrc: https://api.coji-code.com/coji-code/get-asset/cpoeicpjpleclleo/b-card.mind;"
         color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
-        device-orientation-permission-ui="enabled: false">
-    <a-assets>
+        device-orientation-permission-ui="enabled: false"
+        mindar-image="filterMinCF: 0.2; filterBeta: 0.1; missTolerance: 300; warmupTolerance: 1;">
+    <a-assets timeout="6000">
         <img id="b-card-body" src="https://api.coji-code.com/coji-code/get-asset/cpoeicpjpleclleo/b-card-preview.jpg"/>
         <img id="logo" src="https://api.coji-code.com/coji-code/get-asset/cpoeicpjpleclleo/logo.png"/>
 

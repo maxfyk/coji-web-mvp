@@ -241,7 +241,7 @@ body {
 /*data-preview */
 .data-preview-text-div {
     padding-top: 10rem;
-    text-align: center;
+    text-align:center ;
 }
 
 .data-preview-text {

@@ -64,6 +64,7 @@ body {
     width: 100%;
     font-family: Calibri;
     font-size: 3vw;
+    z-index: -3;
 }
 
 .usage-help-div {
@@ -118,6 +119,7 @@ body {
     max-width: 30vw;
     transform: translate(-50%, -50%);
     margin: 0 auto;
+    z-index: 9;
 }
 
 .location-decode-button-container {
@@ -126,6 +128,7 @@ body {
     bottom: 6%;
     transform: translate(-50%, -50%);
     margin: 0 auto;
+    z-index: 9;
 }
 
 .location-decode-button {
@@ -144,6 +147,30 @@ body {
     border: #FFCC00 0.4vh solid;
 }
 
+.pause-button-container {
+    position: fixed;
+    left: 50%;
+    bottom: 4%;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    z-index: 10;
+}
+
+.pause-button {
+    display: flex;
+    align-items: center;
+    width: 18vh;
+    height: 18vh;
+    max-height: 22vw;
+    max-width: 22vw;
+    display: block;
+    margin: 0 auto;
+    background: transparent url('/static/icons/pause.png') no-repeat top left;
+    /* Center and scale the image nicely */
+    background-size: cover;
+    border-radius: 50%;
+    border: #1a1a1a 0.6vh solid;
+}
 
 .scan-button-container {
     position: fixed;
@@ -151,7 +178,7 @@ body {
     bottom: 4%;
     transform: translate(-50%, -50%);
     margin: 0 auto;
-    z-index: 9999;
+    z-index: 10;
 }
 
 .scan-button {
@@ -194,6 +221,7 @@ body {
     max-width: 30vw;
     transform: translate(-50%, -50%);
     margin: 0 auto;
+    z-index: 9;
 }
 
 .button-description {
@@ -213,7 +241,7 @@ body {
 /*data-preview */
 .data-preview-text-div {
     padding-top: 10rem;
-    text-align: center;
+    text-align:center ;
 }
 
 .data-preview-text {

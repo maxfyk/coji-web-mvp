@@ -83,7 +83,7 @@ async function autoScan() {
         var infoInstance = $('#detected-code-instance');
         var infoObjText, infoTextColor;
 
-        if (areaRatio >= 0.02 || isScanning) {
+        if (areaRatio >= 0.036 || isScanning) {
             infoObjText = 'Scanning⌛';
             if (failedToScan) {
                 infoObjText = 'Retrying⌛';

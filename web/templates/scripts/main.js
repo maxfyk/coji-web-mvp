@@ -121,7 +121,7 @@ async function autoScan() {
         children.push(infoText);
     } else {
         failedToScan = false;
-        $(".usage-help-div").hide();
+        $(".usage-help-div").show();
     }
     window.requestAnimationFrame(autoScan);
 }

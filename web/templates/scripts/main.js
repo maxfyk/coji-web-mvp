@@ -92,7 +92,6 @@ async function autoScan() {
             infoInstance.css('background', "transparent url('/static/icons/scan-loading.gif') no-repeat top left");
             infoInstance.css('background-position', 'center');
             infoInstance.css('background-size', '50%');
-            infoInstance.css('border', 'none');
             if (!isScanning) {
                 scanCode();
             }

@@ -84,6 +84,8 @@ async function autoScan() {
         var infoObjText, infoTextColor;
 
         if (areaRatio >= 0.036 || isScanning) {
+            infoTextColor = '#FFCC00';
+
             infoObjText = 'Scanning⌛';
             if (failedToScan) {
                 infoObjText = 'Retrying⌛';

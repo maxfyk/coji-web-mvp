@@ -66,7 +66,7 @@ async function autoScan() {
         children[i].remove();
     }
     children.splice(0);
-    if (predictions.length && predictions[0].classes[0].probability >= 0.4) {
+    if (predictions.length && predictions[0].classes[0].probability >= 0.3  ) {
         var prediction = predictions[0];
         var prediction_score = prediction.classes[0].probability;
         console.log('pred score', prediction_score);

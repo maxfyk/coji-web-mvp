@@ -21,9 +21,9 @@ $(function () {
     video.setAttribute('playsinline', '');
     navigator.mediaDevices.getUserMedia({
         video: {
-            facingMode: 'environment', width: {
-                optional: [{minWidth: 320}, {minWidth: 640}, {minWidth: 1024}, {minWidth: 1280},]
-            }
+            facingMode: 'environment',
+            width: {min: 1280, max: 1560},
+            height: {min: 720, max: 1440},
         }
     })
         .then(function (stream) {

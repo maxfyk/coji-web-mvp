@@ -1,5 +1,13 @@
-var video = $('.video-preview')[0];
 var lat = null, lon = null;
+const headers = {
+    'Content-Type': 'application/json',
+};
+const liveView = $('#live-view');
+const sceneEl = document.querySelector('a-scene');
+var video = document.querySelector("video");
+var isScanning = null, failedToScan = false;
+var videoRatioW, videoRatioH, videoTopOffset, videoLeftOffset, videoW, videoH;
+let model;
 
 /*permissions*/
 $(function () {
@@ -14,28 +22,111 @@ $(function () {
     video.setAttribute('playsinline', '');
     navigator.mediaDevices.getUserMedia({
         video: {
-            facingMode: 'environment',
-            width: {
-                optional: [
-                    {minWidth: 320},
-                    {minWidth: 640},
-                    {minWidth: 1024},
-                    {minWidth: 1280},
-                ]
+            facingMode: 'environment', width: {
+                optional: [{minWidth: 320}, {minWidth: 640}, {minWidth: 1024}, {minWidth: 1280},]
             }
         }
     })
         .then(function (stream) {
             video.srcObject = stream;
             video.play();
+            sceneEl.addEventListener('arReady', initVideoRatio);
+            video.addEventListener('loadeddata', autoScan);
+
         })
         .catch(function (err0r) {
             console.log("Something went wrong with permissions!");
         });
     navigator.geolocation.getCurrentPosition(function (position) {
     }, showError);
-
 });
+var children = [];
+
+function initVideoRatio() {
+    var video_jq = $('video');
+    // console.log(video_jq);
+    videoW = parseInt(video_jq.css('width').replace('px', ''));
+    videoH = parseInt(video_jq.css('height').replace('px', ''));
+    videoTopOffset = parseInt(video_jq.css('top').replace('px', ''));
+    videoLeftOffset = parseInt(video_jq.css('left').replace('px', ''));
+    videoRatioW = videoW / video.videoWidth;
+    videoRatioH = videoH / video.videoHeight;
+    // console.log('W', video_jq.css('width'), video.videoWidth, videoRatioW, videoLeftOffset)
+    // console.log('H', video_jq.css('height'), video.videoHeight, videoRatioH, videoTopOffset)
+}
+
+async function autoScan() {
+    if (!model) {
+        model = await tflite.ObjectDetector.create('https://api.coji-code.com/coji-code/get-asset/model/coji.tflite');
+    }
+    var predictions = model.detect(video);
+    // Remove any highlighting we did previous frame.
+    // console.log(predictions)\
+    for (let i = 0; i < children.length; i++) {
+        children[i].remove();
+    }
+    children.splice(0);
+    if (predictions.length && predictions[0].classes[0].probability >= 0.4) {
+        var prediction = predictions[0];
+        var prediction_score = prediction.classes[0].probability;
+        console.log('pred score', prediction_score);
+        $(".usage-help-div").hide();
+        var x = (prediction.boundingBox.originX * videoRatioW) / 1.01;
+        var y = (prediction.boundingBox.originY * videoRatioH) / 1.01;
+        var w = (prediction.boundingBox.width * videoRatioW);
+        var h = (prediction.boundingBox.height * videoRatioH);
+        // console.log('Area ratio', ((w * h) / (videoW * videoH)));
+        // console.log(w, h, videoW, videoH)
+        var areaRatio = (w * h) / (videoW * videoH);
+        liveView.append('<div id="detected-code-instance"></div>');
+        liveView.append(`<p id="detected-code-text"></p>`);
+        var infoText = $('#detected-code-text');
+        var infoInstance = $('#detected-code-instance');
+        var infoObjText, infoTextColor, instanceBorder;
+
+        if (areaRatio >= 0.02 || isScanning) {
+            infoObjText = 'Scanning⌛';
+            if (failedToScan) {
+                infoObjText = 'Trying again⌛';
+            }
+            infoInstance.css('background', "transparent url('/static/icons/scan-loading.gif') no-repeat top left");
+            infoInstance.css('background-position', 'center');
+            infoInstance.css('background-size', '50%');
+            infoInstance.css('border', 'none');
+            if (!isScanning) {
+                scanCode();
+            }
+        } else {
+            infoObjText = 'Get closer🥺';
+            infoTextColor = '#FB3B1E';
+            instanceBorder = '2px solid #1a1a1a';
+            // infoInstance.css('background', 'rgba(251, 59, 30, 0.2)');
+            infoInstance.css('background', 'none');
+        }
+        infoText.text(infoObjText);
+        infoText.css({
+            'margin-left': x + (Math.abs(((w * 1.2) / 2) - (infoObjText.width('3.2vh Calibri') / 2))) + videoLeftOffset + 'px',
+            'margin-top': y - h + videoTopOffset - 30 + 'px',
+            'width': w * 1.2 - 20 + 'px',
+            'height': h * 1.2 - 20 + 'px',
+            'color': infoTextColor,
+        });
+
+        infoInstance.css({
+            'left': x + videoLeftOffset + 'px',
+            'top': y - h + videoTopOffset + 'px',
+            'width': w * 1.2 + 'px',
+            'height': h * 1.2 + 'px',
+            'border': instanceBorder,
+        });
+        children.push(infoInstance);
+        children.push(infoText);
+    } else {
+        failedToScan = false;
+        $(".usage-help-div").hide();
+    }
+    window.requestAnimationFrame(autoScan);
+}
 
 function location_redirector() {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -55,17 +146,15 @@ function showError(error) {
     }
 }
 
-const headers = {
-    'Content-Type': 'application/json',
-};
 
-/*Scan button*/
-document.getElementById("scan-button").addEventListener("click", function () {
-    scanCode();
-});
+// /*Scan button*/
+// document.getElementById("scan-button").addEventListener("click", function () {
+//     scanCode();
+// });
 
 
 async function scanCode() {
+    isScanning = true;
     var stream = document.querySelector("video");
     var btnCapture = document.getElementById("scan-button");
 
@@ -83,13 +172,9 @@ async function scanCode() {
     var base64Img = capture.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
 
     var data = {
-        'decode-type': 'scan',
-        'in-data': base64Img,
-        'user-id': null,
-        'style-info': {
+        'decode-type': 'scan', 'in-data': base64Img, 'user-id': null, 'style-info': {
             'name': 'geom-original',
-        },
-        'user-data': {
+        }, 'user-data': {
             'lat': lat,
             'lon': lon,
             'decode-type': 'scan',
@@ -111,7 +196,8 @@ async function scanCode() {
 
             var resp = JSON.parse(text);
             if (resp['error']) {
-                alert(resp['text'])
+                // alert(resp['text'])
+                failedToScan = true;
             } else {
                 window.location.replace('data-preview/' + resp['code-id']);
             }
@@ -119,7 +205,19 @@ async function scanCode() {
 
     btnCapture.style.background = "transparent url('/static/icons/scan-button.png') no-repeat top left";
     btnCapture.style.backgroundSize = "cover";
+    isScanning = false;
 
 }
 
-/*keybaord decode*/
+String.prototype.width = function (font) {
+    var o = $('<div></div>')
+        .text(this)
+        .css({
+            'position': 'absolute', 'float': 'left', 'white-space': 'nowrap', 'visibility': 'hidden', 'font': font,
+        })
+        .appendTo($('body')), w = o.width();
+
+    o.remove();
+
+    return w;
+}

@@ -67,16 +67,37 @@ body {
     z-index: -3;
 }
 
+#detected-code-instance {
+    border: 2px solid #1a1a1a;
+    border-radius: 4px;
+    z-index: 1;
+    position: absolute;
+}
+
+#detected-code-text {
+    top: 0;
+    left: 0;
+    font-family: Calibri;
+    font-weight: bold;
+    font-size: 3.2vh;
+    white-space: nowrap;
+
+}
+
 .usage-help-div {
     left: 0;
     position: absolute;
     text-align: center;
-    top: 5%;
+    top: 25%;
     width: 100%;
     font-family: Calibri;
     font-weight: bold;
     font-size: 3vh;
     z-index: 9999;
+}
+
+.usage-help {
+    color: #FFCC00;
 }
 
 /*bottom bar buttons*/
@@ -241,7 +262,7 @@ body {
 /*data-preview */
 .data-preview-text-div {
     padding-top: 10rem;
-    text-align:center ;
+    text-align: center;
 }
 
 .data-preview-text {

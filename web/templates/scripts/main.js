@@ -162,7 +162,6 @@ async function scanCode() {
         capture.width = stream.videoWidth;
         capture.height = stream.videoHeight;
         var ctx = capture.getContext('2d');
-        alert(capture.width, capture.height);
         ctx.drawImage(stream, 0, 0, stream.videoWidth, stream.videoHeight);
     }
     var base64Img = capture.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
@@ -181,7 +180,7 @@ async function scanCode() {
             'device': platform.product,
         }
     }
-    console.log('before request');
+    alert('sending request');
     await fetch(`{{API_URL}}/coji-code/decode`, options = {
         method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
     })
@@ -199,7 +198,7 @@ async function scanCode() {
                 window.location.replace('data-preview/' + resp['code-id']);
             }
         });
-    console.log('after request');
+    alert('after request');
 
     btnCapture.style.background = "transparent url('/static/icons/scan-button.png') no-repeat top left";
     btnCapture.style.backgroundSize = "cover";

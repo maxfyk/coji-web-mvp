@@ -121,7 +121,7 @@ async function autoScan() {
 
         infoInstance.css({
             'left': x + videoLeftOffset + 'px',
-            'top': y - (h / 1.4) + videoTopOffset + 'px',
+            'top': y - (h / 1.6) + videoTopOffset + 'px',
             'width': w + 'px',
             'height': h + 'px',
         });

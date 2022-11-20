@@ -159,11 +159,11 @@ async function scanCode() {
     var capture = document.createElement('canvas');
 
     if (null != stream) {
-        // capture.width = stream.videoWidth;
-        // capture.height = stream.videoHeight;
+        capture.width = stream.videoWidth;
+        capture.height = stream.videoHeight;
         var ctx = capture.getContext('2d');
-
-        ctx.drawImage(stream, 0, 0, 640, 640);
+        alert(capture.width, capture.height);
+        ctx.drawImage(stream, 0, 0, stream.videoWidth, stream.videoHeight);
     }
     var base64Img = capture.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
 

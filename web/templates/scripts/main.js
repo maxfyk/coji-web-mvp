@@ -30,7 +30,7 @@ $(function () {
             video.srcObject = stream;
             video.play();
             sceneEl.addEventListener('arReady', initVideoRatio);
-            video.addEventListener('loadeddata', autoScan);
+            sceneEl.addEventListener('arReady', autoScan);
 
         })
         .catch(function (err0r) {
@@ -60,7 +60,7 @@ async function autoScan() {
     }
     var predictions = model.detect(video);
     // Remove any highlighting we did previous frame.
-    console.log('predicting');
+    // console.log('predicting');
     for (let i = 0; i < children.length; i++) {
         children[i].remove();
     }
@@ -68,7 +68,7 @@ async function autoScan() {
     if (predictions.length && predictions[0].classes[0].probability >= 0.4) {
         var prediction = predictions[0];
         var prediction_score = prediction.classes[0].probability;
-        console.log('pred score', prediction_score);
+        // console.log('pred score', prediction_score);
         $(".usage-help-div").hide();
         var x = (prediction.boundingBox.originX * videoRatioW) / 1.01;
         var y = (prediction.boundingBox.originY * videoRatioH) / 1.01;

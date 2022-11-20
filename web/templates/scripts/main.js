@@ -103,7 +103,7 @@ async function autoScan() {
         infoText.text(infoObjText);
         infoText.css({
             'margin-left': x + (Math.abs((w / 2) - (infoObjText.width('3.6vh Calibri') / 2))) + videoLeftOffset + 'px',
-            'margin-top': y - (h / 1.8) + videoTopOffset - 30 + 'px',
+            'margin-top': y - (h / 2.2) + videoTopOffset - 30 + 'px',
             'width': w - 20 + 'px',
             'height': h - 20 + 'px',
             'color': infoTextColor,
@@ -111,7 +111,7 @@ async function autoScan() {
 
         infoInstance.css({
             'left': x + videoLeftOffset + 'px',
-            'top': y - (h / 1.8) + videoTopOffset + 'px',
+            'top': y - (h / 2.2) + videoTopOffset + 'px',
             'width': w + 'px',
             'height': h + 'px',
         });

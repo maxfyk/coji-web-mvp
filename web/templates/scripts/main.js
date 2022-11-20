@@ -180,7 +180,6 @@ async function scanCode() {
             'device': platform.product,
         }
     }
-    alert('sending request');
     await fetch(`{{API_URL}}/coji-code/decode`, options = {
         method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
     })
@@ -198,8 +197,6 @@ async function scanCode() {
                 window.location.replace('data-preview/' + resp['code-id']);
             }
         });
-    alert('after request');
-
     btnCapture.style.background = "transparent url('/static/icons/scan-button.png') no-repeat top left";
     btnCapture.style.backgroundSize = "cover";
     isScanning = false;

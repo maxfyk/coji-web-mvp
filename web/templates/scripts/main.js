@@ -43,7 +43,7 @@ var children = [];
 
 function initVideoRatio() {
     var video_jq = $('video');
-    // console.log(video_jq);
+    console.log(video_jq);
     videoW = parseInt(video_jq.css('width').replace('px', ''));
     videoH = parseInt(video_jq.css('height').replace('px', ''));
     videoTopOffset = parseInt(video_jq.css('top').replace('px', ''));
@@ -60,7 +60,7 @@ async function autoScan() {
     }
     var predictions = model.detect(video);
     // Remove any highlighting we did previous frame.
-    // console.log('predicting');
+    console.log('predicting');
     for (let i = 0; i < children.length; i++) {
         children[i].remove();
     }

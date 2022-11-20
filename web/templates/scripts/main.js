@@ -52,6 +52,8 @@ function initVideoRatio() {
     // console.log('H', video_jq.css('height'), video.videoHeight, videoRatioH, videoTopOffset)
 }
 
+var framesCount = 0;
+
 async function autoScan() {
     if (!model) {
         model = await tflite.ObjectDetector.create('https://api.coji-code.com/coji-code/get-asset/model/coji.tflite');
@@ -88,7 +90,13 @@ async function autoScan() {
             if (failedToScan) {
                 infoObjText = 'Retrying⌛';
             } else if (isScanning) {
-                infoObjText = 'Uploading image⌛';
+                if (framesCount >= 5) {
+                    infoObjText = 'Uploading image⌛';
+
+                } else {
+                    infoObjText = 'Scanning⌛';
+                    framesCount += 1;
+                }
             }
             infoInstance.css('background', "transparent url('/static/icons/scan-loading.gif') no-repeat top left");
             infoInstance.css('background-position', 'center');

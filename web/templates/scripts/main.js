@@ -88,8 +88,8 @@ async function autoScan() {
             if (failedToScan) {
                 infoObjText = 'Retrying⌛';
             }
-            infoInstance.css('background', "transparent url('/static/icons/scan-loading.gif') no-repeat top left");
-            infoInstance.css('background-position', 'center');
+            infoInstance.css('background', "transparent url('/static/icons/scan-loading.gif') no-repeat");
+            infoInstance.css('background-position', 'no-repeat calc(100% - 20px) center;');
             infoInstance.css('background-size', '50%');
             if (!isScanning) {
                 scanCode();

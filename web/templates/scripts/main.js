@@ -168,7 +168,7 @@ async function scanCode() {
     var base64Img = capture.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
 
     var data = {
-        'decode-type': 'scan', 'in-data': base64.b64encode(base64Img), 'user-id': null, 'style-info': {
+        'decode-type': 'scan', 'in-data': base64Img, 'user-id': null, 'style-info': {
             'name': 'geom-original',
         }, 'user-data': {
             'lat': lat,

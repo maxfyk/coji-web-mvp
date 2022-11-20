@@ -91,7 +91,7 @@ async function autoScan() {
                 infoObjText = 'Retrying⌛';
             } else if (isScanning) {
                 if (framesCount >= 5) {
-                    infoObjText = 'Uploading image⌛';
+                    infoObjText = 'Fetching data⌛';
 
                 } else {
                     infoObjText = 'Scanning⌛';

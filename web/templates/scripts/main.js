@@ -61,7 +61,7 @@ async function autoScan() {
     }
     var predictions = model.detect(video);
     // Remove any highlighting we did previous frame.
-    // console.log(predictions)\
+    console.log('predicting');
     for (let i = 0; i < children.length; i++) {
         children[i].remove();
     }
@@ -84,7 +84,7 @@ async function autoScan() {
         var infoInstance = $('#detected-code-instance');
         var infoObjText, infoTextColor;
 
-        if (areaRatio >= 0.03 || isScanning) {
+        if (areaRatio >= 0.02 || isScanning) {
             infoObjText = 'Scanning⌛';
             if (failedToScan) {
                 infoObjText = 'Retrying⌛';

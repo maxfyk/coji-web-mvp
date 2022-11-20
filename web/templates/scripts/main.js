@@ -87,7 +87,7 @@ async function autoScan() {
         if (areaRatio >= 0.03 || isScanning) {
             infoObjText = 'Scanning⌛';
             if (failedToScan) {
-                infoObjText = 'Blurry photo. Trying again⌛';
+                infoObjText = 'Retrying⌛';
             }
             infoInstance.css('background', "transparent url('/static/icons/scan-loading.gif') no-repeat top left");
             infoInstance.css('background-position', 'center');

@@ -87,6 +87,8 @@ async function autoScan() {
             infoObjText = 'Scanning⌛';
             if (failedToScan) {
                 infoObjText = 'Retrying⌛';
+            } else if (isScanning) {
+                infoObjText = 'Uploading image⌛';
             }
             infoInstance.css('background', "transparent url('/static/icons/scan-loading.gif') no-repeat top left");
             infoInstance.css('background-position', 'center');

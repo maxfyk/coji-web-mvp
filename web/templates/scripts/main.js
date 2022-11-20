@@ -66,7 +66,7 @@ async function autoScan() {
         children[i].remove();
     }
     children.splice(0);
-    if (predictions.length && predictions[0].classes[0].probability >= 0.4) {
+    if (predictions.length && predictions[0].classes[0].probability >= 0.36) {
         var prediction = predictions[0];
         var prediction_score = prediction.classes[0].probability;
         console.log('pred score', prediction_score);
@@ -82,9 +82,9 @@ async function autoScan() {
         liveView.append(`<p id="detected-code-text"></p>`);
         var infoText = $('#detected-code-text');
         var infoInstance = $('#detected-code-instance');
-        var infoObjText, infoTextColor, instanceBorder;
+        var infoObjText, infoTextColor;
 
-        if (areaRatio >= 0.02 || isScanning) {
+        if (areaRatio >= 0.03 || isScanning) {
             infoObjText = 'Scanning⌛';
             if (failedToScan) {
                 infoObjText = 'Trying again⌛';
@@ -99,25 +99,23 @@ async function autoScan() {
         } else {
             infoObjText = 'Get closer🥺';
             infoTextColor = '#FB3B1E';
-            instanceBorder = '2px solid #1a1a1a';
             // infoInstance.css('background', 'rgba(251, 59, 30, 0.2)');
             infoInstance.css('background', 'none');
         }
         infoText.text(infoObjText);
         infoText.css({
-            'margin-left': x + (Math.abs(((w * 1.2) / 2) - (infoObjText.width('3.2vh Calibri') / 2))) + videoLeftOffset + 'px',
-            'margin-top': y - h + videoTopOffset - 30 + 'px',
-            'width': w * 1.2 - 20 + 'px',
-            'height': h * 1.2 - 20 + 'px',
+            'margin-left': x + (Math.abs((w / 2) - (infoObjText.width('3.6vh Calibri') / 2))) + videoLeftOffset + 'px',
+            'margin-top': y - h / 2 + videoTopOffset - 30 + 'px',
+            'width': w - 20 + 'px',
+            'height': h - 20 + 'px',
             'color': infoTextColor,
         });
 
         infoInstance.css({
             'left': x + videoLeftOffset + 'px',
-            'top': y - h + videoTopOffset + 'px',
-            'width': w * 1.2 + 'px',
-            'height': h * 1.2 + 'px',
-            'border': instanceBorder,
+            'top': y - h / 2 + videoTopOffset + 'px',
+            'width': w + 'px',
+            'height': h + 'px',
         });
         children.push(infoInstance);
         children.push(infoText);

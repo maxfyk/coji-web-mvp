@@ -91,7 +91,7 @@ async function autoScan() {
                 framesCount = 0;
             } else if (isScanning) {
                 if (framesCount >= 5) {
-                    infoObjText = 'Fetching data⌛';
+                    infoObjText = 'Fetching⌛';
 
                 } else {
                     infoObjText = 'Scanning⌛';

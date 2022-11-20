@@ -159,16 +159,16 @@ async function scanCode() {
     var capture = document.createElement('canvas');
 
     if (null != stream) {
-        capture.width = stream.videoWidth;
-        capture.height = stream.videoHeight;
+        // capture.width = stream.videoWidth;
+        // capture.height = stream.videoHeight;
         var ctx = capture.getContext('2d');
 
-        ctx.drawImage(stream, 0, 0, stream.videoWidth, stream.videoHeight);
+        ctx.drawImage(stream, 0, 0, 640, 640);
     }
     var base64Img = capture.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
 
     var data = {
-        'decode-type': 'scan', 'in-data': base64Img, 'user-id': null, 'style-info': {
+        'decode-type': 'scan', 'in-data': base64.b64encode(base64Img), 'user-id': null, 'style-info': {
             'name': 'geom-original',
         }, 'user-data': {
             'lat': lat,
@@ -181,6 +181,7 @@ async function scanCode() {
             'device': platform.product,
         }
     }
+    console.log('before request');
     await fetch(`{{API_URL}}/coji-code/decode`, options = {
         method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
     })
@@ -198,6 +199,7 @@ async function scanCode() {
                 window.location.replace('data-preview/' + resp['code-id']);
             }
         });
+    console.log('after request');
 
     btnCapture.style.background = "transparent url('/static/icons/scan-button.png') no-repeat top left";
     btnCapture.style.backgroundSize = "cover";

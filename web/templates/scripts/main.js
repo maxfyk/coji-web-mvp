@@ -22,8 +22,7 @@ $(function () {
     navigator.mediaDevices.getUserMedia({
         video: {
             facingMode: 'environment',
-            width: {min: 1280, max: 1560},
-            height: {min: 720, max: 1440},
+            height: {min: 600, max: 1440},
         }
     })
         .then(function (stream) {

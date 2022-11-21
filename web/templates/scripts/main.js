@@ -52,7 +52,7 @@ async function initVideoRatio() {
     if (!model) {
         var oldText = $(".usage-help").text();
         $(".usage-help").text('Initializing app...');
-        $('body').append('<div class="mindar-ui-overlay mindar-ui-loading"> <div class="loader"> </div></div>')
+        $('body').append('<div class="mindar-ui-overlay mindar-ui-loading"> <div class="loader"> </div></div>');
         model = await tflite.ObjectDetector.create('/static/ar-js-static/coji.tflite');
         $('.mindar-ui-loading').remove();
         $(".usage-help").text(oldText);
@@ -62,6 +62,9 @@ async function initVideoRatio() {
 var framesCount = 0;
 
 async function autoScan() {
+    if (!model) {
+        window.requestAnimationFrame(autoScan);
+    }
     var predictions = model.detect(video);
     // Remove any highlighting we did previous frame.
     console.log('predicting');

@@ -39,7 +39,7 @@ $(function () {
 });
 var children = [];
 
-function initVideoRatio() {
+async function initVideoRatio() {
     var video_jq = $('video');
     videoW = parseInt(video_jq.css('width').replace('px', ''));
     videoH = parseInt(video_jq.css('height').replace('px', ''));
@@ -49,14 +49,19 @@ function initVideoRatio() {
     videoRatioH = videoH / video.videoHeight;
     // console.log('W', video_jq.css('width'), video.videoWidth, videoRatioW, videoLeftOffset)
     // console.log('H', video_jq.css('height'), video.videoHeight, videoRatioH, videoTopOffset)
+    if (!model) {
+        var oldText = $(".usage-help").text();
+        $(".usage-help").text('Initializing app...');
+        $('body').append('<div class="mindar-ui-overlay mindar-ui-loading"> <div class="loader"> </div></div>')
+        model = await tflite.ObjectDetector.create('/static/ar-js-static/coji.tflite');
+        $('.mindar-ui-loading').remove();
+        $(".usage-help").text(oldText);
+    }
 }
 
 var framesCount = 0;
 
 async function autoScan() {
-    if (!model) {
-        model = await tflite.ObjectDetector.create('/static/ar-js-static/coji.tflite');
-    }
     var predictions = model.detect(video);
     // Remove any highlighting we did previous frame.
     console.log('predicting');

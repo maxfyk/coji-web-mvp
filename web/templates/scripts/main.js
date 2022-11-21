@@ -53,7 +53,9 @@ async function initVideoRatio() {
         var oldText = $(".usage-help").text();
         $(".usage-help").text('Initializing app...');
         $('body').append('<div class="mindar-ui-overlay mindar-ui-loading"> <div class="loader"> </div></div>');
+        console.log('b');
         model = await tflite.ObjectDetector.create('/static/ar-js-static/coji.tflite');
+        console.log('a');
         $('.mindar-ui-loading').remove();
         $(".usage-help").text(oldText);
     }

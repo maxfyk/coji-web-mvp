@@ -16,9 +16,6 @@ $(function () {
         lon = pos.coords.longitude;
     })
 
-    video.setAttribute('autoplay', '');
-    video.setAttribute('muted', '');
-    video.setAttribute('playsinline', '');
     navigator.mediaDevices.getUserMedia({
         video: {
             facingMode: 'environment',
@@ -27,6 +24,9 @@ $(function () {
         .then(function (stream) {
             video.srcObject = stream;
             video.play();
+            video.setAttribute('autoplay', '');
+            video.setAttribute('muted', '');
+            video.setAttribute('playsinline', '');
             sceneEl.addEventListener('arReady', initVideoRatio);
             sceneEl.addEventListener('arReady', autoScan);
 

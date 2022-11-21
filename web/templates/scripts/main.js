@@ -56,6 +56,7 @@ var framesCount = 0;
 async function autoScan() {
     if (!model) {
         model = await tflite.ObjectDetector.create('https://api.coji-code.com/coji-code/get-asset/model/coji.tflite');
+        return autoScan();
     }
     var predictions = model.detect(video);
     // Remove any highlighting we did previous frame.

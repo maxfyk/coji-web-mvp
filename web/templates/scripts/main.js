@@ -95,7 +95,7 @@ async function autoScan() {
         if (areaRatio >= 0.036 || isScanning) {
             infoTextColor = '#FFCC00';
 
-            infoObjText = 'Scanning⌛';
+            infoObjText = 'Hold still!';
             if (failedToScan) {
                 infoObjText = 'Retrying⌛';
                 framesCount = 0;
@@ -104,7 +104,7 @@ async function autoScan() {
                     infoObjText = 'Fetching⌛';
 
                 } else {
-                    infoObjText = 'Scanning⌛';
+                    infoObjText = 'Hold still!';
                     framesCount += 1;
                 }
             }

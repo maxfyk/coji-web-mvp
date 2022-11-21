@@ -4,7 +4,7 @@ const headers = {
 };
 const liveView = $('#live-view');
 const sceneEl = document.querySelector('a-scene');
-var video = document.querySelector("video");
+var video;
 var isScanning = null, failedToScan = false;
 var videoRatioW, videoRatioH, videoTopOffset, videoLeftOffset, videoW, videoH;
 let model;
@@ -22,6 +22,7 @@ $(function () {
         }
     })
         .then(function (stream) {
+            video = document.querySelector("video");
             video.srcObject = stream;
             video.play();
             video.setAttribute('autoplay', '');

@@ -31,7 +31,8 @@ $(function () {
             sceneEl.addEventListener('arReady', autoScan);
 
         })
-        .catch(function (err0r) {
+        .catch(function (error) {
+            console.log(error);
             console.log("Something went wrong with permissions!");
         });
     navigator.geolocation.getCurrentPosition(function (position) {

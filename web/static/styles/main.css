@@ -434,3 +434,20 @@ body {
 .whats-this-div-img {
     width: 100%;
 }
+
+/*contact us*/
+.contact-us {
+    float: right;
+    margin-right: 6px;
+    margin-top: 6px;
+    width: 80px;
+    height: 20px;
+    z-index: 9999;
+    background-color: #FFCC00;
+    border-radius: 10%;
+    border: #1a1a1a 4px solid;
+    text-align: center;
+    font-family: Calibri;
+    font-weight: bold;
+    font-size: 16px;
+}

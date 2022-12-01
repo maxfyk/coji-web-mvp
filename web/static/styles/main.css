@@ -82,11 +82,16 @@ body {
 }
 
 .usage-help-div {
-    left: 0;
     position: absolute;
     text-align: center;
     top: 14%;
-    width: 100%;
+    left: 50%;
+    margin-left: -40%;
+    width: 80%;
+    height: auto;
+    background-color: #1a1a1a;
+    border-radius: 10%;
+    border: #FFCC00 0.2vh solid;
     font-family: Calibri;
     font-weight: bold;
     font-size: 3vh;

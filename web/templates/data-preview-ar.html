@@ -17,16 +17,18 @@
 {% autoescape off %}
 {{ PREVIEW_CODE }}
 {% endautoescape %}
-<div class="scan-button-container-swapped">
-    <div class="button-container">
-        <button class="scan-button-swapped" id="scan-button-swapped" onclick="window.location.href = '/';"></button>
-        <small class="button-description">Home</small>
+<div class="buttons-wrap">
+    <div class="scan-button-container-swapped">
+        <div class="button-container">
+            <button class="scan-button-swapped" id="scan-button-swapped" onclick="window.location.href = '/';"></button>
+            <small class="button-description">Home</small>
+        </div>
     </div>
-</div>
-<div class="pause-button-container">
-    <div class="button-container">
-        <button class="pause-button" id="pause-button"></button>
-        <small class="button-description" id="pause-button-text">Pause</small>
+    <div class="pause-button-container">
+        <div class="button-container">
+            <button class="pause-button" id="pause-button"></button>
+            <small class="button-description" id="pause-button-text">Pause</small>
+        </div>
     </div>
 </div>
 <script>

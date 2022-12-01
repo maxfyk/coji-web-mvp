@@ -10,7 +10,7 @@
     <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/index-ar.css') }}">
 </head>
 <body>
-<div class="contact-us">
+<div class="contact-us" onclick="location.href = 'mailto:mfyk@lvivsoft.com';">
     <a>Contact us</a>
 </div>
 
@@ -51,7 +51,6 @@
     pauseButton.addEventListener('click', () => {
         pauseToogler();
     });
-
 </script>
 </body>
 </html>

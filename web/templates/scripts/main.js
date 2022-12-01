@@ -39,6 +39,8 @@ $(function () {
     navigator.geolocation.getCurrentPosition(function (position) {
     }, showError);
 });
+
+
 var children = [];
 
 async function initVideoRatio() {

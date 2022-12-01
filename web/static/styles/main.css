@@ -466,3 +466,9 @@ body {
 .a-canvas {
     z-index: 0 !important;
 }
+
+.mindar-ui-loading {
+    background-color: #FFCC00;
+    opacity: 0.85;
+    z-index: 9998;
+}

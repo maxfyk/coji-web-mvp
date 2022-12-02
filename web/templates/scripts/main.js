@@ -80,7 +80,11 @@ async function autoScan() {
         children[i].remove();
     }
     children.splice(0);
-    if (!frameZero && predictions.length && predictions[0].classes[0].probability >= 0.4) {
+    if (frameZero) {
+        frameZero = false;
+        return window.requestAnimationFrame(autoScan);
+    }
+    else if (predictions.length && predictions[0].classes[0].probability >= 0.4) {
         var prediction = predictions[0];
         var prediction_score = prediction.classes[0].probability;
         // console.log('pred score', prediction_score);
@@ -103,11 +107,11 @@ async function autoScan() {
 
             infoObjText = 'Hold still!';
             if (failedToScan) {
-                infoObjText = 'Retrying⌛';
+                infoObjText = 'Retrying⌛️';
                 framesCount = 0;
             } else if (isScanning) {
                 if (framesCount >= 5) {
-                    infoObjText = 'Fetching⌛';
+                    infoObjText = 'Fetching⌛️';
 
                 } else {
                     infoObjText = 'Hold still!';
@@ -146,9 +150,6 @@ async function autoScan() {
     } else {
         failedToScan = false;
         $(".usage-help-div").show();
-    }
-    if (frameZero) {
-        frameZero = false;
     }
     window.requestAnimationFrame(autoScan);
 }

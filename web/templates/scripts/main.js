@@ -18,6 +18,8 @@ $(function () {
 
     navigator.mediaDevices.getUserMedia({
         video: {
+            width: {min: 640, ideal: 640, max: 1280},
+            height: {min: 480, ideal: 480, max: 720},
             facingMode: 'environment',
         }
     })
@@ -202,12 +204,10 @@ async function scanCode() {
             'device': platform.product,
         }
     }
-    alert('request sent');
     await fetch(`{{API_URL}}/coji-code/decode`, options = {
         method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
     })
         .then(await function (response) {
-            alert('response received');
             return response.text();
         }).then(await function (text) {
             btnCapture.style.background = "transparent url('/static/icons/scan-button.png') no-repeat top left";
@@ -223,7 +223,7 @@ async function scanCode() {
         });
     btnCapture.style.background = "transparent url('/static/icons/scan-button.png') no-repeat top left";
     btnCapture.style.backgroundSize = "cover";
-    if (failedToScan){
+    if (failedToScan) {
         isScanning = false;
     }
 

@@ -7,7 +7,7 @@ const sceneEl = document.querySelector('a-scene');
 var video;
 var isScanning = null, failedToScan = false;
 var videoRatioW, videoRatioH, videoTopOffset, videoLeftOffset, videoW, videoH;
-let model;
+let model = false;
 
 /*permissions*/
 $(function () {
@@ -57,9 +57,10 @@ async function initVideoRatio() {
     // console.log('H', video_jq.css('height'), video.videoHeight, videoRatioH, videoTopOffset)
     if (!model) {
         $('body').append('<div class="mindar-ui-overlay mindar-ui-loading"> <div class="loader"> </div></div>');
-        console.log('b');
-        model = await tflite.ObjectDetector.create('/static/ar-js-static/coji.tflite');
-        console.log('a');
+        console.log('MODEL loading');
+        model = await tflite.ObjectDetector.create('/static/ar-js-static/coji-old.tflite');
+        console.log('MODEL');
+        console.log(model);
         $('.mindar-ui-loading').remove();
         $(".usage-help").text('Point your camera at the code!');
     }
@@ -67,9 +68,10 @@ async function initVideoRatio() {
 
 var framesCount = 0;
 var frameZero = true;
+
 async function autoScan() {
-    if (!model) {
-        window.requestAnimationFrame(autoScan);
+    if (!model || model === 'undefined') {
+        return window.requestAnimationFrame(autoScan);
     }
     var predictions = model.detect(video);
     // Remove any highlighting we did previous frame.
@@ -145,7 +147,7 @@ async function autoScan() {
         failedToScan = false;
         $(".usage-help-div").show();
     }
-    if(frameZero){
+    if (frameZero) {
         frameZero = false;
     }
     window.requestAnimationFrame(autoScan);

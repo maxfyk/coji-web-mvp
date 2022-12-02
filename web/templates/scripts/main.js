@@ -66,7 +66,7 @@ async function initVideoRatio() {
 }
 
 var framesCount = 0;
-
+var frameZero = true;
 async function autoScan() {
     if (!model) {
         window.requestAnimationFrame(autoScan);
@@ -78,7 +78,7 @@ async function autoScan() {
         children[i].remove();
     }
     children.splice(0);
-    if (predictions.length && predictions[0].classes[0].probability >= 0.4) {
+    if (!frameZero && predictions.length && predictions[0].classes[0].probability >= 0.4) {
         var prediction = predictions[0];
         var prediction_score = prediction.classes[0].probability;
         // console.log('pred score', prediction_score);
@@ -144,6 +144,9 @@ async function autoScan() {
     } else {
         failedToScan = false;
         $(".usage-help-div").show();
+    }
+    if(frameZero){
+        frameZero = false;
     }
     window.requestAnimationFrame(autoScan);
 }
@@ -217,6 +220,7 @@ async function scanCode() {
             if (resp['error']) {
                 // alert(resp['text'])
                 failedToScan = true;
+                frameZero = true;
             } else {
                 window.location.replace('data-preview/' + resp['code-id']);
             }

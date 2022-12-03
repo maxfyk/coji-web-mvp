@@ -241,7 +241,7 @@ async function scanCode() {
     if (failedToScan) {
         isScanning = false;
     }
-    $(".usage-help").text('Please try again!');
+    $(".usage-help").text('Please move closer and then try again!');
 
 }
 

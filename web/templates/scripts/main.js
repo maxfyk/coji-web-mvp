@@ -28,8 +28,6 @@ $(function () {
             video.setAttribute('muted', '');
             video.setAttribute('playsinline', '');
             sceneEl.addEventListener('arReady', initVideoRatio);
-            sceneEl.addEventListener('arReady', autoScan);
-
         })
         .catch(function (error) {
             console.log(error);
@@ -87,13 +85,14 @@ async function scanCode() {
     var capture = document.createElement('canvas');
 
     if (null != stream) {
-        capture.width = stream.videoWidth;
-        capture.height = stream.videoHeight;
+        capture.width = 128
+        capture.height = capture.width * (stream.height / stream.width);
         var ctx = capture.getContext('2d');
-        ctx.drawImage(stream, 0, 0, stream.videoWidth, stream.videoHeight);
+        ctx.drawImage(stream, 0, 0, capture.width, capture.height);
     }
-    var base64Img = capture.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
 
+    var base64Img = capture.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
+    console.log(base64Img);
     var data = {
         'decode-type': 'scan', 'in-data': base64Img, 'user-id': null, 'style-info': {
             'name': 'geom-original',

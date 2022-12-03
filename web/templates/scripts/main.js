@@ -90,7 +90,7 @@ async function scanCode() {
         var ctx = capture.getContext('2d');
         ctx.drawImage(stream, 0, 0, capture.width, capture.height);
     }
-
+    alert(capture.width + ' '+ capture.height);
     var base64Img = capture.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
     console.log(base64Img);
     var data = {

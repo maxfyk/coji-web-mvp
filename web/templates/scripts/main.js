@@ -85,8 +85,8 @@ async function scanCode() {
     var capture = document.createElement('canvas');
 
     if (null != stream) {
-        capture.width = stream.height;
-        capture.height = stream.width;
+        capture.width = stream.width;
+        capture.height = stream.height;
         var ctx = capture.getContext('2d');
         ctx.drawImage(stream, 0, 0, capture.width, capture.height);
     }

@@ -128,8 +128,8 @@ async function scanCode() {
     btnCapture.style.background = "transparent url('/static/icons/scan-button.png') no-repeat top left";
     btnCapture.style.backgroundSize = "cover";
 
-    $(".usage-help").text('Please move closer and then try again!');
-
+    $(".usage-help").text('Please move closer your camera closer!');
+    return scanCode();
 }
 
 String.prototype.width = function (font) {

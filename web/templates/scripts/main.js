@@ -185,6 +185,7 @@ document.getElementById("scan-button").addEventListener("click", function () {
 
 
 async function scanCode() {
+    $(".usage-help").text('Taking a picture...📸\nHold still!');
     isScanning = true;
     var stream = document.querySelector("video");
     var btnCapture = document.getElementById("scan-button");
@@ -215,6 +216,7 @@ async function scanCode() {
             'device': platform.product,
         }
     }
+    $(".usage-help").text('Fetching results...');
     await fetch('{{API_URL}}/coji-code/decode', options = {
             method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
         }
@@ -239,6 +241,7 @@ async function scanCode() {
     if (failedToScan) {
         isScanning = false;
     }
+    $(".usage-help").text('Please try again!');
 
 }
 

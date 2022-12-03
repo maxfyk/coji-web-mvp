@@ -74,9 +74,13 @@ document.getElementById("scan-button").addEventListener("click", function () {
     scanCode();
 });
 
+var failedToScan = false;
 
 async function scanCode() {
-    $(".usage-help").text('Taking a picture...📸\nHold still!');
+    if (!failedToScan) {
+        $(".usage-help").text('Taking a picture...📸\nHold still!');
+
+    }
     var stream = document.querySelector("video");
     var btnCapture = document.getElementById("scan-button");
 
@@ -105,7 +109,10 @@ async function scanCode() {
             'device': platform.product,
         }
     }
-    $(".usage-help").text('Scanning🔎...');
+    if (!failedToScan) {
+        $(".usage-help").text('Scanning🔎...');
+
+    }
     await fetch('{{API_URL}}/coji-code/decode', options = {
             method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
         }
@@ -120,12 +127,13 @@ async function scanCode() {
             if (resp['error']) {
                 // alert(resp['text'])
             } else {
+                failedToScan = false;
                 window.location.replace('data-preview/' + resp['code-id']);
             }
         });
     btnCapture.style.background = "transparent url('/static/icons/scan-button.png') no-repeat top left";
     btnCapture.style.backgroundSize = "cover";
-
+    failedToScan = true;
     $(".usage-help").text('Please move closer your camera closer!');
     return scanCode();
 }

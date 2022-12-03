@@ -216,7 +216,7 @@ async function scanCode() {
             'device': platform.product,
         }
     }
-    $(".usage-help").text('Fetching results...');
+    $(".usage-help").text('Scanning...');
     await fetch('{{API_URL}}/coji-code/decode', options = {
             method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
         }

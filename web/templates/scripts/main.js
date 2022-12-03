@@ -7,8 +7,8 @@ const sceneEl = document.querySelector('a-scene');
 var video;
 var isScanning = null, failedToScan = false;
 var videoRatioW, videoRatioH, videoTopOffset, videoLeftOffset, videoW, videoH;
-let model = false;
-
+// let model = false;
+let camera;
 /*permissions*/
 $(function () {
     navigator.geolocation.getCurrentPosition(function (pos) {
@@ -18,8 +18,8 @@ $(function () {
 
     navigator.mediaDevices.getUserMedia({
         video: {
-            width: {min: 640, ideal: 640, max: 1280},
-            height: {min: 480, ideal: 480, max: 720},
+            // width: {min: 640, ideal: 640, max: 1280},
+            // height: {min: 480, ideal: 480, max: 720},
             facingMode: 'environment',
         }
     })
@@ -42,7 +42,6 @@ $(function () {
     }, showError);
 });
 
-
 var children = [];
 
 async function initVideoRatio() {
@@ -55,104 +54,111 @@ async function initVideoRatio() {
     videoRatioH = videoH / video.videoHeight;
     // console.log('W', video_jq.css('width'), video.videoWidth, videoRatioW, videoLeftOffset)
     // console.log('H', video_jq.css('height'), video.videoHeight, videoRatioH, videoTopOffset)
-    if (!model) {
-        $('body').append('<div class="mindar-ui-overlay mindar-ui-loading"> <div class="loader"> </div></div>');
-        console.log('MODEL loading');
-        model = await tflite.ObjectDetector.create('/static/ar-js-static/coji-old.tflite');
-        console.log('MODEL');
-        console.log(model);
-        $('.mindar-ui-loading').remove();
-        $(".usage-help").text('Point your camera at the code!');
-    }
+    // if (!model) {
+    //     $('body').append('<div class="mindar-ui-overlay mindar-ui-loading"> <div class="loader"> </div></div>');
+    //     console.log('MODEL loading');
+    //     model = await tflite.loadTFLiteModel('/static/ar-js-static/coji.tflite');
+    //     console.log('MODEL');
+    //     console.log(model);
+    //     $('.mindar-ui-loading').remove();
+    //     $(".usage-help").text('Point your camera at the code!');
+    // }
+    $(".usage-help").text('Point your camera at the code and then press the scan button!');
 }
 
 var framesCount = 0;
 var frameZero = true;
-
-async function autoScan() {
-    if (!model || model === 'undefined') {
-        return window.requestAnimationFrame(autoScan);
-    }
-    var predictions = model.detect(video);
-    // Remove any highlighting we did previous frame.
-    console.log('predicting');
-    for (let i = 0; i < children.length; i++) {
-        children[i].remove();
-    }
-    children.splice(0);
-    if (frameZero) {
-        frameZero = false;
-        return window.requestAnimationFrame(autoScan);
-    }
-    else if (predictions.length && predictions[0].classes[0].probability >= 0.4) {
-        var prediction = predictions[0];
-        var prediction_score = prediction.classes[0].probability;
-        // console.log('pred score', prediction_score);
-        $(".usage-help-div").hide();
-        var x = (prediction.boundingBox.originX * videoRatioW) / 1.01;
-        var y = (prediction.boundingBox.originY * videoRatioH) / 1.01;
-        var w = (prediction.boundingBox.width * videoRatioW);
-        var h = (prediction.boundingBox.height * videoRatioH);
-        // console.log('Area ratio', ((w * h) / (videoW * videoH)));
-        // console.log(w, h, videoW, videoH)
-        var areaRatio = (w * h) / (videoW * videoH);
-        liveView.append('<div id="detected-code-instance"></div>');
-        liveView.append(`<p id="detected-code-text"></p>`);
-        var infoText = $('#detected-code-text');
-        var infoInstance = $('#detected-code-instance');
-        var infoObjText, infoTextColor;
-
-        if (areaRatio >= 0.036 || isScanning) {
-            infoTextColor = '#FFCC00';
-
-            infoObjText = 'Hold still!';
-            if (failedToScan) {
-                infoObjText = 'Retrying⌛️';
-                framesCount = 0;
-            } else if (isScanning) {
-                if (framesCount >= 5) {
-                    infoObjText = 'Fetching⌛️';
-
-                } else {
-                    infoObjText = 'Hold still!';
-                    framesCount += 1;
-                }
-            }
-            infoInstance.css('background', "transparent url('/static/icons/scan-loading.gif') no-repeat top left");
-            infoInstance.css('background-position', 'center');
-            infoInstance.css('background-size', '50%');
-            if (!isScanning) {
-                scanCode();
-            }
-        } else {
-            infoObjText = 'Get closer🥺';
-            infoTextColor = '#FB3B1E';
-            // infoInstance.css('background', 'rgba(251, 59, 30, 0.2)');
-            infoInstance.css('background', 'none');
-        }
-        infoText.text(infoObjText);
-        infoText.css({
-            'margin-left': x + (Math.abs((w / 2) - (infoObjText.width('3.6vh Calibri') / 2))) + videoLeftOffset + 'px',
-            'margin-top': y - (h / 2.2) + videoTopOffset - 30 + 'px',
-            'width': w - 20 + 'px',
-            'height': h - 20 + 'px',
-            'color': infoTextColor,
-        });
-
-        infoInstance.css({
-            'left': x + videoLeftOffset + 'px',
-            'top': y - (h / 1.6) + videoTopOffset + 'px',
-            'width': w + 'px',
-            'height': h + 'px',
-        });
-        children.push(infoInstance);
-        children.push(infoText);
-    } else {
-        failedToScan = false;
-        $(".usage-help-div").show();
-    }
-    window.requestAnimationFrame(autoScan);
-}
+//
+// async function autoScan() {
+//     if (!model || model === 'undefined') {
+//         return window.requestAnimationFrame(autoScan);
+//     }
+//     let input = tf.image.resizeBilinear(tf.browser.fromPixels(video), [640, 640]);
+//     input = tf.sub(tf.div(tf.expandDims(input), 127.5), 1);
+//     input = input.reshape([1, 3, 640, 640]);
+//     console.log('after reshape');
+//     let predictions = await model.predict(input);
+//     console.log('after predictions');
+//     console.log(predictions);
+//     predictions = predictions.arraySync()[0];
+//     console.log(predictions);
+//     // Remove any highlighting we did previous frame.
+//     for (let i = 0; i < children.length; i++) {
+//         children[i].remove();
+//     }
+//     children.splice(0);
+//     if (frameZero) {
+//         frameZero = false;
+//         return window.requestAnimationFrame(autoScan);
+//     } else if (predictions.length && predictions[0].classes[0].probability >= 0.4) {
+//         var prediction = predictions[0];
+//         var prediction_score = prediction.classes[0].probability;
+//         // console.log('pred score', prediction_score);
+//         $(".usage-help-div").hide();
+//         var x = (prediction.boundingBox.originX * videoRatioW) / 1.01;
+//         var y = (prediction.boundingBox.originY * videoRatioH) / 1.01;
+//         var w = (prediction.boundingBox.width * videoRatioW);
+//         var h = (prediction.boundingBox.height * videoRatioH);
+//         // console.log('Area ratio', ((w * h) / (videoW * videoH)));
+//         // console.log(w, h, videoW, videoH)
+//         var areaRatio = (w * h) / (videoW * videoH);
+//         liveView.append('<div id="detected-code-instance"></div>');
+//         liveView.append(`<p id="detected-code-text"></p>`);
+//         var infoText = $('#detected-code-text');
+//         var infoInstance = $('#detected-code-instance');
+//         var infoObjText, infoTextColor;
+//
+//         if (areaRatio >= 0.036 || isScanning) {
+//             infoTextColor = '#FFCC00';
+//
+//             infoObjText = 'Hold still!';
+//             if (failedToScan) {
+//                 infoObjText = 'Retrying⌛️';
+//                 framesCount = 0;
+//             } else if (isScanning) {
+//                 if (framesCount >= 5) {
+//                     infoObjText = 'Fetching⌛️';
+//
+//                 } else {
+//                     infoObjText = 'Hold still!';
+//                     framesCount += 1;
+//                 }
+//             }
+//             infoInstance.css('background', "transparent url('/static/icons/scan-loading.gif') no-repeat top left");
+//             infoInstance.css('background-position', 'center');
+//             infoInstance.css('background-size', '50%');
+//             if (!isScanning) {
+//                 scanCode();
+//             }
+//         } else {
+//             infoObjText = 'Get closer🥺';
+//             infoTextColor = '#FB3B1E';
+//             // infoInstance.css('background', 'rgba(251, 59, 30, 0.2)');
+//             infoInstance.css('background', 'none');
+//         }
+//         infoText.text(infoObjText);
+//         infoText.css({
+//             'margin-left': x + (Math.abs((w / 2) - (infoObjText.width('3.6vh Calibri') / 2))) + videoLeftOffset + 'px',
+//             'margin-top': y - (h / 2.2) + videoTopOffset - 30 + 'px',
+//             'width': w - 20 + 'px',
+//             'height': h - 20 + 'px',
+//             'color': infoTextColor,
+//         });
+//
+//         infoInstance.css({
+//             'left': x + videoLeftOffset + 'px',
+//             'top': y - (h / 1.6) + videoTopOffset + 'px',
+//             'width': w + 'px',
+//             'height': h + 'px',
+//         });
+//         children.push(infoInstance);
+//         children.push(infoText);
+//     } else {
+//         failedToScan = false;
+//         $(".usage-help-div").show();
+//     }
+//     window.requestAnimationFrame(autoScan);
+// }
 
 function location_redirector() {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -172,11 +178,10 @@ function showError(error) {
     }
 }
 
-
-// /*Scan button*/
-// document.getElementById("scan-button").addEventListener("click", function () {
-//     scanCode();
-// });
+/*Scan button*/
+document.getElementById("scan-button").addEventListener("click", function () {
+    scanCode();
+});
 
 
 async function scanCode() {
@@ -210,9 +215,10 @@ async function scanCode() {
             'device': platform.product,
         }
     }
-    await fetch(`{{API_URL}}/coji-code/decode`, options = {
-        method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
-    })
+    await fetch('{{API_URL}}/coji-code/decode', options = {
+            method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
+        }
+    )
         .then(await function (response) {
             return response.text();
         }).then(await function (text) {

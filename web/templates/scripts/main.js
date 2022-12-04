@@ -85,6 +85,7 @@ async function scanCode() {
     ctx.drawImage(stream, 0, 0, canvas.width, canvas.height);
 
     var base64Img = canvas.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
+    console.log(base64Img);
     var data = {
         'decode-type': 'scan', 'in-data': base64Img, 'user-id': null, 'style-info': {
             'name': 'geom-original',

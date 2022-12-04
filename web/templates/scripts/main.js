@@ -113,6 +113,7 @@ async function scanCode() {
         $(".usage-help").text('Scanning🔎...');
 
     }
+    $('body').append('<div class="mindar-ui-overlay mindar-ui-loading"> <div class="loader"> </div></div>');
     await fetch('{{API_URL}}/coji-code/decode', options = {
             method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
         }
@@ -135,6 +136,7 @@ async function scanCode() {
     btnCapture.style.backgroundSize = "cover";
     failedToScan = true;
     $(".usage-help").text('Please move your camera closer and try again!');
+    $('.mindar-ui-loading').remove();
 }
 
 String.prototype.width = function (font) {

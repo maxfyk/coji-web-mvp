@@ -132,7 +132,7 @@ async function scanCode() {
     btnCapture.style.background = "transparent url('/static/icons/scan-button.png') no-repeat top left";
     btnCapture.style.backgroundSize = "cover";
     failedToScan = true;
-    $(".usage-help").text('Please move your camera closer and try again!');
+    $(".usage-help").text('Please adjust your camera and try again!');
     $('.mindar-ui-loading').remove();
 }
 

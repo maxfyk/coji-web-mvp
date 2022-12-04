@@ -2,10 +2,7 @@ var lat = null, lon = null;
 const headers = {
     'Content-Type': 'application/json',
 };
-const liveView = $('#live-view');
-const sceneEl = document.querySelector('a-scene');
 var video;
-var videoRatioW, videoRatioH, videoTopOffset, videoLeftOffset, videoW, videoH;
 /*permissions*/
 $(function () {
     navigator.geolocation.getCurrentPosition(function (pos) {
@@ -21,35 +18,26 @@ $(function () {
         }
     })
         .then(function (stream) {
-            video = document.querySelector("video");
+            video = document.querySelector("#stream");
             video.srcObject = stream;
             video.play();
             video.setAttribute('autoplay', '');
             video.setAttribute('muted', '');
             video.setAttribute('playsinline', '');
-            sceneEl.addEventListener('arReady', initVideoRatio);
+            initFinish();
         })
         .catch(function (error) {
             console.log(error);
             console.log("Something went wrong with permissions!");
-            $(".usage-help").text('This app requires camera permission to work  !');
+            $(".usage-help").text('This app requires camera permission to work!');
         });
     navigator.geolocation.getCurrentPosition(function (position) {
     }, showError);
 });
 
-var children = [];
-
-async function initVideoRatio() {
-    var video_jq = $('video');
-    videoW = parseInt(video_jq.css('width').replace('px', ''));
-    videoH = parseInt(video_jq.css('height').replace('px', ''));
-    videoTopOffset = parseInt(video_jq.css('top').replace('px', ''));
-    videoLeftOffset = parseInt(video_jq.css('left').replace('px', ''));
-    videoRatioW = videoW / video.videoWidth;
-    videoRatioH = videoH / video.videoHeight;
-
+function initFinish() {
     $(".usage-help").text('Point your camera at the code and then press the scan button!');
+    $('.mindar-ui-loading').remove();
 }
 
 function location_redirector() {
@@ -82,20 +70,21 @@ async function scanCode() {
         $(".usage-help").text('Taking a picture...📸\nHold still!');
 
     }
-    var stream = document.querySelector("video");
+    var stream = document.getElementById("stream");
     var btnCapture = document.getElementById("scan-button");
 
     btnCapture.style.background = "transparent url('/static/icons/scan-loading.gif') no-repeat top left";
     btnCapture.style.backgroundSize = "cover";
-    var capture = document.createElement('canvas');
+    let canvas = document.createElement('canvas');
 
-    if (null != stream) {
-        capture.width = 360;
-        capture.height = capture.width * (stream.height / stream.width);
-        var ctx = capture.getContext('2d');
-        ctx.drawImage(stream, 0, 0, capture.width, capture.height);
-    }
-    var base64Img = capture.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
+    canvas.width = 360;
+    canvas.height = canvas.width * (stream.videoHeight / stream.videoWidth);
+
+    let ctx = canvas.getContext('2d');
+
+    ctx.drawImage(stream, 0, 0, canvas.width, canvas.height);
+
+    var base64Img = canvas.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
     var data = {
         'decode-type': 'scan', 'in-data': base64Img, 'user-id': null, 'style-info': {
             'name': 'geom-original',

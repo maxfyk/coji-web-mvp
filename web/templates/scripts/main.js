@@ -75,8 +75,13 @@ document.getElementById("scan-button").addEventListener("click", function () {
 });
 
 var failedToScan = false;
+var runningThreads = 0;
 
 async function scanCode() {
+    if (runningThreads >= 4) {
+        return scanCode();
+    }
+    runningThreads += 1;
     if (!failedToScan) {
         $(".usage-help").text('Taking a picture...📸\nHold still!');
 
@@ -113,6 +118,7 @@ async function scanCode() {
         $(".usage-help").text('Scanning🔎...');
 
     }
+    scanCode();
     await fetch('{{API_URL}}/coji-code/decode', options = {
             method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
         }
@@ -134,8 +140,8 @@ async function scanCode() {
     btnCapture.style.background = "transparent url('/static/icons/scan-button.png') no-repeat top left";
     btnCapture.style.backgroundSize = "cover";
     failedToScan = true;
-    $(".usage-help").text('Please move closer your camera closer!');
-    return scanCode();
+    $(".usage-help").text('Please move your camera closer!');
+    runningThreads -= 1;
 }
 
 String.prototype.width = function (font) {

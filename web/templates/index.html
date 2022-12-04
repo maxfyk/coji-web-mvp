@@ -30,11 +30,12 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
-    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/index-ar.css') }}">
     <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image.prod.js"></script>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-aframe.prod.js"></script>
+    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/index-ar.css') }}">
+
 </head>
 {% if ERROR %}
     <script>

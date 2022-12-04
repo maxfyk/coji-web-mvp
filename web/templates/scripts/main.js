@@ -77,7 +77,7 @@ async function scanCode() {
     btnCapture.style.backgroundSize = "cover";
     let canvas = document.createElement('canvas');
 
-    canvas.width = 360;
+    canvas.width = 180;
     canvas.height = canvas.width * (stream.videoHeight / stream.videoWidth);
 
     let ctx = canvas.getContext('2d');

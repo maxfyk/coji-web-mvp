@@ -32,6 +32,7 @@ $(function () {
         .catch(function (error) {
             console.log(error);
             console.log("Something went wrong with permissions!");
+            $(".usage-help").text('This app requires camera permission to work  !');
         });
     navigator.geolocation.getCurrentPosition(function (position) {
     }, showError);

@@ -15,9 +15,6 @@
 </script>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image.prod.js"></script>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-aframe.prod.js"></script>
     {#<link rel="preload" href="/static/ar-js-static/coji.tflite" as="fetch" crossorigin="anonymous"/>#}
     <link rel="preload" as="font" href="/static/fonts/calibri/calibri.eot" crossorigin="anonymous">
     <link rel="preload" as="font" href="/static/fonts/calibri/calibri.svg" crossorigin="anonymous">
@@ -35,6 +32,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
     <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/index-ar.css') }}">
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image.prod.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-aframe.prod.js"></script>
 </head>
 {% if ERROR %}
     <script>

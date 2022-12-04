@@ -77,7 +77,7 @@ async function scanCode() {
     btnCapture.style.backgroundSize = "cover";
     let canvas = document.createElement('canvas');
 
-    canvas.width = 180;
+    canvas.width = 360;
     canvas.height = canvas.width * (stream.videoHeight / stream.videoWidth);
 
     let ctx = canvas.getContext('2d');
@@ -85,7 +85,6 @@ async function scanCode() {
     ctx.drawImage(stream, 0, 0, canvas.width, canvas.height);
 
     var base64Img = canvas.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
-    console.log(base64Img);
     var data = {
         'decode-type': 'scan', 'in-data': base64Img, 'user-id': null, 'style-info': {
             'name': 'geom-original',

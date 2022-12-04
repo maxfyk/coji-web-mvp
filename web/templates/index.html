@@ -13,33 +13,35 @@
 
     gtag('config', 'G-CCXXB5EDB0');
 </script>
-<meta name="viewport" content="width=device-width, initial-scale=1"/>
-<script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image.prod.js"></script>
-<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-aframe.prod.js"></script>
-{#<link rel="preload" href="/static/ar-js-static/coji.tflite" as="fetch" crossorigin="anonymous"/>#}
-<link rel="preload" as="font" href="/static/fonts/calibri/calibri.eot" crossorigin="anonymous">
-<link rel="preload" as="font" href="/static/fonts/calibri/calibri.svg" crossorigin="anonymous">
-<link rel="preload" as="font" href="/static/fonts/calibri/calibri.ttf" type="font/ttf" crossorigin="anonymous">
-<link rel="preload" as="font" href="/static/fonts/calibri/calibri.woff" type="font/woff2" crossorigin="anonymous">
-<link rel="preload" as="font" href="/static/fonts/calibri/calibri-bold.ttf" type="font/ttf" crossorigin="anonymous">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image.prod.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-aframe.prod.js"></script>
+    {#<link rel="preload" href="/static/ar-js-static/coji.tflite" as="fetch" crossorigin="anonymous"/>#}
+    <link rel="preload" as="font" href="/static/fonts/calibri/calibri.eot" crossorigin="anonymous">
+    <link rel="preload" as="font" href="/static/fonts/calibri/calibri.svg" crossorigin="anonymous">
+    <link rel="preload" as="font" href="/static/fonts/calibri/calibri.ttf" type="font/ttf" crossorigin="anonymous">
+    <link rel="preload" as="font" href="/static/fonts/calibri/calibri.woff" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" as="font" href="/static/fonts/calibri/calibri-bold.ttf" type="font/ttf" crossorigin="anonymous">
 
-<link rel="apple-touch-icon" sizes="180x180" href="/static/icons/favicons/apple-touch-icon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicons/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicons/favicon-16x16.png">
-<link rel="manifest" href="/static/icons/favicons/site.webmanifest">
-<link rel="mask-icon" href="/static/icons/favicons/safari-pinned-tab.svg" color="#5bbad5">
-<meta name="msapplication-TileColor" content="#da532c">
-<meta name="theme-color" content="#ffffff">
-<meta name="mobile-web-app-capable" content="yes">
-<link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
-<link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/index-ar.css') }}">
-
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/static/icons/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/static/icons/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/index-ar.css') }}">
+</head>
 {% if ERROR %}
     <script>
         alert("{{ ERROR }}" + '😢');
     </script>
 {% endif %}
+
 <body>
 <a class="camera-warning">Please provide camera access!</a>
 {#<div class="usage-help-div">#}

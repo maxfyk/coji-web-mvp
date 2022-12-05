@@ -10,6 +10,9 @@
     <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/index-ar.css') }}">
 </head>
 <body>
+<div class="usage-help-div">
+    <a class="usage-help">Now point the camera at the code to sight the data!🎉</a>
+</div>
 <div class="contact-us" onclick="location.href = 'mailto:mfyk@lvivsoft.com';">
     <a>Contact us</a>
 </div>
@@ -32,10 +35,11 @@
     </div>
 </div>
 <script>
+    const target = $('.usage-help-div');
+    target.hide();
     var paused = false;
 
-    function pauseToogler() {
-        console.log(paused);
+    function pauseToggler() {
         if (paused) {
             arSystem.unpause();
             pauseButtonText.innerHTML = 'Pause';
@@ -51,8 +55,16 @@
     const pauseButton = document.querySelector("#pause-button");
     const pauseButtonText = document.querySelector("#pause-button-text");
     pauseButton.addEventListener('click', () => {
-        pauseToogler();
+        pauseToggler();
     });
+
+    document.querySelector('a-entity').addEventListener("targetFound", event => {
+        target.hide();
+    });
+    document.querySelector('a-entity').addEventListener("targetLost", event => {
+        target.toggle(500);
+    });
+    target.toggle(500);
 </script>
 </body>
 </html>

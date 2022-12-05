@@ -36,7 +36,9 @@ $(function () {
 });
 
 function initFinish() {
-    $(".usage-help").text('Point your camera at the code and then press the scan button!');
+    $(".usage-help-div").hide();
+    $(".usage-help-div").toggle(500);
+    $(".usage-help").text('Point your camera at the code and then press the scan button!👀');
     $('.mindar-ui-loading').remove();
 }
 
@@ -122,7 +124,7 @@ async function scanCode() {
     btnCapture.style.background = "transparent url('/static/icons/scan-button.png') no-repeat top left";
     btnCapture.style.backgroundSize = "cover";
     failedToScan = true;
-    $(".usage-help").text('Please adjust your camera and try again!');
+    $(".usage-help").text('Please adjust your camera and try again!👀');
     $('.mindar-ui-loading').remove();
 }
 

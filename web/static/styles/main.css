@@ -507,13 +507,13 @@ body {
 
 .scan-border-text {
     position: absolute;
-    top: -8vh;
+    top: 8vh;
     left: 0;
     right: 0;
     bottom: 0;
     margin: auto;
-    width: 300px;
-    height: 300px;
+    width: 60vw;
+    height: 60vw;
     z-index: 9998;
 }
 

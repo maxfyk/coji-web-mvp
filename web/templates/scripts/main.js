@@ -1,41 +1,46 @@
-var video = $('.video-preview')[0];
 var lat = null, lon = null;
-
+const headers = {
+    'Content-Type': 'application/json',
+};
+var video;
 /*permissions*/
 $(function () {
-
     navigator.geolocation.getCurrentPosition(function (pos) {
         lat = pos.coords.latitude;
         lon = pos.coords.longitude;
     })
 
-    video.setAttribute('autoplay', '');
-    video.setAttribute('muted', '');
-    video.setAttribute('playsinline', '');
     navigator.mediaDevices.getUserMedia({
         video: {
+            // width: {min: 640, ideal: 640, max: 1280},
+            // height: {min: 480, ideal: 480, max: 720},
             facingMode: 'environment',
-            width: {
-                optional: [
-                    {minWidth: 320},
-                    {minWidth: 640},
-                    {minWidth: 1024},
-                    {minWidth: 1280},
-                ]
-            }
         }
     })
         .then(function (stream) {
+            video = document.querySelector("#stream");
             video.srcObject = stream;
             video.play();
+            video.setAttribute('autoplay', '');
+            video.setAttribute('muted', '');
+            video.setAttribute('playsinline', '');
+            initFinish();
         })
-        .catch(function (err0r) {
+        .catch(function (error) {
+            console.log(error);
             console.log("Something went wrong with permissions!");
+            $(".usage-help").text('This app requires camera permission to work!');
         });
     navigator.geolocation.getCurrentPosition(function (position) {
     }, showError);
-
 });
+
+function initFinish() {
+    $(".usage-help-div").hide();
+    $(".usage-help-div").toggle(500);
+    $(".usage-help").text('Point your camera at the code and then press the scan button!👀');
+    $('.mindar-ui-loading').remove();
+}
 
 function location_redirector() {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -55,41 +60,38 @@ function showError(error) {
     }
 }
 
-const headers = {
-    'Content-Type': 'application/json',
-};
-
 /*Scan button*/
 document.getElementById("scan-button").addEventListener("click", function () {
     scanCode();
 });
 
+var failedToScan = false;
 
 async function scanCode() {
-    var stream = document.querySelector("video");
+    if (!failedToScan) {
+        $(".usage-help").text('Taking a picture...📸\nHold still!');
+
+    }
+    var stream = document.getElementById("stream");
     var btnCapture = document.getElementById("scan-button");
 
     btnCapture.style.background = "transparent url('/static/icons/scan-loading.gif') no-repeat top left";
     btnCapture.style.backgroundSize = "cover";
-    var capture = document.createElement('canvas');
+    let canvas = document.createElement('canvas');
 
-    if (null != stream) {
-        capture.width = stream.videoWidth;
-        capture.height = stream.videoHeight;
-        var ctx = capture.getContext('2d');
+    canvas.width = 360;
+    canvas.height = canvas.width * (stream.videoHeight / stream.videoWidth);
 
-        ctx.drawImage(stream, 0, 0, stream.videoWidth, stream.videoHeight);
-    }
-    var base64Img = capture.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
+    let ctx = canvas.getContext('2d');
 
+    ctx.drawImage(stream, 0, 0, canvas.width, canvas.height);
+
+    var base64Img = canvas.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
+    console.log(base64Img);
     var data = {
-        'decode-type': 'scan',
-        'in-data': base64Img,
-        'user-id': null,
-        'style-info': {
+        'decode-type': 'scan', 'in-data': base64Img, 'user-id': null, 'style-info': {
             'name': 'geom-original',
-        },
-        'user-data': {
+        }, 'user-data': {
             'lat': lat,
             'lon': lon,
             'decode-type': 'scan',
@@ -100,9 +102,12 @@ async function scanCode() {
             'device': platform.product,
         }
     }
-    await fetch(`{{API_URL}}/coji-code/decode`, options = {
-        method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
-    })
+    $(".usage-help").text('Scanning🔎...');
+    $('body').append('<div class="mindar-ui-overlay mindar-ui-loading"> <div class="loader"> </div></div>');
+    await fetch('{{API_URL}}/coji-code/decode', options = {
+            method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
+        }
+    )
         .then(await function (response) {
             return response.text();
         }).then(await function (text) {
@@ -111,15 +116,28 @@ async function scanCode() {
 
             var resp = JSON.parse(text);
             if (resp['error']) {
-                alert(resp['text'])
+                // alert(resp['text'])
             } else {
+                failedToScan = false;
                 window.location.replace('data-preview/' + resp['code-id']);
             }
         });
-
     btnCapture.style.background = "transparent url('/static/icons/scan-button.png') no-repeat top left";
     btnCapture.style.backgroundSize = "cover";
-
+    failedToScan = true;
+    $(".usage-help").text('Please adjust your camera and try again!👀');
+    $('.mindar-ui-loading').remove();
 }
 
-/*keybaord decode*/
+String.prototype.width = function (font) {
+    var o = $('<div></div>')
+        .text(this)
+        .css({
+            'position': 'absolute', 'float': 'left', 'white-space': 'nowrap', 'visibility': 'hidden', 'font': font,
+        })
+        .appendTo($('body')), w = o.width();
+
+    o.remove();
+
+    return w;
+}

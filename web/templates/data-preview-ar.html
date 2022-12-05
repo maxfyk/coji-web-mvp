@@ -5,30 +5,41 @@
     <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image.prod.js"></script>
     <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-aframe.prod.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
     <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/index-ar.css') }}">
 </head>
 <body>
+<div class="usage-help-div">
+    <a class="usage-help">Now point the camera at the code to sight the data!🎉</a>
+</div>
+<div class="contact-us" onclick="location.href = 'mailto:mfyk@lvivsoft.com';">
+    <a>Contact us</a>
+</div>
+
 {% autoescape off %}
 {{ PREVIEW_CODE }}
 {% endautoescape %}
-<div class="scan-button-container-swapped">
-    <div class="button-container">
-        <button class="scan-button-swapped" id="scan-button-swapped" onclick="window.location.href = '/';"></button>
-        <small class="button-description">Home</small>
+<div class="buttons-wrap">
+    <div class="scan-button-container-swapped">
+        <div class="button-container">
+            <button class="scan-button-swapped" id="scan-button-swapped" onclick="window.location.href = '/';"></button>
+            <small class="button-description">Home</small>
+        </div>
     </div>
-</div>
-<div class="pause-button-container">
-    <div class="button-container">
-        <button class="pause-button" id="pause-button"></button>
-        <small class="button-description" id="pause-button-text">Pause</small>
+    <div class="pause-button-container">
+        <div class="button-container">
+            <button class="pause-button" id="pause-button"></button>
+            <small class="button-description" id="pause-button-text">Pause</small>
+        </div>
     </div>
 </div>
 <script>
+    const target = $('.usage-help-div');
+    target.hide();
     var paused = false;
 
-    function pauseToogler() {
-        console.log(paused);
+    function pauseToggler() {
         if (paused) {
             arSystem.unpause();
             pauseButtonText.innerHTML = 'Pause';
@@ -44,9 +55,16 @@
     const pauseButton = document.querySelector("#pause-button");
     const pauseButtonText = document.querySelector("#pause-button-text");
     pauseButton.addEventListener('click', () => {
-        pauseToogler();
+        pauseToggler();
     });
 
+    document.querySelector('a-entity').addEventListener("targetFound", event => {
+        target.hide();
+    });
+    document.querySelector('a-entity').addEventListener("targetLost", event => {
+        target.toggle(500);
+    });
+    target.toggle(500);
 </script>
 </body>
 </html>

@@ -1,3 +1,8 @@
+body {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
 body::after {
     position: absolute;
     width: 0;
@@ -16,6 +21,7 @@ body::after {
     url('/static/fonts/calibri/calibri.svg#calibri') format('svg');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -23,7 +29,9 @@ body::after {
     src: url('/static/fonts/calibri/calibri-bold.ttf') format('truetype');
     font-weight: bold;
     font-style: normal;
+    font-display: swap;
 }
+
 
 body {
     background: #FFCC00 no-repeat center center; /* add error background for camera */
@@ -44,14 +52,14 @@ body {
 }
 
 .video-preview {
-    /* Make video to at least 100% wide and tall */
-    /* Center the video */
     width: 100vw;
     height: 100vh;
+    object-fit: cover;
+    z-index: -1;
     position: absolute;
+    left: 50%; /* % of surrounding element */
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); /* % of current element */
 }
 
 .camera-warning {
@@ -67,16 +75,39 @@ body {
     z-index: -3;
 }
 
-.usage-help-div {
+#detected-code-instance {
+    z-index: 1;
+    position: absolute;
+}
+
+#detected-code-text {
+    top: 0;
     left: 0;
+    font-family: Calibri;
+    font-weight: bold;
+    font-size: 3.6vh;
+    white-space: nowrap;
+}
+
+.usage-help-div {
     position: absolute;
     text-align: center;
-    top: 5%;
-    width: 100%;
+    top: 14%;
+    left: 50%;
+    margin-left: -40%;
+    width: 80%;
+    height: auto;
+    background-color: #1a1a1a;
+    border-radius: 10%;
+    border: #FFCC00 0.2vh solid;
     font-family: Calibri;
     font-weight: bold;
     font-size: 3vh;
     z-index: 9999;
+}
+
+.usage-help {
+    color: #FFCC00;
 }
 
 /*bottom bar buttons*/
@@ -87,6 +118,7 @@ body {
     -ms-user-select: none;
     -o-user-select: none;
     user-select: none;
+    z-index: 9999;
 }
 
 .button-container {
@@ -153,7 +185,6 @@ body {
     bottom: 4%;
     transform: translate(-50%, -50%);
     margin: 0 auto;
-    z-index: 10;
 }
 
 .pause-button {
@@ -241,7 +272,7 @@ body {
 /*data-preview */
 .data-preview-text-div {
     padding-top: 10rem;
-    text-align:center ;
+    text-align: center;
 }
 
 .data-preview-text {
@@ -404,7 +435,6 @@ body {
     position: absolute;
     text-align: center;
     width: 50%;
-
     font-family: Calibri;
 }
 
@@ -415,4 +445,81 @@ body {
 
 .whats-this-div-img {
     width: 100%;
+}
+
+/*contact us*/
+.contact-us {
+    touch-action: manipulation;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+    position: fixed;
+    bottom: 6px;
+    right: 6px;
+    width: 80px;
+    height: 20px;
+    z-index: 9999;
+    background-color: #FFCC00;
+    border-radius: 10%;
+    border: #1a1a1a 4px solid;
+    text-align: center;
+    font-family: Calibri;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.a-canvas {
+    z-index: 0 !important;
+}
+
+.mindar-ui-loading {
+    background-color: #FFCC00;
+    opacity: 0.85;
+    z-index: 9998;
+}
+
+.scan-border-div {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    text-align: center;
+    font-family: Calibri;
+    font-weight: bold;
+    font-size: 1.8vh;
+    color: #FFCC00;
+}
+
+.scan-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 66vw;
+    height: 66vw;
+    z-index: 9998;
+
+}
+
+.scan-border-text {
+    position: absolute;
+    top: 8vh;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 60vw;
+    height: 60vw;
+    z-index: 9998;
+}
+
+@media screen and (orientation: landscape) {
+    .scan-border {
+    width: 66vh;
+    height: 66vh;
+    }
 }

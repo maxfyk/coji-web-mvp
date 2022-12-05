@@ -10,7 +10,7 @@ from static.constants import *
 
 app = Flask(__name__)
 CORS(app)
-API_URL = os.environ.get('API_URL') or 'https://api.coji-code.com'
+API_URL = os.environ.get('API_URL') or 'https://api.coji.ai'
 DATA_TYPES = ['text', 'url']  # , 'file'
 
 

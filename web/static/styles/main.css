@@ -478,5 +478,48 @@ body {
     background-color: #FFCC00;
     opacity: 0.85;
     z-index: 9998;
+}
 
+.scan-border-div {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    text-align: center;
+    font-family: Calibri;
+    font-weight: bold;
+    font-size: 1.8vh;
+    color: #FFCC00;
+}
+
+.scan-border {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 66vw;
+    height: 66vw;
+    z-index: 9998;
+
+}
+
+.scan-border-text {
+    position: absolute;
+    top: -8vh;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    width: 300px;
+    height: 300px;
+    z-index: 9998;
+}
+
+@media screen and (orientation: landscape) {
+    .scan-border {
+    width: 66vh;
+    height: 66vh;
+    }
 }

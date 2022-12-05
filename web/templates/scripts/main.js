@@ -84,8 +84,8 @@ async function scanCode() {
     canvas.height = stream.videoHeight;
     let ctx = canvas.getContext('2d');
     ctx.drawImage(stream, 0, 0, canvas.width, canvas.height);
-    console.log(canvas.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', ''));
-    console.log(rect.x, rect.y, document.querySelector('#stream').offsetLeft, document.querySelector('#stream').offsetTop)
+    // console.log(canvas.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', ''));
+    // console.log(rect.x, rect.y, document.querySelector('#stream').offsetLeft, document.querySelector('#stream').offsetTop)
     var imageData = ctx.getImageData(rect.x + (stream.videoWidth / 2 - document.querySelector('#stream').offsetLeft), rect.y + (stream.videoHeight / 2 - document.querySelector('#stream').offsetTop), rect.width, rect.height)
 
     var canvas1 = document.createElement("canvas");
@@ -95,7 +95,6 @@ async function scanCode() {
     ctx1.putImageData(imageData, 0, 0);
 
     var base64Img = canvas1.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
-    console.log(base64Img);
     var data = {
         'decode-type': 'scan', 'in-data': base64Img, 'user-id': null, 'style-info': {
             'name': 'geom-original',

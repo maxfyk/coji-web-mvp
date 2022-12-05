@@ -77,17 +77,26 @@ async function scanCode() {
 
     btnCapture.style.background = "transparent url('/static/icons/scan-loading.gif') no-repeat top left";
     btnCapture.style.backgroundSize = "cover";
+    var rect = document.querySelector('.scan-border').getBoundingClientRect();
     let canvas = document.createElement('canvas');
 
-    canvas.width = 360;
-    canvas.height = canvas.width * (stream.videoHeight / stream.videoWidth);
-
+    canvas.width = stream.videoWidth;
+    canvas.height = stream.videoHeight;
     let ctx = canvas.getContext('2d');
-
     ctx.drawImage(stream, 0, 0, canvas.width, canvas.height);
+    console.log(canvas.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', ''));
+    console.log(rect.x, rect.y, document.querySelector('#stream').offsetLeft, document.querySelector('#stream').offsetTop)
+    var imageData = ctx.getImageData(rect.x + (stream.videoWidth / 2 - document.querySelector('#stream').offsetLeft), rect.y + (stream.videoHeight / 2 - document.querySelector('#stream').offsetTop), rect.width, rect.height)
 
-    var base64Img = canvas.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
+    var canvas1 = document.createElement("canvas");
+    canvas1.width = 250;
+    canvas1.height = 250;
+    var ctx1 = canvas1.getContext("2d");
+    ctx1.putImageData(imageData, 0, 0);
+
+    var base64Img = canvas1.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
     console.log(base64Img);
+    console.log(getElementRec(document.querySelector('#stream')));
     var data = {
         'decode-type': 'scan', 'in-data': base64Img, 'user-id': null, 'style-info': {
             'name': 'geom-original',

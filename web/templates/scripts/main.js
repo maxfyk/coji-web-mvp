@@ -89,8 +89,8 @@ async function scanCode() {
     var imageData = ctx.getImageData(rect.x + (stream.videoWidth / 2 - document.querySelector('#stream').offsetLeft), rect.y + (stream.videoHeight / 2 - document.querySelector('#stream').offsetTop), rect.width, rect.height)
 
     var canvas1 = document.createElement("canvas");
-    canvas1.width = 250;
-    canvas1.height = 250;
+    canvas1.width = 220;
+    canvas1.height = 220;
     var ctx1 = canvas1.getContext("2d");
     ctx1.putImageData(imageData, 0, 0);
 

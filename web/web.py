@@ -106,6 +106,8 @@ def scripts_main_js():
 
 if bool(os.environ.get('IS_DEV_ENV', True)):
     print('CODE GENERATION ENABLED!')
+
+
     @app.route('/create-code')
     def create_code():
         return render_template('create-code.html', data_types=DATA_TYPES)
@@ -134,8 +136,6 @@ if bool(os.environ.get('IS_DEV_ENV', True)):
         else:
             error = 'Wrong values. Please try again!'
         return render_template('create-code.html', ERROR=error)
-
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8001, debug=True)

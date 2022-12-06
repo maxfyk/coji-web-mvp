@@ -1,7 +1,7 @@
 import os
 
 import json
-import requests
+import validators
 import requests as r
 from flask import (Flask, Response, redirect, render_template, request)
 from flask_cors import CORS
@@ -102,6 +102,39 @@ def keyboard_decode_post():
 @app.route('/scripts/main.js')
 def scripts_main_js():
     return render_template('scripts/main.js', API_URL=API_URL)
+
+
+if bool(os.environ.get('IS_DEV_ENV', True)):
+    print('CODE GENERATION ENABLED!')
+    @app.route('/create-code')
+    def create_code():
+        return render_template('create-code.html', data_types=DATA_TYPES)
+
+
+    @app.route('/create-code-submit', methods=['post'])
+    def create_code_post():
+        """Create a new code (post form)"""
+        data_type = request.form.get('data-type', None)
+        in_data = request.form.get(f'{data_type}-in', None)
+        location = request.form.get('location-in', None)
+
+        if data_type and in_data:
+            if data_type == 'url' and validators.url(in_data) or data_type != 'url':
+                data = CREATE_POST_JSON.copy()
+                data['in-data'] = in_data
+                data['data-type'] = data_type
+                data['location'] = location
+                resp = r.post(f'{API_URL}/coji-code/create', json=data)
+                data = resp.json()
+                if resp.status_code == 200 and not data.get('error'):
+                    return render_template('download-code.html', code_image=data['image'], char_code=data['code'])
+                error = data.get('text') or 'Failed create a new code, try again later'
+            else:
+                error = 'You url is not valid!'
+        else:
+            error = 'Wrong values. Please try again!'
+        return render_template('create-code.html', ERROR=error)
+
 
 
 if __name__ == '__main__':

@@ -15,9 +15,11 @@
             border: none;
             overflow: hidden;
         }
+
         body {
             background-color: #FFCC00;
         }
+
         iframe {
             display: block;
             border: none;
@@ -36,6 +38,15 @@
     </style>
 </head>
 <body>
-<iframe id="index-iframe" src="/index-iframe"></iframe>
-</body>
+<script>
+    navigator.geolocation.getCurrentPosition(function (pos) {})
+
+    navigator.mediaDevices.getUserMedia({
+        video: {
+            facingMode: 'environment',
+        }
+    })
+</script>
+<iframe id="index-iframe" src="/index-iframe" allow="camera *; geolocation *;"></iframe>
+</body>;
 </html>

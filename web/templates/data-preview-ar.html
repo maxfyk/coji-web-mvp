@@ -67,9 +67,10 @@
     target.toggle(500);
 
     function renderIndex() {
-        $('body', window.parent.document).append('<iframe id="index-iframe" src="/index-iframe"></iframe>');
+        $('body', window.parent.document).append('<iframe id="index-iframe" src="/index-iframe" allow="camera *; geolocation *;"></iframe>');
         $('#data-preview-iframe', window.parent.document).remove();
     }
-</script>
-</body>
-</html>
+
+    </script>
+    </body>
+    </html>

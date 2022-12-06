@@ -22,6 +22,12 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/index-iframe', methods=['get'])
+def index_iframe():
+    """Index page iframe"""
+    return render_template('index-iframe.html')
+
+
 # data preview page
 @app.route('/data-preview/<id>', methods=['get'])
 def data_preview(id):

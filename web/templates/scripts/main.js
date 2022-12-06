@@ -36,6 +36,7 @@ $(function () {
 });
 
 function initFinish() {
+    $(".scan-border-div").toggle(500);
     $(".usage-help-div").hide();
     $(".usage-help-div").toggle(500);
     $(".usage-help").text('Point your camera at the code and then press the scan button!👀');
@@ -68,6 +69,10 @@ document.getElementById("scan-button").addEventListener("click", function () {
 var failedToScan = false;
 
 async function scanCode() {
+    $('body', window.parent.document).append('<iframe id="data-preview-iframe" src="http://127.0.0.1:8001/data-preview/dnkmdbobckjoefoj"></iframe>');
+    $('#index-iframe', window.parent.document).remove();
+    return;
+
     if (!failedToScan) {
         $(".usage-help").text('Taking a picture...📸\nHold still!');
 
@@ -84,9 +89,16 @@ async function scanCode() {
     canvas.height = stream.videoHeight;
     let ctx = canvas.getContext('2d');
     ctx.drawImage(stream, 0, 0, canvas.width, canvas.height);
-    // console.log(canvas.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', ''));
-    // console.log(rect.x, rect.y, document.querySelector('#stream').offsetLeft, document.querySelector('#stream').offsetTop)
-    var imageData = ctx.getImageData(rect.x + (stream.videoWidth / 2 - document.querySelector('#stream').offsetLeft), rect.y + (stream.videoHeight / 2 - document.querySelector('#stream').offsetTop), rect.width, rect.height)
+    console.log(canvas.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', ''));
+    console.log(rect.x, rect.y, stream.videoWidth, stream.videoHeight, document.querySelector('#stream').offsetLeft, document.querySelector('#stream').offsetTop)
+    console.log($(window).width(), $(window).height());
+    var x = (rect.x * stream.videoWidth) / $(window).width();
+    var y = (rect.y * stream.videoHeight) / $(window).height();
+    var w = (rect.width * stream.videoWidth) / $(window).width();
+    var h = (rect.height * stream.videoHeight) / $(window).height();
+    console.log(w, h);
+    var imageData = ctx.getImageData(x, y, w, h);
+    //+(stream.videoHeight / 2 - document.querySelector('#stream').offsetLeft)
 
     var canvas1 = document.createElement("canvas");
     canvas1.width = 220;
@@ -110,12 +122,12 @@ async function scanCode() {
             'device': platform.product,
         }
     }
+    $(".scan-border-div").hide();
     $(".usage-help").text('Scanning🔎...');
     $('body').append('<div class="mindar-ui-overlay mindar-ui-loading"> <div class="loader"> </div></div>');
     await fetch('{{API_URL}}/coji-code/decode', options = {
-            method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
-        }
-    )
+        method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
+    })
         .then(await function (response) {
             return response.text();
         }).then(await function (text) {
@@ -134,6 +146,7 @@ async function scanCode() {
     btnCapture.style.backgroundSize = "cover";
     failedToScan = true;
     $(".usage-help").text('Please adjust your camera and try again!👀');
+    $(".scan-border-div").toggle(100);
     $('.mindar-ui-loading').remove();
 }
 

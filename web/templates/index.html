@@ -1,114 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-CCXXB5EDB0"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-
-    gtag('config', 'G-CCXXB5EDB0');
-</script>
+<html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    {#<link rel="preload" href="/static/ar-js-static/coji.tflite" as="fetch" crossorigin="anonymous"/>#}
-    <link rel="preload" as="font" href="/static/fonts/calibri/calibri.eot" crossorigin="anonymous">
-    <link rel="preload" as="font" href="/static/fonts/calibri/calibri.svg" crossorigin="anonymous">
-    <link rel="preload" as="font" href="/static/fonts/calibri/calibri.ttf" type="font/ttf" crossorigin="anonymous">
-    <link rel="preload" as="font" href="/static/fonts/calibri/calibri.woff" type="font/woff2" crossorigin="anonymous">
-    <link rel="preload" as="font" href="/static/fonts/calibri/calibri-bold.ttf" type="font/ttf" crossorigin="anonymous">
+    <style type="text/css">
+        html {
+            overflow: auto;
+        }
 
-    <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/favicons/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicons/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicons/favicon-16x16.png">
-    <link rel="manifest" href="/static/icons/favicons/site.webmanifest">
-    <link rel="mask-icon" href="/static/icons/favicons/safari-pinned-tab.svg" color="#5bbad5">
-    <meta name="msapplication-TileColor" content="#da532c">
-    <meta name="theme-color" content="#ffffff">
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
-    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/index-ar.css') }}">
+        html,
+        body,
+        div,
+        iframe {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            border: none;
+            overflow: hidden;
+        }
+        body {
+            background-color: #FFCC00;
+        }
+        iframe {
+            display: block;
+            border: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            z-index: 999999;
+        }
+    </style>
 </head>
-{% if ERROR %}
-    <script>
-        alert("{{ ERROR }}" + '😢');
-    </script>
-{% endif %}
-<style>
-    html, body {
-        overflow: hidden;
-        height: 100%;
-    }
-</style>
-<body scroll="no" style="overflow: hidden">
-<div class="mindar-ui-overlay mindar-ui-loading">
-    <div class="loader"></div>
-</div>
-<a class="camera-warning">Please provide camera access!</a>
-<div class="scan-border-div">
-    <a class="scan-border-text" style="color: #FFCC00;">Make sure code fits into the scanning area!</a>
-    <img src="/static/icons/border.png" class="scan-border" alt="border">
-</div>
-<div class="usage-help-div">
-    <a class="usage-help">Initializing app...</a>
-</div>
-<div class="contact-us" onclick="location.href = 'mailto:mfyk@lvivsoft.com';">
-    <a>Contact us</a>
-</div>
-<div class="buttons-wrap">
-    <div class="info-button-container">
-        <div class="button-container">
-            <button class="info-button" id="info-button" onclick="window.location.href = '/what-is-this';"></button>
-            <small class="button-description">What's </br> this?</small>
-
-        </div>
-
-    </div>
-    <div class="scan-button-container">
-        <div class="button-container">
-            <button class="scan-button" id="scan-button"></button>
-            <small class="button-description">Scan</small>
-        </div>
-    </div>
-    <div class="keyboard-decode-button-container">
-        <div class="button-container">
-            <button class="keyboard-decode-button" id="keyboard-decode-button"
-                    onclick="window.location.href = '/keyboard-decode';"></button>
-            <small class="button-description">Type in</small>
-        </div>
-    </div>
-    {#    <div class="location-decode-button-container">#}
-    {#        <div class="button-container">#}
-    {#            <button class="location-decode-button" id="location-decode-button"#}
-    {#                    onclick="location_redirector();"></button>#}
-    {#            <small class="button-description">Map</small>#}
-    {#        </div>#}
-    {#    </div>#}
-</div>
-
-{#<a-scene#}
-{#        id="a-scene"#}
-{#        mindar-image="imageTargetSrc: ../static/dummy.mind;"#}
-{#        color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"#}
-{#        device-orientation-permission-ui="enabled: false">#}
-{##}
-{#    <a-camera id="stream" position="0 0 0" look-controls="enabled: false"#}
-{#              cursor="fuse: false; rayOrigin: mouse;"#}
-{#              raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>#}
-{#</a-scene>#}
-<video class="video-preview" id="stream" style=""></video>
+<body>
+<iframe id="index-iframe" src="/index-iframe"></iframe>
 </body>
-{#<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>#}
-{#<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs-tflite/dist/tf-tflite.min.js"></script>#}
-<script type="text/javascript" src="https://unpkg.com/platform@1.3.6/platform.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="scripts/main.js"></script>
-
-<script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image.prod.js"></script>
-<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-aframe.prod.js"></script>
 </html>

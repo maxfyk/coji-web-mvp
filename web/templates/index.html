@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <style type="text/css">
         html {
@@ -34,11 +35,27 @@
             overflow: hidden;
             z-index: 999999;
         }
+
+        #centered-iframe-logo-div {
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+
+        #centered-iframe-logo-div #centered-iframe-logo{
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
     </style>
 </head>
 <body>
 <script>
-    navigator.geolocation.getCurrentPosition(function (pos) {})
+    navigator.geolocation.getCurrentPosition(function (pos) {
+    })
 
     navigator.mediaDevices.getUserMedia({
         video: {
@@ -46,6 +63,10 @@
         }
     })
 </script>
+<div id="centered-iframe-logo-div">
+    <img id="centered-iframe-logo" style="top: -10vh;" src="static/icons/logo-small.png">
+    <img id="centered-iframe-logo" style="top: 20vh; width: 10vh; height: 10vh;" src="static/icons/scan-loading.gif">
+</div>
 <iframe id="index-iframe" src="/index-iframe" allow="camera *; geolocation *;"></iframe>
 </body>
 </html>

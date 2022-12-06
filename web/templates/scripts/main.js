@@ -36,6 +36,7 @@ $(function () {
 });
 
 function initFinish() {
+    $(".scan-border-div").toggle();
     $(".usage-help-div").hide();
     $(".usage-help-div").toggle(500);
     $(".usage-help").text('Point your camera at the code and then press the scan button!👀');
@@ -68,6 +69,7 @@ document.getElementById("scan-button").addEventListener("click", function () {
 var failedToScan = false;
 
 async function scanCode() {
+
     if (!failedToScan) {
         $(".usage-help").text('Taking a picture...📸\nHold still!');
 
@@ -80,13 +82,21 @@ async function scanCode() {
     var rect = document.querySelector('.scan-border').getBoundingClientRect();
     let canvas = document.createElement('canvas');
 
+
     canvas.width = stream.videoWidth;
     canvas.height = stream.videoHeight;
     let ctx = canvas.getContext('2d');
     ctx.drawImage(stream, 0, 0, canvas.width, canvas.height);
     // console.log(canvas.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', ''));
     // console.log(rect.x, rect.y, document.querySelector('#stream').offsetLeft, document.querySelector('#stream').offsetTop)
-    var imageData = ctx.getImageData(rect.x + (stream.videoWidth / 2 - document.querySelector('#stream').offsetLeft), rect.y + (stream.videoHeight / 2 - document.querySelector('#stream').offsetTop), rect.width, rect.height)
+    var x = (window.screen.width * rect.x) / window.innerWidth;
+    var y = (window.screen.height * rect.y) / window.innerHeight;
+    var w = (window.screen.width * rect.width) / window.innerWidth;
+    var h = (window.screen.height * rect.height) / window.innerHeight;
+    h = w = Math.max.apply(null, [h, w]);
+    var offsetLeft = (window.screen.width * document.querySelector('#stream').offsetLeft) / window.innerWidth;
+    var offsetTop = (window.screen.height * document.querySelector('#stream').offsetTop) / window.innerHeight;
+    var imageData = ctx.getImageData(x + (stream.videoWidth / 2 - offsetLeft), y + (stream.videoHeight / 2 - offsetTop), w, h)
 
     var canvas1 = document.createElement("canvas");
     canvas1.width = 220;
@@ -95,7 +105,6 @@ async function scanCode() {
     ctx1.putImageData(imageData, 0, 0);
 
     var base64Img = canvas1.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
-    console.log(base64Img);
     var data = {
         'decode-type': 'scan', 'in-data': base64Img, 'user-id': null, 'style-info': {
             'name': 'geom-original',
@@ -110,12 +119,12 @@ async function scanCode() {
             'device': platform.product,
         }
     }
+    $(".scan-border-div").hide();
     $(".usage-help").text('Scanning🔎...');
     $('body').append('<div class="mindar-ui-overlay mindar-ui-loading"> <div class="loader"> </div></div>');
     await fetch('{{API_URL}}/coji-code/decode', options = {
-            method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
-        }
-    )
+        method: 'POST', body: JSON.stringify(data), headers: headers, mode: 'cors'
+    })
         .then(await function (response) {
             return response.text();
         }).then(await function (text) {
@@ -127,13 +136,15 @@ async function scanCode() {
                 // alert(resp['text'])
             } else {
                 failedToScan = false;
-                window.location.replace('data-preview/' + resp['code-id']);
+                $('body', window.parent.document).append('<iframe id="data-preview-iframe" src="' + 'data-preview/' + resp['code-id'] + '" allow="camera *; geolocation *;"></iframe>');
+                $('#index-iframe', window.parent.document).remove();
             }
         });
     btnCapture.style.background = "transparent url('/static/icons/scan-button.png') no-repeat top left";
     btnCapture.style.backgroundSize = "cover";
     failedToScan = true;
     $(".usage-help").text('Please adjust your camera and try again!👀');
+    $(".scan-border-div").toggle(100);
     $('.mindar-ui-loading').remove();
 }
 

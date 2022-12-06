@@ -281,19 +281,30 @@ body {
 }
 
 /*create-code*/
+
+.sub-data-input {
+    border-radius: 2rem;
+    background-color: #1a1a1a;
+    color: #FFCC00;
+    font-family: Calibri;
+    font-size: 1.8rem;
+    white-space: nowrap;
+    height: 4rem;
+    left: 25% !important;
+}
+
 .create-code {
-    left: 0;
+    left: 0 !important;
     line-height: 200px;
     margin-top: 4% !important;
     position: absolute;
     text-align: center;
     width: 50%;
-
     font-family: Calibri;
 }
 
 .create-code-char-code {
-    left: 0;
+    left: 0 !important;;
     line-height: 200px;
     margin-top: -2% !important;
     font-size: 200% !important;
@@ -330,17 +341,6 @@ body {
     height: 50rem;
 }
 
-
-.sub-data-input {
-    border-radius: 2rem;
-    background-color: #1a1a1a;
-    color: #FFCC00;
-    font-family: Calibri;
-    font-size: 1.8rem;
-    white-space: nowrap;
-    height: 4rem;
-    left: 25% !important;
-}
 
 .code-id-div {
     left: 25%;
@@ -561,29 +561,6 @@ body {
     border: #1a1a1a 0.5vh solid;
 }
 
-.create-code {
-    left: 0;
-    line-height: 200px;
-    margin-top: 4% !important;
-    position: absolute;
-    text-align: center;
-    width: 50%;
-
-    font-family: Calibri;
-}
-
-
-.create-code-char-code {
-    left: 0;
-    line-height: 200px;
-    margin-top: -2% !important;
-    font-size: 200% !important;
-    position: absolute;
-    text-align: center;
-    width: 50%;
-    font-family: Calibri;
-}
-
 /*what's this*/
 .whats-this-div {
     width: 100%;
@@ -602,18 +579,18 @@ body {
     -o-user-select: none;
     user-select: none;
     position: fixed;
-    bottom: 6px;
-    right: 6px;
-    width: 80px;
-    height: 20px;
+    bottom: 0.4vh;
+    right: 0.4vh;
+    width: 8vh;
+    height: 2vh;
     z-index: 9999;
     background-color: #FFCC00;
     border-radius: 10%;
-    border: #1a1a1a 4px solid;
+    border: #1a1a1a 0.4vh solid;
     text-align: center;
     font-family: Calibri;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 1.6vh;
 }
 
 .a-canvas {
@@ -665,7 +642,10 @@ body {
 
 @media screen and (orientation: landscape) {
     .scan-border {
-        width: 66vh;
-        height: 66vh;
+        width: 44vh;
+        height: 44vh;
+    }
+    .scan-button-container{
+        z-index: 999999999;
     }
 }

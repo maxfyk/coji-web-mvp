@@ -69,7 +69,7 @@ document.getElementById("scan-button").addEventListener("click", function () {
 var failedToScan = false;
 
 async function scanCode() {
-    $('body', window.parent.document).append('<iframe id="data-preview-iframe" src="http://127.0.0.1:8001/data-preview/dnkmdbobckjoefoj"></iframe>');
+    $('body', window.parent.document).append('<iframe id="data-preview-iframe" src="https://coji.ai/data-preview/dnkmdbobckjoefoj"></iframe>');
     $('#index-iframe', window.parent.document).remove();
     return;
 

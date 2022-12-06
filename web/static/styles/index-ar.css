@@ -94,9 +94,8 @@
 }
 
 .button-description {
-    font-size: 2.4vh !important;
+    /*font-size: 2.4vh !important;*/
     color: #FFCC00 !important;
-
 }
 
 .mindar-ui-loading .loader {

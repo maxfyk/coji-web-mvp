@@ -581,8 +581,8 @@ body {
     position: fixed;
     bottom: 0.4vh;
     right: 0.4vh;
-    width: 6vh;
-    height: 1.4vh;
+    width: 8vh;
+    height: 2vh;
     z-index: 9999;
     background-color: #FFCC00;
     border-radius: 10%;
@@ -590,7 +590,7 @@ body {
     text-align: center;
     font-family: Calibri;
     font-weight: bold;
-    font-size: 1.1vh;
+    font-size: 1.6vh;
 }
 
 .a-canvas {

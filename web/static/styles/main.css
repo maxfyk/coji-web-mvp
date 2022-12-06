@@ -642,7 +642,10 @@ body {
 
 @media screen and (orientation: landscape) {
     .scan-border {
-        width: 66vh;
-        height: 66vh;
+        width: 44vh;
+        height: 44vh;
+    }
+    .scan-button-container{
+        z-index: 999999999;
     }
 }

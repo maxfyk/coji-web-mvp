@@ -96,7 +96,7 @@ async function scanCode() {
     h = w = Math.max.apply(null, [h, w]);
     var offsetLeft = (window.screen.width * document.querySelector('#stream').offsetLeft) / window.innerWidth;
     var offsetTop = (window.screen.height * document.querySelector('#stream').offsetTop) / window.innerHeight;
-    var imageData = ctx.getImageData(x + (stream.videoWidth / 2 - offsetLeft) - 10, y + (stream.videoHeight / 2 - offsetTop) - 10, w + 10, h + 10)
+    var imageData = ctx.getImageData(((x + (stream.videoWidth / 2 - offsetLeft)) + w / 4) * 0.85, ((y + (stream.videoHeight / 2 - offsetTop)) + h / 4) * 0.85, w, h)
 
     var canvas1 = document.createElement("canvas");
     canvas1.width = 220;
@@ -105,6 +105,7 @@ async function scanCode() {
     ctx1.putImageData(imageData, 0, 0);
 
     var base64Img = canvas1.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', '');
+    return;
     var data = {
         'decode-type': 'scan', 'in-data': base64Img, 'user-id': null, 'style-info': {
             'name': 'geom-original',

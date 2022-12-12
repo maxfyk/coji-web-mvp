@@ -61,6 +61,10 @@
     document.querySelector('a-entity').addEventListener("targetFound", event => {
         target.hide();
         pauseToggler();
+        setTimeout(function () {
+
+            pauseToggler();
+        }, 100);
     });
     document.querySelector('a-entity').addEventListener("targetLost", event => {
         target.toggle(500);

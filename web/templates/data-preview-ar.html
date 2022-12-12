@@ -13,10 +13,12 @@
 <div class="usage-help-div">
     <a class="usage-help">Now point your camera at the code to sight the data!🎉</a>
 </div>
-<div class="contact-us" onclick="window.parent.location.href = 'mailto:mfyk@lvivsoft.com';">
-    <a>Contact us</a>
+{#<div class="contact-us" onclick="window.parent.location.href = 'mailto:mfyk@lvivsoft.com';">#}
+{#    <a>Contact us</a>#}
+{#</div>#}
+<div class="contact-us" onclick="window.parent.location.href = '/what-is-this';">
+    <a>What's this?</a>
 </div>
-
 {% autoescape off %}
 {{ PREVIEW_CODE }}
 {% endautoescape %}
@@ -60,11 +62,6 @@
 
     document.querySelector('a-entity').addEventListener("targetFound", event => {
         target.hide();
-        pauseToggler();
-        setTimeout(function () {
-
-            pauseToggler();
-        }, 1000);
     });
     document.querySelector('a-entity').addEventListener("targetLost", event => {
         target.toggle(500);

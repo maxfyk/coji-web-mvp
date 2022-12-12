@@ -133,19 +133,19 @@ async function scanCode() {
 
             var resp = JSON.parse(text);
             if (resp['error']) {
-                // alert(resp['text'])
+                btnCapture.style.background = "transparent url('/static/icons/scan-button.png') no-repeat top left";
+                btnCapture.style.backgroundSize = "cover";
+                failedToScan = true;
+                $(".usage-help").text('Please adjust your camera and try again!👀');
+                $(".scan-border-div").toggle(100);
+                $('.mindar-ui-loading').remove();
             } else {
                 failedToScan = false;
                 $('#index-iframe', window.parent.document).attr('src', 'data-preview/' + resp['code-id']);
-                return;
+                $(".usage-help").text('Loading...');
+
             }
         });
-    btnCapture.style.background = "transparent url('/static/icons/scan-button.png') no-repeat top left";
-    btnCapture.style.backgroundSize = "cover";
-    failedToScan = true;
-    $(".usage-help").text('Please adjust your camera and try again!👀');
-    $(".scan-border-div").toggle(100);
-    $('.mindar-ui-loading').remove();
 }
 
 String.prototype.width = function (font) {

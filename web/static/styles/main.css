@@ -215,10 +215,10 @@ body {
 .scan-button {
     display: flex;
     align-items: center;
-    width: 18vh;
-    height: 18vh;
-    max-height: 22vw;
-    max-width: 22vw;
+    width: 22vh;
+    height: 22vh;
+    max-height: 26vw;
+    max-width: 26vw;
     display: block;
     margin: 0 auto;
     background: transparent url('/static/icons/scan-button.png') no-repeat top left;
@@ -264,7 +264,7 @@ body {
     color: #1a1a1a;
     font-family: Calibri;
     font-weight: bold;
-    font-size: 280%;
+    font-size: 300%;
 
 }
 

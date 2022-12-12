@@ -89,10 +89,10 @@ async function scanCode() {
     ctx.drawImage(stream, 0, 0, canvas.width, canvas.height);
     // console.log(canvas.toDataURL('image/jpeg', 1).replace('data:image/jpeg;base64,', ''));
     // console.log(rect.x, rect.y, document.querySelector('#stream').offsetLeft, document.querySelector('#stream').offsetTop)
-    var x = (window.screen.width * rect.x) / window.innerWidth - 10;
-    var y = (window.screen.height * rect.y) / window.innerHeight - 10;
-    var w = (window.screen.width * rect.width) / window.innerWidth + 10;
-    var h = (window.screen.height * rect.height) / window.innerHeight + 10;
+    var x = (window.screen.width * rect.x) / window.innerWidth;
+    var y = (window.screen.height * rect.y) / window.innerHeight;
+    var w = (window.screen.width * rect.width) / window.innerWidth;
+    var h = (window.screen.height * rect.height) / window.innerHeight;
     h = w = Math.max.apply(null, [h, w]);
     var offsetLeft = (window.screen.width * document.querySelector('#stream').offsetLeft) / window.innerWidth;
     var offsetTop = (window.screen.height * document.querySelector('#stream').offsetTop) / window.innerHeight;

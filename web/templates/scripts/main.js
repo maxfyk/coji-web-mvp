@@ -142,6 +142,7 @@ async function scanCode() {
             } else {
                 failedToScan = false;
                 $('#index-iframe', window.parent.document).attr('src', 'data-preview/' + resp['code-id']);
+                window.parent.history.pushState({}, 'AR', 'data-preview/' + resp['code-id']);
                 $(".usage-help").text('Loading...');
 
             }

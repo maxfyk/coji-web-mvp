@@ -96,7 +96,7 @@ async function scanCode() {
     h = w = Math.max.apply(null, [h, w]);
     var offsetLeft = (window.screen.width * document.querySelector('#stream').offsetLeft) / window.innerWidth;
     var offsetTop = (window.screen.height * document.querySelector('#stream').offsetTop) / window.innerHeight;
-    var imageData = ctx.getImageData(x + (stream.videoWidth / 2 - offsetLeft), y + (stream.videoHeight / 2 - offsetTop), w, h)
+    var imageData = ctx.getImageData(x + (stream.videoWidth / 2 - offsetLeft) - 10, y + (stream.videoHeight / 2 - offsetTop) - 10, w + 10, h + 10)
 
     var canvas1 = document.createElement("canvas");
     canvas1.width = 220;

@@ -53,16 +53,17 @@
     </style>
 </head>
 <body>
-{#<script>#}
-{#    navigator.geolocation.getCurrentPosition(function (pos) {#}
-{#    })#}
-{##}
-{#    navigator.mediaDevices.getUserMedia({#}
-{#        video: {#}
-{#            facingMode: 'environment',#}
-{#        }#}
-{#    })#}
-{#</script>#}
+<script>
+    const isMobile = navigator.userAgentData.mobile; //resolves true/false
+    if (!isMobile) {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const force = urlParams.get('force');
+        if (force !== 'yup') {
+            window.location.replace('/what-is-this');
+        }
+    }
+</script>
 <div id="centered-iframe-logo-div">
     <img id="centered-iframe-logo" style="top: -10vh;" src="static/icons/logo-small.png">
     <img id="centered-iframe-logo" style="top: 20vh; width: 10vh; height: 10vh;" src="static/icons/scan-loading.gif">

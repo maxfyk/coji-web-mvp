@@ -136,8 +136,8 @@ async function scanCode() {
                 // alert(resp['text'])
             } else {
                 failedToScan = false;
-                $('body', window.parent.document).append('<iframe id="data-preview-iframe" src="' + 'data-preview/' + resp['code-id'] + '" allow="camera *; geolocation *;"></iframe>');
-                $('#index-iframe', window.parent.document).remove();
+                $('#index-iframe', window.parent.document).attr('src', 'data-preview/' + resp['code-id']);
+                return;
             }
         });
     btnCapture.style.background = "transparent url('/static/icons/scan-button.png') no-repeat top left";

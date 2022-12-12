@@ -60,6 +60,7 @@
 
     document.querySelector('a-entity').addEventListener("targetFound", event => {
         target.hide();
+        pauseToggler();
     });
     document.querySelector('a-entity').addEventListener("targetLost", event => {
         target.toggle(500);

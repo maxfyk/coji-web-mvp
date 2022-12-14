@@ -40,12 +40,12 @@
 
     var paused = false;
 
-    function pauseToggler() {
+    function pauseToggler(keepVideo=false) {
         if (paused) {
             arSystem.unpause();
             pauseButtonText.innerHTML = 'Freeze';
         } else {
-            arSystem.pause();
+            arSystem.pause(keepVideo);
             pauseButtonText.innerHTML = 'Resume';
         }
         paused = !paused;
@@ -56,7 +56,7 @@
     const pauseButton = document.querySelector("#pause-button");
     const pauseButtonText = document.querySelector("#pause-button-text");
     pauseButton.addEventListener('click', () => {
-        pauseToggler();
+        pauseToggler(true);
     });
 
     const usageHelpDiv = $('.usage-help-div');

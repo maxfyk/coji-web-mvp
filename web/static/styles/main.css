@@ -92,7 +92,7 @@ body {
 .usage-help-div {
     position: absolute;
     text-align: center;
-    top: 14%;
+    top: 14vh;
     left: 50%;
     margin-left: -40%;
     width: 80%;
@@ -190,10 +190,10 @@ body {
 .pause-button {
     display: flex;
     align-items: center;
-    width: 18vh;
-    height: 18vh;
-    max-height: 22vw;
-    max-width: 22vw;
+    width: 22vh;
+    height: 22vh;
+    max-height: 26vw;
+    max-width: 26vw;
     display: block;
     margin: 0 auto;
     background: transparent url('/static/icons/pause.png') no-repeat top left;

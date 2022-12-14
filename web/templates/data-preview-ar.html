@@ -40,7 +40,7 @@
 
     var paused = false;
 
-    function pauseToggler(keepVideo=false) {
+    function pauseToggler(keepVideo = false) {
         if (paused) {
             arSystem.unpause();
             pauseButtonText.innerHTML = 'Freeze';
@@ -49,6 +49,13 @@
             pauseButtonText.innerHTML = 'Resume';
         }
         paused = !paused;
+    }
+
+    function doBounce(element, times, distance, speed) {
+        for (i = 0; i < times; i++) {
+            element.animate({paddingTop: '-=' + distance}, speed)
+                .animate({paddingTop: '+=' + distance}, speed);
+        }
     }
 
     const sceneEl = document.querySelector('a-scene');
@@ -60,8 +67,10 @@
     });
 
     const usageHelpDiv = $('.usage-help-div');
+
     document.querySelector('a-entity').addEventListener("targetFound", event => {
         usageHelpDiv.hide();
+        doBounce($(".pause-button-container"), 4, '46px', 320);
     });
     document.querySelector('a-entity').addEventListener("targetLost", event => {
         usageHelpDiv.toggle(500);

@@ -62,7 +62,6 @@
     const usageHelpDiv = $('.usage-help-div');
     document.querySelector('a-entity').addEventListener("targetFound", event => {
         usageHelpDiv.hide();
-        pauseToggler(true);
     });
     document.querySelector('a-entity').addEventListener("targetLost", event => {
         usageHelpDiv.toggle(500);

@@ -3,7 +3,7 @@ import os
 import json
 import validators
 import requests as r
-from flask import (Flask, Response, redirect, render_template, request)
+from flask import (Flask, Response, redirect, render_template, request, send_file)
 from flask_cors import CORS
 
 from static.constants import *
@@ -111,6 +111,16 @@ def keyboard_decode_post():
 @app.route('/scripts/main.js')
 def scripts_main_js():
     return render_template('scripts/main.js', API_URL=API_URL)
+
+
+@app.route('/styles/main.css')
+def main_css():
+    return send_file('/app/static/styles/main.css')
+
+
+@app.route('/styles/index-ar.css')
+def index_ar_css():
+    return send_file('/app/static/styles/index-ar.css')
 
 
 # @app.route('/ar')

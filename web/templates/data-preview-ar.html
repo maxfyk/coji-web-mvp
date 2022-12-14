@@ -37,8 +37,7 @@
     </div>
 </div>
 <script>
-    const target = $('.usage-help-div');
-    target.hide();
+
     var paused = false;
 
     function pauseToggler() {
@@ -60,13 +59,17 @@
         pauseToggler();
     });
 
+    const usageHelpDiv = $('.usage-help-div');
     document.querySelector('a-entity').addEventListener("targetFound", event => {
-        target.hide();
+        usageHelpDiv.hide();
+        pauseToggler();
     });
     document.querySelector('a-entity').addEventListener("targetLost", event => {
-        target.toggle(500);
+        usageHelpDiv.toggle(500);
     });
-    target.toggle(500);
+    usageHelpDiv.hide();
+    usageHelpDiv.toggle(500);
+
 
     function renderIndex() {
         $('#index-iframe', window.parent.document).attr('src', '/index-iframe');

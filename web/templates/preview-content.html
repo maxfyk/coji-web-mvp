@@ -296,6 +296,7 @@
                 } else {
                     $('.usage-help').text(final_transcript + '❌');
                     $('#speak-icon').attr('src', 'https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/wrong-icon.png');
+                    speechRecognition.stop();
 
                 }
             } else {

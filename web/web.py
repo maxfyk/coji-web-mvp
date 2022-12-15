@@ -123,14 +123,14 @@ def index_ar_css():
     return send_file('static/styles/index-ar.css')
 
 
-# @app.route('/ar')
-# def ar():
-#     return render_template('preview.html')
+@app.route('/ar')
+def ar():
+    return render_template('preview.html')
 
-#
-# @app.route('/preview-content')
-# def ar_content():
-#     return render_template('preview-content.html')
+
+@app.route('/preview-content')
+def ar_content():
+    return render_template('preview-content.html')
 
 
 if bool(os.environ.get('IS_DEV_ENV', True)):

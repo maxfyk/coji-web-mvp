@@ -1,0 +1,314 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image.prod.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-aframe.prod.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" media="all" href="/styles/main.css">
+    <link rel="stylesheet" media="all" href="/styles/index-ar.css">
+</head>
+<style>
+    .usage-help {
+        color: #D9D9D9;
+    }
+
+    #dodo-logo {
+        margin-top: 1vh;
+        height: 100%;
+        width: auto;
+    }
+
+    #dodo-logo-div {
+        text-align: center;
+        width: 100%;
+        height: 12vh;
+    }
+
+    #speak-icon-div {
+        text-align: center;
+        width: 100%;
+        height: auto;
+        margin-top: 12vh;
+        display: none;
+    }
+
+    #speak-icon {
+        height: 4vh;
+        width: auto;
+    }
+
+    .video-blurred {
+        -o-filter: blur(20px);
+        filter: blur(20px);
+    }
+</style>
+<body>
+
+<div id="dodo-logo-div">
+    <img src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/dodo-logo.png" id="dodo-logo">
+</div>
+<div class="usage-help-div">
+    <a class="usage-help">Now point your camera at the code to sight the data!🎉</a>
+</div>
+<div id="speak-icon-div">
+    <img src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/speak-icon.png" id="speak-icon">
+</div>
+<div class="contact-us" onclick="window.parent.location.href = '/what-is-this';">
+    <a>What's this?</a>
+</div>
+
+<script>
+    AFRAME.registerComponent('weblink', {
+        init() {
+            this.el.addEventListener('click', (evt) => {
+                window.open(evt['srcElement']['attributes']['weblink']['nodeValue'], '_blank').focus();
+            });
+        }
+    });
+    AFRAME.registerComponent('startgame', {
+        init() {
+            this.el.addEventListener('click', (evt) => {
+                startGame();
+            });
+        }
+    });
+    AFRAME.registerComponent('showpromocode', {
+        init() {
+            this.el.addEventListener('click', (evt) => {
+                showPromocode();
+            });
+        }
+    });
+    AFRAME.registerComponent('sharepromocode', {
+        init() {
+            this.el.addEventListener('click', (evt) => {
+                window.parent.navigator.clipboard.writeText('EJF5');
+                $('.usage-help').text('Промокод скопійовано!');
+            });
+        }
+    });
+</script>
+<a-scene
+        mindar-image="imageTargetSrc: https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/code.mind; filterMinCF:0.0001; filterBeta: 0.01;"
+        color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false">
+    <a-assets>
+        <img crossorigin="anonymous" id="play"
+             src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/play-button.png"/>
+        <img crossorigin="anonymous" id="kolyada-text-task"
+             src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/kolyada-text-task.png"/>
+        <img crossorigin="anonymous" id="kolyada-text-win"
+             src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/kolyada-text-win.png"/>
+        <img crossorigin="anonymous" id="get-promocode"
+             src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/get-promocode.png"/>
+        <img crossorigin="anonymous" id="promocode"
+             src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/promocode.png"/>
+    </a-assets>
+    <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"
+              raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
+
+    <a-entity mindar-image-target="targetIndex: 0">
+
+        <a-image id="play-button" src="#play" class="clickable" startgame
+                 position="0 0 0"
+                 scale="0.63 0.3 1"
+                 rotation="0 0 0"
+                 transparent="true">
+        </a-image>
+
+    </a-entity>
+</a-scene>
+
+
+<div class="buttons-wrap">
+    <div class="scan-button-container-swapped">
+        <div class="button-container">
+            <button class="scan-button-swapped" id="scan-button-swapped" onclick="window.location.href = '/';"></button>
+            <small class="button-description">Home</small>
+        </div>
+    </div>
+    <div class="pause-button-container">
+        <div class="button-container">
+            <button class="pause-button" id="pause-button"></button>
+            <small class="button-description" id="pause-button-text">Freeze</small>
+        </div>
+    </div>
+</div>
+<script>
+
+    var paused = false;
+
+    function pauseToggler(keepVideo = false) {
+        if (paused) {
+            arSystem.unpause();
+            pauseButtonText.innerHTML = 'Freeze';
+        } else {
+            arSystem.pause(keepVideo);
+            pauseButtonText.innerHTML = 'Resume';
+        }
+        paused = !paused;
+    }
+
+    const sceneEl = document.querySelector('a-scene');
+    const arSystem = sceneEl.systems["mindar-image-system"];
+    const pauseButton = document.querySelector("#pause-button");
+    const pauseButtonText = document.querySelector("#pause-button-text");
+    pauseButton.addEventListener('click', () => {
+        pauseToggler();
+    });
+
+
+    function doBounce(element, times, distance, speed) {
+        for (i = 0; i < times; i++) {
+            element.animate({paddingTop: '-=' + distance}, speed)
+                .animate({paddingTop: '+=' + distance}, speed);
+        }
+    }
+
+    const usageHelpDiv = $('.usage-help-div');
+    const usageHelpText = $('.usage-help');
+    usageHelpText.text('Тепер наведіть камеру на код, щоб розпочати!🎉');
+
+    document.querySelector('a-entity').addEventListener("targetFound", event => {
+        usageHelpDiv.hide();
+        usageHelpDiv.toggle(500)
+        document.querySelector('video').classList.add('video-blurred');
+        usageHelpText.text('Завершіть колядку та отримайте промокод!🎁');
+        doBounce($(".pause-button-container"), 4, '46px', 320);
+    });
+    document.querySelector('a-entity').addEventListener("targetLost", event => {
+        usageHelpText.text('Тримайте камеру наведеною на код або скористайтеся кнопкою "Freeze"!');
+        document.querySelector('video').classList.remove('video-blurred');
+
+    });
+    usageHelpDiv.hide();
+    usageHelpDiv.toggle(500);
+
+
+    function renderIndex() {
+        $('#index-iframe', window.parent.document).attr('src', '/index-iframe');
+    }
+
+    async function startGame() {
+        pauseToggler(true);
+        var playButton = document.querySelector('#play-button');
+        playButton.parentNode.removeChild(playButton);
+        usageHelpText.hide();
+        usageHelpText.toggle(500);
+        usageHelpText.text('Скажіть слово, яке має бути вкінці колядки!');
+        $('#speak-icon-div').toggle(200);
+
+
+        $('a-entity').append('<a-image id="kolyada-text-task-entity" src="#kolyada-text-task"\
+                             position="0 0 -2"\
+                             scale="1.575 1 1"\
+                             rotation="0 0 0"\
+                             transparent="true"\
+                             animation="property: position; to: 0 0 0; dur: 200; easing: linear;">\
+                             </a-image>'
+        );
+        await detectWord();
+    }
+
+    async function showWin() {
+        var kolyada = document.querySelector('#kolyada-text-task-entity');
+        kolyada.parentNode.removeChild(kolyada);
+        $('a-entity').append('<a-image id="kolyada-text-task-win" src="#kolyada-text-win"\
+                             position="0 0 -6"\
+                             scale="1.575 1 1"\
+                             rotation="0 0 0"\
+                             transparent="true"\
+                             animation="property: position; to: 0 0 0; dur: 1000; easing: linear;">\
+                             </a-image>'
+        );
+        $('a-entity').append('<a-image id="get-promocode-button" src="#get-promocode"\
+                             position="0 0 -6"\
+                             scale="0.92 0.322 1"\
+                             rotation="0 0 0"\
+                             transparent="true"\
+                             class="clickable"\
+                             showpromocode\
+                             animation="property: position; to: 0 -1 0; dur: 1000; easing: linear;">\
+                             </a-image>'
+        );
+        usageHelpText.hide();
+        usageHelpText.toggle(500);
+        usageHelpText.text('Правильно!✨');
+        $('#speak-icon').attr('src', 'https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/win-icon.png');
+
+    }
+
+    async function showPromocode() {
+        var kolyada = document.querySelector('#kolyada-text-task-win');
+        kolyada.parentNode.removeChild(kolyada);
+        var btn = document.querySelector('#get-promocode-button');
+        btn.parentNode.removeChild(btn);
+        $('#speak-icon-div').toggle(200);
+        usageHelpText.text('Покажіть цей код менеджеру або використайте в інтернет магазині!✨');
+        usageHelpText.hide();
+        usageHelpText.toggle(500);
+        $('a-entity').append('<a-image id="promocode-button" src="#promocode"\
+                             position="0 0 -4"\
+                             scale="0.918 0.876 1"\
+                             rotation="0 0 0"\
+                             transparent="true"\
+                             class="clickable"\
+                             sharepromocode\
+                             animation="property: position; to: 0 0 0; dur: 800; easing: linear;">\
+                             </a-image>'
+        );
+    }
+
+    async function detectWord() {
+        let speechRecognition = new webkitSpeechRecognition();
+        let final_transcript = "";
+
+        speechRecognition.continuous = true;
+        speechRecognition.interimResults = true;
+        speechRecognition.lang = 'uk-UA';
+
+        speechRecognition.onstart = () => {
+            console.log('speech rec started');
+        };
+        speechRecognition.onerror = () => {
+            console.log('speech rec onerror');
+
+        };
+        speechRecognition.onend = () => {
+            console.log('speech rec onend');
+            showWin();
+        };
+
+        speechRecognition.onresult = (event) => {
+            let interim_transcript = "";
+
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    final_transcript += event.results[i][0].transcript;
+                } else {
+                    interim_transcript += event.results[i][0].transcript;
+                }
+            }
+            if (interim_transcript) {
+                if (interim_transcript.includes('паляниця')) {
+                    console.log('win!');
+                    speechRecognition.stop();
+                } else {
+                    $('.usage-help').text(interim_transcript + '❌');
+                    $('#speak-icon').attr('src', 'https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/wrong-icon.png');
+
+                }
+            } else {
+                $('.usage-help').text('Очікую варіанти відповіді...');
+                $('#speak-icon').attr('src', 'https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/speak-icon.png');
+            }
+
+        };
+        speechRecognition.start();
+
+    }
+
+</script>
+</body>
+</html>

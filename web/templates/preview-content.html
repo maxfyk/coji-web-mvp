@@ -44,10 +44,6 @@
     }
 </style>
 <body>
-
-<div id="dodo-logo-div">
-    <img src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/dodo-logo.png" id="dodo-logo">
-</div>
 <div class="usage-help-div">
     <a class="usage-help">Now point your camera at the code to sight the data!🎉</a>
 </div>
@@ -112,7 +108,7 @@
 
         <a-image id="play-button" src="#play" class="clickable" startgame
                  position="0 0 0"
-                 scale="0.63 0.3 1"
+                 scale="0.7875 0.375 1"
                  rotation="0 0 0"
                  transparent="true">
         </a-image>
@@ -290,6 +286,7 @@
                     interim_transcript += event.results[i][0].transcript;
                 }
             }
+            console.log(interim_transcript);
             if (interim_transcript) {
                 if (interim_transcript.includes('паляниця')) {
                     console.log('win!');

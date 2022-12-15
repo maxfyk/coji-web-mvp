@@ -258,7 +258,6 @@
 
     async function detectWord() {
         let speechRecognition = new webkitSpeechRecognition();
-        let final_transcript = "";
         let detected = false;
         speechRecognition.continuous = true;
         speechRecognition.interimResults = true;
@@ -282,25 +281,20 @@
         };
         speechRecognition.start();
 
+        let final_transcript = '';
         speechRecognition.onresult = (event) => {
-            let interim_transcript = "";
-
             for (let i = event.resultIndex; i < event.results.length; ++i) {
                 if (event.results[i].isFinal) {
                     final_transcript += event.results[i][0].transcript;
-                } else {
-                    interim_transcript += event.results[i][0].transcript;
                 }
             }
-            console.log(interim_transcript);
-            console.log(final_transcript);
-            if (interim_transcript) {
-                if (interim_transcript.includes('паляниця')) {
+            if (final_transcript) {
+                if (final_transcript.includes('паляниця')) {
                     console.log('win!');
                     speechRecognition.stop();
                     detected = true;
                 } else {
-                    $('.usage-help').text(interim_transcript + '❌');
+                    $('.usage-help').text(final_transcript + '❌');
                     $('#speak-icon').attr('src', 'https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/wrong-icon.png');
 
                 }
@@ -308,6 +302,7 @@
                 $('.usage-help').text('Очікую варіанти відповіді...');
                 $('#speak-icon').attr('src', 'https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/speak-icon.png');
             }
+            final_transcript = '';
 
         };
 

@@ -259,7 +259,7 @@
     async function detectWord() {
         let speechRecognition = new webkitSpeechRecognition();
         let final_transcript = "";
-
+        let detected = false;
         speechRecognition.continuous = true;
         speechRecognition.interimResults = true;
         speechRecognition.lang = 'uk-UA';
@@ -273,7 +273,12 @@
         };
         speechRecognition.onend = () => {
             console.log('speech rec onend');
-            showWin();
+            if (!detected) {
+                speechRecognition.start();
+            } else {
+                showWin();
+            }
+
         };
 
         speechRecognition.onresult = (event) => {
@@ -291,6 +296,7 @@
                 if (interim_transcript.includes('паляниця')) {
                     console.log('win!');
                     speechRecognition.stop();
+                    detected = true;
                 } else {
                     $('.usage-help').text(interim_transcript + '❌');
                     $('#speak-icon').attr('src', 'https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/wrong-icon.png');

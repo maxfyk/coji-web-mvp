@@ -1,9 +1,9 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <script src="/js-static/mindar-image.prod.js"></script>
-    <script src="/js-static/aframe.min.js"></script>
-    <script src="/js-static/mindar-image-aframe.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image.prod.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-aframe.prod.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <link rel="stylesheet" media="all" href="/styles/main.css">
     <link rel="stylesheet" media="all" href="/styles/index-ar.css">
@@ -89,7 +89,7 @@
         mindar-image="imageTargetSrc: https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/code.mind; filterMinCF:0.0001; filterBeta: 0.01;"
         color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
         device-orientation-permission-ui="enabled: false">
-    <a-assets timeout="100">
+    <a-assets>
         <img crossorigin="anonymous" id="play"
              src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/play-button.png"/>
         <img crossorigin="anonymous" id="kolyada-text-task"
@@ -308,6 +308,7 @@
         };
 
     }
+
 </script>
 </body>
 </html>

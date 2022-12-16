@@ -118,13 +118,6 @@ def main_css():
     return send_file('static/styles/main.css')
 
 
-@app.route('/js-static/<file_name>')
-def js_static(file_name):
-    if not '.js' in file_name or '/' in file_name or '\\' in file_name:
-       return None
-    return send_file(f'static/js-static/{file_name}')
-
-
 @app.route('/styles/index-ar.css')
 def index_ar_css():
     return send_file('static/styles/index-ar.css')

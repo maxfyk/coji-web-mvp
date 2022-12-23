@@ -32,23 +32,25 @@
         margin-top: 22vh;
         display: none;
     }
-
+\
     #speak-icon {
         height: 4vh;
         width: auto;
+        background: transparent;
     }
 
     .video-blurred {
         -o-filter: blur(20px);
         filter: blur(20px);
     }
+
 </style>
 <body>
 <div class="usage-help-div">
     <a class="usage-help">Now point your camera at the code to sight the data!🎉</a>
 </div>
 <div id="speak-icon-div">
-    <img src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/speak-icon.png" id="speak-icon">
+    <img src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/speak-icon-empty.png" id="speak-icon">
 </div>
 <div class="contact-us" onclick="window.parent.location.href = '/what-is-this';">
     <a>What's this?</a>
@@ -84,6 +86,20 @@
             });
         }
     });
+    AFRAME.registerComponent('choicebtn', {
+        init() {
+            this.el.addEventListener('click', (evt) => {
+                var choice = evt['srcElement']['attributes']['choicebtn']['nodeValue'];
+                if (choice === 'palyanica') {
+                    showWin();
+                } else {
+                    $('.usage-help').text('Неправильна відповідь😢');
+                    $('#speak-icon').attr('src', 'https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/wrong-icon.png');
+
+                }
+            });
+        }
+    });
 </script>
 <a-scene
         mindar-image="imageTargetSrc: https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/code.mind; filterMinCF:0.0001; filterBeta: 0.01;"
@@ -100,6 +116,12 @@
              src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/get-promocode.png"/>
         <img crossorigin="anonymous" id="promocode"
              src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/promocode.png"/>
+        <img crossorigin="anonymous" id="palyanica"
+             src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/palyanica.png"/>
+        <img crossorigin="anonymous" id="polunica"
+             src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/polunica.png"/>
+        <img crossorigin="anonymous" id="ukrzal"
+             src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/ukrzali.png"/>
     </a-assets>
     <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"
               raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
@@ -164,13 +186,13 @@
 
     const usageHelpDiv = $('.usage-help-div');
     const usageHelpText = $('.usage-help');
-    usageHelpText.text('Тепер наведіть камеру на код, щоб розпочати!🎉');
+    usageHelpText.text('Утримуйте камеру на коді, щоб зіграти!🎉');
 
     document.querySelector('a-entity').addEventListener("targetFound", event => {
         usageHelpDiv.hide();
         usageHelpDiv.toggle(500)
         document.querySelector('video').classList.add('video-blurred');
-        usageHelpText.text('Завершіть колядку та отримайте промокод!🎁');
+        usageHelpText.text('Оберіть правильне завершення колядки та отримайте промокод!🎁');
         doBounce($(".pause-button-container"), 4, '46px', 320);
     });
     document.querySelector('a-entity').addEventListener("targetLost", event => {
@@ -187,12 +209,11 @@
     }
 
     async function startGame() {
-        pauseToggler(true);
         var playButton = document.querySelector('#play-button');
         playButton.parentNode.removeChild(playButton);
         usageHelpText.hide();
         usageHelpText.toggle(500);
-        usageHelpText.text('Скажіть слово, яке має бути вкінці колядки!');
+        usageHelpText.text('Оберіть слово, яке має бути вкінці колядки!');
         $('#speak-icon-div').toggle(200);
 
 
@@ -201,21 +222,56 @@
                              scale="1.575 1 1"\
                              rotation="0 0 0"\
                              transparent="true"\
-                             animation="property: position; to: 0 0 0; dur: 200; easing: linear;">\
+                             animation="property: position; to: 0 0.4 0; dur: 400; easing: linear;">\
                              </a-image>'
         );
-        await detectWord();
+        $('a-entity').append('<a-image id="polunica-entity" src="#polunica"\
+                             position="-0.4 -0.25 0"\
+                             scale="0.462 0.15 1"\
+                             rotation="0 0 0"\
+                             transparent="true"\
+                             class="clickable"\
+                             choicebtn="polunica"\
+                             animation="property: position; to: -0.4 -0.3 0; dur: 1800; easing: easeInOutBack; loop:true;">\
+                             </a-image>'
+        );
+        $('a-entity').append('<a-image id="palyanica-entity" src="#palyanica"\
+                             position="0 -0.45 0"\
+                             scale="0.462 0.15 1"\
+                             rotation="0 0 0"\
+                             transparent="true"\
+                             class="clickable"\
+                             choicebtn="palyanica"\
+                             animation="property: position; to: 0 -0.5 0; dur: 1800; easing: easeInOutBack; loop:true;">\
+                             </a-image>'
+        );
+        $('a-entity').append('<a-image id="ukrzal-entity" src="#ukrzal"\
+                             position="0.4 -0.65 0"\
+                             scale="0.621 0.15 1"\
+                             rotation="0 0 0"\
+                             transparent="true"\
+                             class="clickable"\
+                             choicebtn="ukrzal"\
+                             animation="property: position; to: 0.4 -0.7 0; dur: 1800; easing: easeInOutBack; loop:true;">\
+                             </a-image>'
+        );
     }
 
     async function showWin() {
         var kolyada = document.querySelector('#kolyada-text-task-entity');
         kolyada.parentNode.removeChild(kolyada);
+        var btn1 = document.querySelector('#polunica-entity');
+        btn1.parentNode.removeChild(btn1);
+        var btn2 = document.querySelector('#palyanica-entity');
+        btn2.parentNode.removeChild(btn2);
+        var btn3 = document.querySelector('#ukrzal-entity');
+        btn3.parentNode.removeChild(btn3);
         $('a-entity').append('<a-image id="kolyada-text-task-win" src="#kolyada-text-win"\
                              position="0 0 -6"\
                              scale="1.575 1 1"\
                              rotation="0 0 0"\
                              transparent="true"\
-                             animation="property: position; to: 0 0 0; dur: 1000; easing: linear;">\
+                             animation="property: position; to: 0 0.4 0; dur: 1000; easing: linear;">\
                              </a-image>'
         );
         $('a-entity').append('<a-image id="get-promocode-button" src="#get-promocode"\
@@ -225,7 +281,7 @@
                              transparent="true"\
                              class="clickable"\
                              showpromocode\
-                             animation="property: position; to: 0 -0.9 0; dur: 1000; easing: linear;">\
+                             animation="property: position; to: 0 -0.36 0; dur: 1000; easing: linear;">\
                              </a-image>'
         );
         usageHelpText.hide();
@@ -254,59 +310,6 @@
                              animation="property: position; to: 0 0 0; dur: 800; easing: linear;">\
                              </a-image>'
         );
-    }
-
-    async function detectWord() {
-        let speechRecognition = new webkitSpeechRecognition();
-        let detected = false;
-        speechRecognition.continuous = true;
-        speechRecognition.interimResults = true;
-        speechRecognition.lang = 'uk-UA';
-
-        speechRecognition.onstart = () => {
-            console.log('speech rec started');
-        };
-        speechRecognition.onerror = () => {
-            console.log('speech rec onerror');
-
-        };
-        speechRecognition.onend = () => {
-            console.log('speech rec onend');
-            if (!detected) {
-                speechRecognition.start();
-            } else {
-                showWin();
-            }
-
-        };
-        speechRecognition.start();
-
-        let final_transcript = '';
-        speechRecognition.onresult = (event) => {
-            for (let i = event.resultIndex; i < event.results.length; ++i) {
-                if (event.results[i].isFinal) {
-                    final_transcript += event.results[i][0].transcript;
-                }
-            }
-            if (final_transcript) {
-                if (final_transcript.includes('паляниця')) {
-                    console.log('win!');
-                    speechRecognition.stop();
-                    detected = true;
-                } else {
-                    $('.usage-help').text(final_transcript + '❌');
-                    $('#speak-icon').attr('src', 'https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/wrong-icon.png');
-                    speechRecognition.stop();
-
-                }
-            } else {
-                $('.usage-help').text('Очікую варіанти відповіді...');
-                $('#speak-icon').attr('src', 'https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/speak-icon.png');
-            }
-            final_transcript = '';
-
-        };
-
     }
 
 </script>

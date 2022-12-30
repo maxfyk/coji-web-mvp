@@ -127,7 +127,7 @@ def index_ar_css():
 def get_js_file(file):
     if '\\' not in file and '/' not in file and '.js' in file:
         return send_file(f'static/js-static/{file}')
-    #
+
     # if 'aframe.min.js' in file:
     #     return send_file(f'static/js-static/{file}')
     # if '\\' not in file and '/' not in file and '.js' in file:

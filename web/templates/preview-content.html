@@ -103,7 +103,7 @@
     });
 </script>
 <a-scene
-        mindar-image="imageTargetSrc: https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/code.mind; stayVisible:true; stayVisibleScale:50; filterMinCF:0.0001; filterBeta: 0.01; missTolerance: 8"
+        mindar-image="imageTargetSrc: https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/code.mind; stayVisible:true; stayVisibleScale:50; filterMinCF:0.0001; filterBeta: 0.01; missTolerance: 6"
         color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
         device-orientation-permission-ui="enabled: false">
     <a-assets>
@@ -147,36 +147,10 @@
             <small class="button-description">Home</small>
         </div>
     </div>
-    <div class="pause-button-container">
-        <div class="button-container">
-            <button class="pause-button" id="pause-button"></button>
-            <small class="button-description" id="pause-button-text">Freeze</small>
-        </div>
-    </div>
 </div>
 <script>
-
-    var paused = false;
-
-    function pauseToggler(keepVideo = false) {
-        if (paused) {
-            arSystem.unpause();
-            pauseButtonText.innerHTML = 'Freeze';
-        } else {
-            arSystem.pause(keepVideo);
-            pauseButtonText.innerHTML = 'Resume';
-        }
-        paused = !paused;
-    }
-
     const sceneEl = document.querySelector('a-scene');
     const arSystem = sceneEl.systems["mindar-image-system"];
-    const pauseButton = document.querySelector("#pause-button");
-    const pauseButtonText = document.querySelector("#pause-button-text");
-    pauseButton.addEventListener('click', () => {
-        pauseToggler();
-    });
-
 
     function doBounce(element, times, distance, speed) {
         for (i = 0; i < times; i++) {
@@ -187,7 +161,7 @@
 
     const usageHelpDiv = $('.usage-help-div');
     const usageHelpText = $('.usage-help');
-    usageHelpText.text('Утримуйте камеру на коді, щоб зіграти!🎉');
+    usageHelpText.text('Наведіть камеру знову на код, щоб зіграти!🎉');
 
     document.querySelector('a-entity').addEventListener("targetFound", event => {
         usageHelpDiv.hide();
@@ -196,11 +170,7 @@
         usageHelpText.text('Оберіть правильне завершення колядки та отримайте промокод!🎁');
         doBounce($(".pause-button-container"), 4, '46px', 320);
     });
-    document.querySelector('a-entity').addEventListener("targetLost", event => {
-        usageHelpText.text('Тримайте камеру наведеною на код або скористайтеся кнопкою "Freeze"!');
-        document.querySelector('video').classList.remove('video-blurred');
 
-    });
     usageHelpDiv.hide();
     usageHelpDiv.toggle(500);
 

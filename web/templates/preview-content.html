@@ -180,6 +180,7 @@
     }
 
     async function startGame() {
+        document.querySelector('a-entity').addEventListener("targetFound", event => {});
         var playButton = document.querySelector('#play-button');
         playButton.parentNode.removeChild(playButton);
         usageHelpText.hide();

@@ -123,6 +123,16 @@ def index_ar_css():
     return send_file('static/styles/index-ar.css')
 
 
+@app.route('/js-static/<file>')
+def get_js_file(file):
+    # if 'aframe.min.js' in file:
+    #     return send_file(f'static/js-static/{file}')
+    if '\\' not in file and '/' not in file and '.js' in file:
+        return send_file(f'static/js-static/{file}')
+        # return send_file(f'C:\\Users\\maxfyk\\Documents\\mind-ar-js\\dist\\{file}')
+    return None
+
+
 if bool(os.environ.get('IS_DEV_ENV', True)):
     print('AR DEBUGGING && CODE GENERATION ENABLED!')
 

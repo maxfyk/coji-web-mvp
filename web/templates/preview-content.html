@@ -1,9 +1,9 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image.prod.js"></script>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-aframe.prod.js"></script>
+    <script type="module" src="/js-static/mindar-image-aframe.prod.js"></script>
+    <script type="module" src="/js-static/mindar-image.prod.js"></script>
+    <script src="/js-static/aframe.min.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <link rel="stylesheet" media="all" href="/styles/main.css">
     <link rel="stylesheet" media="all" href="/styles/index-ar.css">
@@ -32,7 +32,8 @@
         margin-top: 22vh;
         display: none;
     }
-\
+
+    \
     #speak-icon {
         height: 4vh;
         width: auto;
@@ -102,7 +103,7 @@
     });
 </script>
 <a-scene
-        mindar-image="imageTargetSrc: https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/code.mind; filterMinCF:0.0001; filterBeta: 0.01;"
+        mindar-image="imageTargetSrc: https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/code.mind; stayVisible:true; stayVisibleScale:50; filterMinCF:0.0001; filterBeta: 0.01;"
         color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
         device-orientation-permission-ui="enabled: false">
     <a-assets>
@@ -128,7 +129,7 @@
 
     <a-entity mindar-image-target="targetIndex: 0">
 
-        <a-image id="play-button" src="#play" class="clickable" startgame
+        <a-image id="play-button" src="#play" class="clickable" startgame move
                  position="0 0 0"
                  scale="0.7875 0.375 1"
                  rotation="0 0 0"

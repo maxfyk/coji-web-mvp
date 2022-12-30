@@ -65199,11 +65199,11 @@ class Eq {
             a === null ? i.isTracking = !1 : i.currentModelViewTransform = a;
           }
           if (i.showing || i.isTracking && (i.trackMiss = 0, i.trackCount += 1, i.trackCount > this.warmupTolerance && (i.showing = !0, i.trackingMatrix = null, i.filter.reset())), i.showing && (i.isTracking ? i.trackMiss = 0 : (i.trackCount = 0, i.trackMiss += 1, i.trackMiss > this.missTolerance && !this.stayVisible && (i.showing = !1, i.trackingMatrix = null, this.onUpdate && this.onUpdate({ type: "updateMatrix", targetIndex: o, worldMatrix: null })))), i.showing) {
-            let a;
+            let a, l;
             if (i.trackMiss <= this.missTolerance)
-              a = this._glModelViewMatrix(i.currentModelViewTransform, o);
+              a = this._glModelViewMatrix(i.currentModelViewTransform, o), l = !0;
             else {
-              const c = this.markerDimensions[o];
+              const u = this.markerDimensions[o];
               a = [
                 1,
                 0,
@@ -65217,17 +65217,17 @@ class Eq {
                 -0,
                 1,
                 0,
-                -c[0] / 2,
-                -c[1] / 2,
-                -(c[0] * c[1]) / (100 + this.stayVisibleScale),
+                -u[0] / 2,
+                -u[1] / 2,
+                -(u[0] * u[1]) / (100 + this.stayVisibleScale),
                 1
-              ];
+              ], l = !1;
             }
             i.trackingMatrix = i.filter.filter(Date.now(), a);
-            const l = [];
-            for (let c = 0; c < i.trackingMatrix.length; c++)
-              l[c] = i.trackingMatrix[c];
-            this.onUpdate && this.onUpdate({ type: "updateMatrix", targetIndex: o, worldMatrix: l });
+            const c = [];
+            for (let u = 0; u < i.trackingMatrix.length; u++)
+              c[u] = i.trackingMatrix[u];
+            this.onUpdate && this.onUpdate({ type: "updateMatrix", targetIndex: o, worldMatrix: c, targetPresent: l });
           }
         }
         s.dispose(), this.onUpdate && this.onUpdate({ type: "processDone" }), await af.nextFrame();

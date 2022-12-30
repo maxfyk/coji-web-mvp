@@ -1,5 +1,5 @@
 import { Matrix4 as m, Vector3 as p, Quaternion as w, Scene as v, WebGLRenderer as M, sRGBEncoding as b, PerspectiveCamera as T, Group as g } from "three";
-import { t as A, C as R } from "./controller.644904a5.js";
+import { t as A, C as R } from "./controller.2b75280d.js";
 import { CSS3DRenderer as E } from "three/addons/renderers/CSS3DRenderer.js";
 import { U as I } from "./ui.60fa7f33.js";
 const f = new m();

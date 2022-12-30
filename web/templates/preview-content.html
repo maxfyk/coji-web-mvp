@@ -161,14 +161,18 @@
 
     const usageHelpDiv = $('.usage-help-div');
     const usageHelpText = $('.usage-help');
+    let targetDetected = false;
     usageHelpText.text('Наведіть камеру знову на код, щоб зіграти!🎉');
 
     document.querySelector('a-entity').addEventListener("targetFound", event => {
-        usageHelpDiv.hide();
-        usageHelpDiv.toggle(500)
-        document.querySelector('video').classList.add('video-blurred');
-        usageHelpText.text('Оберіть правильне завершення колядки та отримайте промокод!🎁');
-        doBounce($(".pause-button-container"), 4, '46px', 320);
+        if (!targetDetected) {
+            usageHelpDiv.hide();
+            usageHelpDiv.toggle(500)
+            document.querySelector('video').classList.add('video-blurred');
+            usageHelpText.text('Оберіть правильне завершення колядки та отримайте промокод!🎁');
+            doBounce($(".pause-button-container"), 4, '46px', 320);
+            targetDetected = true;
+        }
     });
 
     usageHelpDiv.hide();
@@ -180,7 +184,6 @@
     }
 
     async function startGame() {
-        document.querySelector('a-entity').addEventListener("targetFound", event => {});
         var playButton = document.querySelector('#play-button');
         playButton.parentNode.removeChild(playButton);
         usageHelpText.hide();

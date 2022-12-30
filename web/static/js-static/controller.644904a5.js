@@ -65196,11 +65196,11 @@ class Eq {
           const i = this.trackingStates[o];
           if (i.isTracking && i.currentModelViewTransform) {
             let a = await this._trackAndUpdate(s, i.currentModelViewTransform, o);
-            a === null && !this.stayVisible ? i.isTracking = !1 : i.currentModelViewTransform = a;
+            a === null ? i.isTracking = !1 : i.currentModelViewTransform = a;
           }
-          if (i.showing || i.isTracking && (i.trackMiss = 0, i.trackCount += 1, i.trackCount > this.warmupTolerance && (i.showing = !0, i.trackingMatrix = null, i.filter.reset())), i.showing && (!i.isTracking && !this.stayVisible ? (i.trackCount = 0, i.trackMiss += 1, i.trackMiss > this.missTolerance && (i.showing = !1, i.trackingMatrix = null, this.onUpdate && this.onUpdate({ type: "updateMatrix", targetIndex: o, worldMatrix: null }))) : i.trackMiss = 0), i.showing) {
+          if (i.showing || i.isTracking && (i.trackMiss = 0, i.trackCount += 1, i.trackCount > this.warmupTolerance && (i.showing = !0, i.trackingMatrix = null, i.filter.reset())), i.showing && (i.isTracking ? i.trackMiss = 0 : (i.trackCount = 0, i.trackMiss += 1, i.trackMiss > this.missTolerance && !this.stayVisible && (i.showing = !1, i.trackingMatrix = null, this.onUpdate && this.onUpdate({ type: "updateMatrix", targetIndex: o, worldMatrix: null })))), i.showing) {
             let a;
-            if (i.currentModelViewTransform)
+            if (i.trackMiss <= this.missTolerance)
               a = this._glModelViewMatrix(i.currentModelViewTransform, o);
             else {
               const c = this.markerDimensions[o];
@@ -65221,7 +65221,7 @@ class Eq {
                 -c[1] / 2,
                 -(c[0] * c[1]) / (100 + this.stayVisibleScale),
                 1
-              ], i.isTracking = !1;
+              ];
             }
             i.trackingMatrix = i.filter.filter(Date.now(), a);
             const l = [];

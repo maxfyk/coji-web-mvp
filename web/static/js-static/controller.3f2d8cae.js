@@ -65198,9 +65198,9 @@ class Eq {
             let a = await this._trackAndUpdate(s, i.currentModelViewTransform, o);
             a === null ? i.isTracking = !1 : i.currentModelViewTransform = a;
           }
-          if (i.showing || i.isTracking && (i.trackMiss = 0, i.trackCount += 1, i.trackCount > this.warmupTolerance && (i.showing = !0, i.trackingMatrix = null, i.filter.reset())), i.showing && (i.isTracking ? i.trackMiss = 0 : (i.trackCount = 0, i.trackMiss += 1, i.trackMiss > this.missTolerance && !this.stayVisible && (i.showing = !1, i.trackingMatrix = null, this.onUpdate && this.onUpdate({ type: "updateMatrix", targetIndex: o, worldMatrix: null })))), i.showing) {
+          if (i.showing || (i.isTracking || this.stayVisible) && (i.trackMiss = 0, i.trackCount += 1, i.trackCount > this.warmupTolerance && (i.showing = !0, i.trackingMatrix = null, i.filter.reset())), i.showing && (i.isTracking ? i.trackMiss = 0 : (i.trackCount = 0, i.trackMiss += 1, i.trackMiss > this.missTolerance && !this.stayVisible && (i.showing = !1, i.trackingMatrix = null, this.onUpdate && this.onUpdate({ type: "updateMatrix", targetIndex: o, worldMatrix: null })))), i.showing) {
             let a, l;
-            if (i.trackMiss <= this.missTolerance)
+            if (i.trackMiss <= this.missTolerance && i.isTracking)
               a = this._glModelViewMatrix(i.currentModelViewTransform, o), l = !0;
             else {
               const u = this.markerDimensions[o];

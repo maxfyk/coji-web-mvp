@@ -47,7 +47,7 @@
 </style>
 <body>
 <div class="usage-help-div">
-    <a class="usage-help">Now point your camera at the code to sight the data!🎉</a>
+    <a class="usage-help">Секундочку...⌛</a>
 </div>
 <div id="speak-icon-div">
     <img src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/speak-icon-empty.png" id="speak-icon">
@@ -151,27 +151,14 @@
     const sceneEl = document.querySelector('a-scene');
     const arSystem = sceneEl.systems["mindar-image-system"];
 
-    function doBounce(element, times, distance, speed) {
-        for (i = 0; i < times; i++) {
-            element.animate({paddingTop: '-=' + distance}, speed)
-                .animate({paddingTop: '+=' + distance}, speed);
-        }
-    }
-
     const usageHelpDiv = $('.usage-help-div');
     const usageHelpText = $('.usage-help');
-    let targetDetected = false;
-    usageHelpText.text('Натисніть кнопку "Play", щоб зіграти!🎉');
 
-    document.querySelector('a-entity').addEventListener("targetFound", event => {
-        if (!targetDetected) {
-            usageHelpDiv.hide();
-            usageHelpDiv.toggle(500)
-            document.querySelector('video').classList.add('video-blurred');
-            usageHelpText.text('Оберіть правильне завершення колядки та отримайте промокод!🎁');
-            doBounce($(".pause-button-container"), 4, '46px', 320);
-            targetDetected = true;
-        }
+    sceneEl.addEventListener("arReady", event => {
+        document.querySelector('video').classList.add('video-blurred');
+        usageHelpText.text('Оберіть правильне завершення колядки та отримайте промокод!🎁');
+        usageHelpDiv.hide();
+        usageHelpDiv.toggle(500);
     });
 
     usageHelpDiv.hide();

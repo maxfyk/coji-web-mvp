@@ -1,0 +1,278 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="/js-static/aframe.min.js"></script>
+    <script src="/js-static/mindar-image-aframe.prod.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" media="all" href="/styles/main.css">
+    <link rel="stylesheet" media="all" href="/styles/index-ar.css">
+</head>
+<style>
+    .usage-help {
+        color: #D9D9D9;
+    }
+
+    #dodo-logo {
+        margin-top: 1vh;
+        height: 100%;
+        width: auto;
+    }
+
+    #dodo-logo-div {
+        text-align: center;
+        width: 100%;
+        height: 12vh;
+    }
+
+    #speak-icon-div {
+        text-align: center;
+        width: 100%;
+        height: auto;
+        margin-top: 22vh;
+        display: none;
+    }
+
+    \
+    #speak-icon {
+        height: 4vh;
+        width: auto;
+        background: transparent;
+    }
+
+    .video-blurred {
+        -o-filter: blur(20px);
+        filter: blur(20px);
+    }
+
+</style>
+<body>
+<div class="usage-help-div">
+    <a class="usage-help">Секундочку...⌛</a>
+</div>
+<div id="speak-icon-div">
+    <img src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/speak-icon-empty.png" id="speak-icon">
+</div>
+<div class="contact-us" onclick="window.parent.location.href = '/what-is-this';">
+    <a>What's this?</a>
+</div>
+
+<script>
+    AFRAME.registerComponent('weblink', {
+        init() {
+            this.el.addEventListener('click', (evt) => {
+                window.open(evt['srcElement']['attributes']['weblink']['nodeValue'], '_blank').focus();
+            });
+        }
+    });
+    AFRAME.registerComponent('startgame', {
+        init() {
+            this.el.addEventListener('click', (evt) => {
+                startGame();
+            });
+        }
+    });
+    AFRAME.registerComponent('showpromocode', {
+        init() {
+            this.el.addEventListener('click', (evt) => {
+                showPromocode();
+            });
+        }
+    });
+    AFRAME.registerComponent('sharepromocode', {
+        init() {
+            this.el.addEventListener('click', (evt) => {
+                window.parent.navigator.clipboard.writeText('EJF5');
+                $('.usage-help').text('Промокод скопійовано!');
+            });
+        }
+    });
+    AFRAME.registerComponent('choicebtn', {
+        init() {
+            this.el.addEventListener('click', (evt) => {
+                var choice = evt['srcElement']['attributes']['choicebtn']['nodeValue'];
+                if (choice === 'palyanica') {
+                    showWin();
+                } else {
+                    $('.usage-help').text('Неправильна відповідь😢');
+                    $('#speak-icon').attr('src', 'https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/wrong-icon.png');
+
+                }
+            });
+        }
+    });
+</script>
+<a-scene
+        mindar-image="imageTargetSrc: https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/code.mind; stayVisible:true; stayVisibleScale:50; filterMinCF:0.001; filterBeta: 0.01;"
+        color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false">
+    <a-assets>
+        <img crossorigin="anonymous" id="play"
+             src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/play-button.png"/>
+        <img crossorigin="anonymous" id="kolyada-text-task"
+             src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/kolyada-text-task.png"/>
+        <img crossorigin="anonymous" id="kolyada-text-win"
+             src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/kolyada-text-win.png"/>
+        <img crossorigin="anonymous" id="get-promocode"
+             src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/get-promocode.png"/>
+        <img crossorigin="anonymous" id="promocode"
+             src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/promocode.png"/>
+        <img crossorigin="anonymous" id="palyanica"
+             src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/palyanica.png"/>
+        <img crossorigin="anonymous" id="polunica"
+             src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/polunica.png"/>
+        <img crossorigin="anonymous" id="ukrzal"
+             src="https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/ukrzali.png"/>
+    </a-assets>
+    <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"
+              raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
+
+    <a-entity mindar-image-target="targetIndex: 0">
+
+        <a-image id="play-button" src="#play" class="clickable" startgame move
+                 position="0 0 0"
+                 scale="0.7875 0.375 1"
+                 rotation="0 0 0"
+                 transparent="true">
+        </a-image>
+
+    </a-entity>
+</a-scene>
+
+
+<div class="buttons-wrap">
+    <div class="scan-button-container-swapped">
+        <div class="button-container">
+            <button class="scan-button-swapped" id="scan-button-swapped" onclick="window.location.href = '/';"></button>
+            <small class="button-description">Home</small>
+        </div>
+    </div>
+</div>
+<script>
+    const sceneEl = document.querySelector('a-scene');
+    const arSystem = sceneEl.systems["mindar-image-system"];
+
+    const usageHelpDiv = $('.usage-help-div');
+    const usageHelpText = $('.usage-help');
+
+    sceneEl.addEventListener("arReady", event => {
+        document.querySelector('video').classList.add('video-blurred');
+        usageHelpText.text('Оберіть правильне завершення колядки та отримайте промокод!🎁');
+        usageHelpDiv.hide();
+        usageHelpDiv.toggle(500);
+    });
+
+    usageHelpDiv.hide();
+    usageHelpDiv.toggle(500);
+
+
+    function renderIndex() {
+        $('#index-iframe', window.parent.document).attr('src', '/index-iframe');
+    }
+
+    async function startGame() {
+        var playButton = document.querySelector('#play-button');
+        playButton.parentNode.removeChild(playButton);
+        usageHelpText.hide();
+        usageHelpText.toggle(500);
+        usageHelpText.text('Оберіть слово, яке має бути вкінці колядки!');
+        $('#speak-icon-div').toggle(200);
+
+
+        $('a-entity').append('<a-image id="kolyada-text-task-entity" src="#kolyada-text-task"\
+                             position="0 0 -2"\
+                             scale="1.575 1 1"\
+                             rotation="0 0 0"\
+                             transparent="true"\
+                             animation="property: position; to: 0 0.4 0; dur: 400; easing: linear;">\
+                             </a-image>'
+        );
+        $('a-entity').append('<a-image id="polunica-entity" src="#polunica"\
+                             position="-0.4 -0.25 0"\
+                             scale="0.462 0.15 1"\
+                             rotation="0 0 0"\
+                             transparent="true"\
+                             class="clickable"\
+                             choicebtn="polunica"\
+                             animation="property: position; to: -0.4 -0.3 0; dur: 1800; easing: easeInOutBack; loop:true;">\
+                             </a-image>'
+        );
+        $('a-entity').append('<a-image id="palyanica-entity" src="#palyanica"\
+                             position="0 -0.45 0"\
+                             scale="0.462 0.15 1"\
+                             rotation="0 0 0"\
+                             transparent="true"\
+                             class="clickable"\
+                             choicebtn="palyanica"\
+                             animation="property: position; to: 0 -0.5 0; dur: 1800; easing: easeInOutBack; loop:true;">\
+                             </a-image>'
+        );
+        $('a-entity').append('<a-image id="ukrzal-entity" src="#ukrzal"\
+                             position="0.4 -0.65 0"\
+                             scale="0.621 0.15 1"\
+                             rotation="0 0 0"\
+                             transparent="true"\
+                             class="clickable"\
+                             choicebtn="ukrzal"\
+                             animation="property: position; to: 0.4 -0.7 0; dur: 1800; easing: easeInOutBack; loop:true;">\
+                             </a-image>'
+        );
+    }
+
+    async function showWin() {
+        var kolyada = document.querySelector('#kolyada-text-task-entity');
+        kolyada.parentNode.removeChild(kolyada);
+        var btn1 = document.querySelector('#polunica-entity');
+        btn1.parentNode.removeChild(btn1);
+        var btn2 = document.querySelector('#palyanica-entity');
+        btn2.parentNode.removeChild(btn2);
+        var btn3 = document.querySelector('#ukrzal-entity');
+        btn3.parentNode.removeChild(btn3);
+        $('a-entity').append('<a-image id="kolyada-text-task-win" src="#kolyada-text-win"\
+                             position="0 0 -6"\
+                             scale="1.575 1 1"\
+                             rotation="0 0 0"\
+                             transparent="true"\
+                             animation="property: position; to: 0 0.4 0; dur: 1000; easing: linear;">\
+                             </a-image>'
+        );
+        $('a-entity').append('<a-image id="get-promocode-button" src="#get-promocode"\
+                             position="0 0 -6"\
+                             scale="0.92 0.322 1"\
+                             rotation="0 0 0"\
+                             transparent="true"\
+                             class="clickable"\
+                             showpromocode\
+                             animation="property: position; to: 0 -0.36 0; dur: 1000; easing: linear;">\
+                             </a-image>'
+        );
+        usageHelpText.hide();
+        usageHelpText.toggle(500);
+        usageHelpText.text('Правильно!✨');
+        $('#speak-icon').attr('src', 'https://api.coji.ai/coji-code/get-asset/bofmejjoblckaeal/win-icon.png');
+
+    }
+
+    async function showPromocode() {
+        var kolyada = document.querySelector('#kolyada-text-task-win');
+        kolyada.parentNode.removeChild(kolyada);
+        var btn = document.querySelector('#get-promocode-button');
+        btn.parentNode.removeChild(btn);
+        $('#speak-icon-div').toggle(200);
+        usageHelpText.text('Покажіть цей код менеджеру або використайте в інтернет магазині!✨');
+        usageHelpText.hide();
+        usageHelpText.toggle(500);
+        $('a-entity').append('<a-image id="promocode-button" src="#promocode"\
+                             position="0 0 -4"\
+                             scale="0.918 0.876 1"\
+                             rotation="0 0 0"\
+                             transparent="true"\
+                             class="clickable"\
+                             sharepromocode\
+                             animation="property: position; to: 0 0 0; dur: 800; easing: linear;">\
+                             </a-image>'
+        );
+    }
+
+</script>
+</body>
+</html>

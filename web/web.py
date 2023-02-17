@@ -3,7 +3,7 @@ import os
 import json
 import validators
 import requests as r
-from flask import (Flask, Response, redirect, render_template, request)
+from flask import (Flask, Response, redirect, render_template, request, send_file)
 from flask_cors import CORS
 
 from static.constants import *
@@ -44,7 +44,10 @@ def data_preview(id):
         elif code_info['data-type'] == 'ar-preview':
             resp = r.get(code_info['in-data'])
             preview_code = resp.content.decode('utf8')
-            return render_template('data-preview-ar.html', PREVIEW_CODE=preview_code)
+            if '<html>' in preview_code:
+                return render_template('data-preview-ar-custom.html', PREVIEW_CODE=preview_code)
+            else:
+                return render_template('data-preview-ar.html', PREVIEW_CODE=preview_code)
         elif code_info['data-type'] == 'url':
             return redirect(code_info['in-data'])
         return 'Not yet supported'
@@ -110,8 +113,40 @@ def scripts_main_js():
     return render_template('scripts/main.js', API_URL=API_URL)
 
 
+@app.route('/styles/main.css')
+def main_css():
+    return send_file('static/styles/main.css')
+
+
+@app.route('/styles/index-ar.css')
+def index_ar_css():
+    return send_file('static/styles/index-ar.css')
+
+
+@app.route('/js-static/<file>')
+def get_js_file(file):
+    if '\\' not in file and '/' not in file and '.js' in file:
+        return send_file(f'static/js-static/{file}')
+
+    # if 'aframe.min.js' in file:
+    #     return send_file(f'static/js-static/{file}')
+    # if '\\' not in file and '/' not in file and '.js' in file:
+    #     return send_file(f'C:\\Users\\maxfyk\\Documents\\mind-ar-js\\dist\\{file}')
+    # return None
+
+
 if bool(os.environ.get('IS_DEV_ENV', True)):
-    print('CODE GENERATION ENABLED!')
+    print('AR DEBUGGING && CODE GENERATION ENABLED!')
+
+
+    @app.route('/ar')
+    def ar():
+        return render_template('preview.html')
+
+
+    @app.route('/preview-content')
+    def ar_content():
+        return render_template('preview-content.html')
 
 
     @app.route('/create-code')

@@ -19,13 +19,20 @@ DATA_TYPES = ['text', 'url']  # , 'file'
 @app.route('/', methods=['get'])
 def index():
     """Main page"""
-    return render_template('index.html')
+    # return render_template('index.html')
+    return render_template('index-partizan.html')
 
 
 @app.route('/index-iframe', methods=['get'])
 def index_iframe():
     """Index page iframe"""
     return render_template('index-iframe.html')
+
+
+@app.route('/index-iframe-partizan', methods=['get'])
+def index_iframe_partizan():
+    """Index page iframe"""
+    return render_template('index-iframe-partizan.html')
 
 
 # data preview page

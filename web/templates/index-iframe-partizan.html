@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-CCXXB5EDB0"></script>
+<script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image.prod.js"></script>
+<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-aframe.prod.js"></script>
+<script src="https://rawgit.com/mayognaise/aframe-gif-shader/master/dist/aframe-gif-shader.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-CCXXB5EDB0');
+</script>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    {#<link rel="preload" href="/static/ar-js-static/coji.tflite" as="fetch" crossorigin="anonymous"/>#}
+    <link rel="preload" as="font" href="/static/fonts/calibri/calibri.eot" crossorigin="anonymous">
+    <link rel="preload" as="font" href="/static/fonts/calibri/calibri.svg" crossorigin="anonymous">
+    <link rel="preload" as="font" href="/static/fonts/calibri/calibri.ttf" type="font/ttf" crossorigin="anonymous">
+    <link rel="preload" as="font" href="/static/fonts/calibri/calibri.woff" type="font/woff2" crossorigin="anonymous">
+    <link rel="preload" as="font" href="/static/fonts/calibri/calibri-bold.ttf" type="font/ttf" crossorigin="anonymous">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/static/icons/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/static/icons/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/static/icons/favicons/favicon-16x16.png">
+    <link rel="manifest" href="/static/icons/favicons/site.webmanifest">
+    <link rel="mask-icon" href="/static/icons/favicons/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/index-ar.css') }}">
+</head>
+{% if ERROR %}
+    <script>
+        alert("{{ ERROR }}" + '😢');
+    </script>
+{% endif %}
+<style>
+    html, body {
+        overflow: hidden;
+        height: 100%;
+    }
+</style>
+<body scroll="no" style="overflow: hidden">
+<a class="camera-warning">Please provide camera access!</a>
+
+{#<div class="scan-border-div" style="display: none;">#}
+{#    <a class="scan-border-text" style="color: #FFCC00;">Make sure code fits into the scanning area!</a>#}
+{#    <img src="/static/icons/border.png" class="scan-border" alt="border">#}
+{#</div>#}
+
+<div class="usage-help-div">
+    <a class="usage-help">Initializing app...</a>
+</div>
+{#<div class="contact-us" onclick="window.parent.location.href = 'mailto:mfyk@lvivsoft.com';">#}
+{#    <a>Contact us</a>#}
+{#</div>#}
+<div class="contact-us" onclick="window.parent.location.href = '/what-is-this';">
+    <a>What's this?</a>
+</div>
+<div class="buttons-wrap">
+</div>
+
+<a-scene
+        id="a-scene"
+        mindar-image="imageTargetSrc: https://api.coji.ai/coji-code/get-asset/dnkmdbobckjoefoj/code.mind; filterMinCF:0.001; filterBeta: 0.01;"
+        color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false">
+    <a-assets>
+        <img crossorigin="anonymous" id="sakura-back" src="https://api.coji.ai/coji-code/get-asset/dnkmdbobckjoefoj/sakura-back.png"/>
+    </a-assets>
+    <a-camera id="stream" position="0 0 0" look-controls="enabled: false"
+              cursor="fuse: false; rayOrigin: mouse;"
+              raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
+    <a-entity id="entity" mindar-image-target="targetIndex: 0">
+
+        <a-image id="play-button" src="#sakura-back" class="clickable"
+                 position="0 0 0"
+                 scale="1.25 1.25 1"
+                 rotation="0 0 0">
+        </a-image>
+        <a-entity geometry="primitive:box;" material="shader:gif;src:url(https://api.coji.ai/coji-code/get-asset/dnkmdbobckjoefoj/sakura-gif.gif);opacity:1"
+                  position="0 -0.25 0"
+                  scale="1.1 0.6 1"
+                  rotation="0 0 0"
+        ></a-entity>
+        <a-entity text="value: Happy cherry blossom season!; font:mozillavr;"
+                  position="0.39 0.36 0"
+                  scale="2 2 1"
+                  rotation="0 0 0"
+        ></a-entity>
+
+    </a-entity>
+</a-scene>
+</body>
+<script>
+    const sceneEl = document.querySelector('a-scene');
+    const arSystem = sceneEl.systems["mindar-image-system"];
+
+    const usageHelpDiv = $('.usage-help-div');
+    const usageHelpText = $('.usage-help');
+    const entity = document.querySelector('#entity');
+
+    sceneEl.addEventListener("arReady", event => {
+        usageHelpText.text('Point your camera at the COJI code!👀');
+        usageHelpDiv.hide();
+        usageHelpDiv.toggle(500);
+    });
+    entity.addEventListener("targetFound", event => {
+        usageHelpDiv.hide();
+
+    });
+    entity.addEventListener("targetLost", event => {
+        usageHelpDiv.toggle(500);
+
+    });
+
+    usageHelpDiv.hide();
+    usageHelpDiv.toggle(500);
+</script>
+<script type="text/javascript" src="https://unpkg.com/platform@1.3.6/platform.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+</html>

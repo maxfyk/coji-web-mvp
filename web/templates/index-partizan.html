@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style type="text/css">
+        html {
+            overflow: auto;
+        }
+
+        html,
+        body,
+        div,
+        iframe {
+            margin: 0px;
+            padding: 0px;
+            height: 100%;
+            border: none;
+            overflow: hidden;
+        }
+
+        body {
+            background-color: #FFCC00;
+        }
+
+        iframe {
+            display: block;
+            border: none;
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            z-index: 999999;
+        }
+
+        #centered-iframe-logo-div {
+            position: relative;
+            height: 100%;
+            width: 100%;
+        }
+
+        #centered-iframe-logo-div #centered-iframe-logo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const isMobile = navigator.userAgentData.mobile; //resolves true/false
+    if (!isMobile) {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const force = urlParams.get('force');
+        if (force !== 'yup') {
+            window.location.replace('/what-is-this');
+        }
+    }
+</script>
+<div id="centered-iframe-logo-div">
+    <img id="centered-iframe-logo" style="top: -10vh;" src="static/icons/logo-small.png">
+    <img id="centered-iframe-logo" style="top: 20vh; width: 10vh; height: 10vh;" src="static/icons/scan-loading.gif">
+</div>
+<iframe id="index-iframe" src="/index-iframe-partizan" allow="camera *; geolocation *;microphone *;"></iframe>
+</body>
+</html>

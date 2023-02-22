@@ -37,6 +37,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
     <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/index-ar.css') }}">
+    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='ar-test/partizan/sakura.css') }}">
 </head>
 {% if ERROR %}
     <script>
@@ -75,7 +76,8 @@
         color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
         device-orientation-permission-ui="enabled: false">
     <a-assets>
-        <img crossorigin="anonymous" id="sakura-back" src="https://api.coji.ai/coji-code/get-asset/dnkmdbobckjoefoj/sakura-back.png"/>
+        <img crossorigin="anonymous" id="sakura-back"
+             src="https://api.coji.ai/coji-code/get-asset/dnkmdbobckjoefoj/sakura-back.png"/>
     </a-assets>
     <a-camera id="stream" position="0 0 0" look-controls="enabled: false"
               cursor="fuse: false; rayOrigin: mouse;"
@@ -87,20 +89,30 @@
                  scale="1.25 1.25 1"
                  rotation="0 0 0">
         </a-image>
-        <a-entity geometry="primitive:box;" material="shader:gif;src:url(https://api.coji.ai/coji-code/get-asset/dnkmdbobckjoefoj/sakura-gif.gif);opacity:1"
+        <a-entity geometry="primitive:box;"
+                  material="shader:gif;src:url(https://api.coji.ai/coji-code/get-asset/dnkmdbobckjoefoj/sakura-gif.gif);opacity:1"
                   position="0 -0.25 0"
                   scale="1.1 0.6 1"
                   rotation="0 0 0"
         ></a-entity>
         <a-entity text="value: Happy cherry blossom season!; font:mozillavr;"
-                  position="0.39 0.36 0"
+                  position="0.39 0.38 0"
                   scale="2 2 1"
                   rotation="0 0 0"
         ></a-entity>
-
+{#        <a-entity text="value: 快乐的樱花季!; font:roboto;"#}
+{#                  position="0.39 0.33 0"#}
+{#                  scale="2 2 1"#}
+{#                  rotation="0 0 0"#}
+{#        ></a-entity>#}
     </a-entity>
 </a-scene>
 </body>
+<script src="static/ar-test/partizan/sakura.js" text="text/javascript"></script>
+<script>
+    const sakura = new Sakura('body');
+    sakura.stop(false);
+</script>
 <script>
     const sceneEl = document.querySelector('a-scene');
     const arSystem = sceneEl.systems["mindar-image-system"];
@@ -116,11 +128,11 @@
     });
     entity.addEventListener("targetFound", event => {
         usageHelpDiv.hide();
-
+        sakura.start();
     });
     entity.addEventListener("targetLost", event => {
         usageHelpDiv.toggle(500);
-
+        sakura.stop(false);
     });
 
     usageHelpDiv.hide();

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css')}}">
+{% if ERROR %}
+    <script>
+        alert("{{ ERROR }}"+'😢');
+    </script>
+{% endif %}
+<body>
+<div class="form-div">
+    <form action="{{ url_for('upload_object_post') }}" method="post" enctype="multipart/form-data">
+        <div class="create-code-form-padding">
+            <b class="main-text create-code">Create your code:</b>
+            <div>
+                <select id="data-type" name="data-type" method="GET" action="/" class="create-code data-type-form">
+                    {% for data_type in data_types %}
+                    <option value="{{data_type}}" class="dropdown-options" SELECTED>{{data_type}}</option>
+                    {% endfor %}
+                    <option disabled value class="dropdown-options">ar model</option>
+                    <option disabled selected class="dropdown-options" value>Select data type:</option>
+                </select>
+            </div>
+            <div>
+                <div id="text-div" hidden class="create-code data-create-div">
+                    <input class="create-code sub-data-input" type="text" id="text-in" name="text-in"
+                           minlength="1" maxlength="10000" placeholder="Enter your text:"/>
+                </div>
+                <div id="url-div" hidden class="create-code data-create-div">
+                    <input class="create-code sub-data-input" type="text" id="url-in" name="url-in"
+                           minlength="1" maxlength="1000" placeholder="Enter your url:"/>
+                </div>
+                <div id="file-div" hidden class="create-code data-create-div">
+                    <input class="create-code sub-data-input" type="file" id="file-in" name="file-in"
+                           accept="image/*, audio/*, video/*, text/*, application/*" placeholder="Select your file:">
+                </div>
+                <div id="3d-object-div" hidden class="create-code data-create-div">
+                    <input class="create-code sub-data-input" type="file" id="3d-object-in" name="file"
+                           placeholder="Select your file:">
+{#                     accept="image/*, audio/*, video/*, text/*, application/*"#}
+                </div>
+            </div>
+            <div id="code-location-div" hidden class="create-code code-id-div">
+                <input class="create-code sub-data-input" type="text" id="location-in" name="location-in" style="font-size:50%"
+                       minlength="8" placeholder="(Test) Enter where code will be located (lat, lon):"/>
+            </div>
+        </div>
+
+        <div class="create-code-buttons">
+            <div class="scan-button-container-create-code">
+                <div class="button-container">
+                    <button class="scan-button-create-code" id="scan-button"
+                            onclick="window.location.href = '/';" type="button"></button>
+                    <small class="button-description">Home</small>
+                </div>
+            </div>
+            <div class="add-button-container-create-code">
+                <div class="button-container">
+                    <button class="add-button-create-code" id="add-button" type="submit"></button>
+                    <small class="button-description">Submit</small>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="{{ url_for('static', filename='js-static/create-element.js')}}"></script>
+</html>

@@ -1,0 +1,118 @@
+<html>
+<head>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image.prod.js"></script>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.1.5/dist/mindar-image-aframe.prod.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/main.css') }}">
+    <link rel="stylesheet" media="all" href="{{ url_for('static', filename='styles/index-ar.css') }}">
+</head>
+<body>
+<div class="usage-help-div">
+    <a class="usage-help">Now point your camera at the code to sight the data!🎉</a>
+</div>
+{#<div class="contact-us" onclick="window.parent.location.href = 'mailto:mfyk@lvivsoft.com';">#}
+{#    <a>Contact us</a>#}
+{#</div>#}
+<div class="contact-us" onclick="window.parent.location.href = '/what-is-this';">
+    <a>What's this?</a>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const sceneEl = document.querySelector('a-scene');
+        const exampleTarget = document.querySelector('#example-target');
+
+        exampleTarget.addEventListener("targetFound", event => {
+            console.log("target found");
+        });
+        // detect target lost
+        exampleTarget.addEventListener("targetLost", event => {
+            console.log("target lost");
+        });
+
+    });
+</script>
+<a-scene
+        mindar-image="imageTargetSrc: https://api.coji.ai/coji-code/get-asset/model/ar.mind; filterMinCF:0.001; filterBeta: 0.01;"
+        color-space="sRGB" renderer="colorManagement: true, physicallyCorrectLights" vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false">
+    <a-assets>
+        <a-asset-item id="model" response-type="arraybuffer"
+                      src="{{ in_data['glb-model-url'] }}"></a-asset-item>
+    </a-assets>
+
+    <a-entity mindar-image-target="targetIndex: 0" id="example-target">
+        <a-entity position="{{ in_data['position'] }}" scale="{{ in_data['scale'] }}"
+                  gltf-model="#model"></a-entity>
+    </a-entity>
+    </a-entity>
+    <a-camera position="0 0 0" look-controls="enabled: false" cursor="fuse: false; rayOrigin: mouse;"
+              raycaster="far: ${customFields.libVersion}; objects: .clickable"></a-camera>
+</a-scene>
+
+<div class="buttons-wrap">
+    <div class="scan-button-container-swapped">
+        <div class="button-container">
+            <button class="scan-button-swapped" id="scan-button-swapped" onclick="renderIndex();"></button>
+            <small class="button-description">Home</small>
+        </div>
+    </div>
+    <div class="pause-button-container">
+        <div class="button-container">
+            <button class="pause-button" id="pause-button"></button>
+            <small class="button-description" id="pause-button-text">Freeze</small>
+        </div>
+    </div>
+</div>
+<script>
+
+    var paused = false;
+
+    function pauseToggler(keepVideo = false) {
+        if (paused) {
+            arSystem.unpause();
+            pauseButtonText.innerHTML = 'Freeze';
+        } else {
+            arSystem.pause(keepVideo);
+            pauseButtonText.innerHTML = 'Resume';
+        }
+        paused = !paused;
+    }
+
+    function doBounce(element, times, distance, speed) {
+        for (i = 0; i < times; i++) {
+            element.animate({paddingTop: '-=' + distance}, speed)
+                .animate({paddingTop: '+=' + distance}, speed);
+        }
+    }
+
+    const sceneEl = document.querySelector('a-scene');
+    const arSystem = sceneEl.systems["mindar-image-system"];
+    const pauseButton = document.querySelector("#pause-button");
+    const pauseButtonText = document.querySelector("#pause-button-text");
+    pauseButton.addEventListener('click', () => {
+        pauseToggler(true);
+    });
+
+    const usageHelpDiv = $('.usage-help-div');
+
+    document.querySelector('a-entity').addEventListener("targetFound", event => {
+        usageHelpDiv.hide();
+        doBounce($(".pause-button-container"), 4, '46px', 320);
+    });
+    document.querySelector('a-entity').addEventListener("targetLost", event => {
+        usageHelpDiv.toggle(500);
+    });
+    usageHelpDiv.hide();
+    usageHelpDiv.toggle(500);
+
+
+    function renderIndex() {
+        $('#index-iframe', window.parent.document).attr('src', '/index-iframe');
+    }
+
+</script>
+</body>
+</html>

@@ -1,4 +1,5 @@
 import os
+import base64
 
 import json
 import validators
@@ -11,7 +12,7 @@ from static.constants import *
 app = Flask(__name__)
 CORS(app)
 API_URL = os.environ.get('API_URL') or 'https://api.coji.ai'
-DATA_TYPES = ['text', 'url']  # , 'file'
+DATA_TYPES = ('3d-object',)  # , 'file'
 
 
 # GET pages
@@ -28,6 +29,49 @@ def index_iframe():
     return render_template('index-iframe.html')
 
 
+@app.route('/upload-object', methods=['get'])
+def upload_object():
+    """Index page iframe"""
+    return render_template('upload-object.html', data_types=DATA_TYPES)
+
+
+@app.route('/upload-object-submit', methods=['post'])
+def upload_object_post():
+    """Create a new code (post form)"""
+    data_type = request.form.get('data-type', None)
+    in_data = request.form.get(f'{data_type}-in', None)
+    location = request.form.get('location-in', None)
+    if data_type and (in_data or request.files.get('file', None)):
+        if data_type == 'url' and validators.url(in_data):
+            data = CREATE_POST_JSON.copy()
+            data['in-data'] = in_data
+            data['data-type'] = data_type
+            data['location'] = location
+            resp = r.post(f'{API_URL}/coji-code/create', json=data)
+            data = resp.json()
+            if resp.status_code == 200 and not data.get('error'):
+                return render_template('download-code.html', code_image=data['image'], char_code=data['code'])
+            error = data.get('text') or 'Failed create a new code, try again later'
+
+        elif data_type == '3d-object' and request.files.get('file', None):
+            data = CREATE_POST_JSON.copy()
+            data['in-data'] = str(base64.b64encode(request.files['file'].read()))
+            data['data-type'] = data_type
+            data['location'] = location
+            data['other'] = request.files['file'].filename.split('.')[-1]
+            resp = r.post(f'{API_URL}/coji-code/create', json=data)
+            data = resp.json()
+            if resp.status_code == 200 and not data.get('error'):
+                return render_template('download-code.html', code_image=data['image'], char_code=data['code'])
+            error = data.get('text') or 'Failed create a new code, try again later'
+
+        else:
+            error = 'You url is not valid!'
+    else:
+        error = 'Wrong values. Please try again!'
+    return render_template('create-code.html', ERROR=error)
+
+
 # data preview page
 @app.route('/data-preview/<id>', methods=['get'])
 def data_preview(id):
@@ -41,6 +85,12 @@ def data_preview(id):
             return render_template('data-preview-text.html', code_info=code_info)
         elif code_info['data-type'] == 'ar-model':
             return render_template('data-preview-ar-model.html', in_data=code_info['in-data'])
+        elif code_info['data-type'] == '3d-object':
+            return render_template('data-preview-ar-model2.html', in_data={
+                'glb-model-url': f'''https://api.coji.ai/coji-code/get-asset/model/ldemplcimalieoag.glb''',
+                'position': '-0.2 -0.2 1',
+                'scale': '0.05 0.05 0.05',
+            })
         elif code_info['data-type'] == 'ar-preview':
             resp = r.get(code_info['in-data'])
             preview_code = resp.content.decode('utf8')
@@ -55,6 +105,16 @@ def data_preview(id):
         return render_template('error-page.html', ERROR='Code not found!')
 
     return render_template('error-page.html', ERROR='Something went wrong!')
+
+
+@app.route('/test', methods=['get'])
+def test():
+    """Retrieve the encoded info"""
+    return render_template('data-preview-ar-model2.html', in_data={
+        'glb-model-url': f'''https://api.coji.ai/coji-code/get-asset/model/ldemplcimalieoag.glb''',
+        'position': '-0.2 -0.2 1',
+        'scale': '0.05 0.05 0.05',
+    })
 
 
 # map location page
@@ -179,4 +239,4 @@ if bool(os.environ.get('IS_DEV_ENV', True)):
         return render_template('create-code.html', ERROR=error)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8001, debug=True)
+    app.run(host='0.0.0.0', port=8001, debug=True, ssl_context="adhoc")
